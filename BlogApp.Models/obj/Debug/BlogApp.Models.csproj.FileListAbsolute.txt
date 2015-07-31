@@ -1,0 +1,4 @@
+c:\Users\alejandro alvarez\documents\visual studio 2012\Projects\BlogApp\BlogApp.Models\bin\Debug\BlogApp.Models.dll
+c:\Users\alejandro alvarez\documents\visual studio 2012\Projects\BlogApp\BlogApp.Models\bin\Debug\BlogApp.Models.pdb
+c:\Users\alejandro alvarez\documents\visual studio 2012\Projects\BlogApp\BlogApp.Models\obj\Debug\BlogApp.Models.dll
+c:\Users\alejandro alvarez\documents\visual studio 2012\Projects\BlogApp\BlogApp.Models\obj\Debug\BlogApp.Models.pdb

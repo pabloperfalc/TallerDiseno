@@ -1,0 +1,1 @@
+c:\Users\alejandro alvarez\documents\visual studio 2012\Projects\BlogApp\BlogApp.DataAccess\obj\Debug\BlogApp.DataAccess.csprojResolveAssemblyReference.cache
