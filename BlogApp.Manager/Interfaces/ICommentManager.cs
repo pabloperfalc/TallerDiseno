@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlogApp.Manager.Interfaces
 {
-    class ICommentManager
+    public class ICommentManager
     {
     }
 }

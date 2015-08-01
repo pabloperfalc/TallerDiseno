@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlogApp.DataAccess.Interfaces
 {
-    class IArticleDataAccess
+    public class IArticleDataAccess
     {
     }
 }

@@ -2,3 +2,7 @@ c:\Users\alejandro alvarez\documents\visual studio 2012\Projects\BlogApp\BlogApp
 c:\Users\alejandro alvarez\documents\visual studio 2012\Projects\BlogApp\BlogApp.Models\bin\Debug\BlogApp.Models.pdb
 c:\Users\alejandro alvarez\documents\visual studio 2012\Projects\BlogApp\BlogApp.Models\obj\Debug\BlogApp.Models.dll
 c:\Users\alejandro alvarez\documents\visual studio 2012\Projects\BlogApp\BlogApp.Models\obj\Debug\BlogApp.Models.pdb
+C:\Users\pabloperfalc\Documents\TallerDiseno\BlogApp.Models\bin\Debug\BlogApp.Models.dll
+C:\Users\pabloperfalc\Documents\TallerDiseno\BlogApp.Models\bin\Debug\BlogApp.Models.pdb
+C:\Users\pabloperfalc\Documents\TallerDiseno\BlogApp.Models\obj\Debug\BlogApp.Models.dll
+C:\Users\pabloperfalc\Documents\TallerDiseno\BlogApp.Models\obj\Debug\BlogApp.Models.pdb
