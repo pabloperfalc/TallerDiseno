@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApp.DataAccess", "BlogApp.DataAccess\BlogApp.DataAccess.csproj", "{BF1DC20A-AF8B-496D-9736-00A429D21460}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApp.Logger", "BlogApp.Logger\BlogApp.Logger.csproj", "{FEC18373-C961-4CC6-B6D7-40B3C22C9DC5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApp.Web", "BlogApp.Web\BlogApp.Web.csproj", "{7216A232-4075-451A-9467-3ED90430B88F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApp.Manager", "BlogApp.Manager\BlogApp.Manager.csproj", "{355D318B-0F58-49F4-A09A-BFFAA3D5686D}"
 EndProject
@@ -25,10 +25,6 @@ Global
 		{FEC18373-C961-4CC6-B6D7-40B3C22C9DC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEC18373-C961-4CC6-B6D7-40B3C22C9DC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEC18373-C961-4CC6-B6D7-40B3C22C9DC5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7216A232-4075-451A-9467-3ED90430B88F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7216A232-4075-451A-9467-3ED90430B88F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7216A232-4075-451A-9467-3ED90430B88F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7216A232-4075-451A-9467-3ED90430B88F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{355D318B-0F58-49F4-A09A-BFFAA3D5686D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{355D318B-0F58-49F4-A09A-BFFAA3D5686D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{355D318B-0F58-49F4-A09A-BFFAA3D5686D}.Release|Any CPU.ActiveCfg = Release|Any CPU
