@@ -1,5 +1,0 @@
-c:\Users\alejandro alvarez\documents\visual studio 2012\Projects\BlogApp\BlogApp.DataAccess\obj\Debug\BlogApp.DataAccess.csprojResolveAssemblyReference.cache
-C:\Users\pabloperfalc\Documents\TallerDiseno\BlogApp.DataAccess\obj\Debug\BlogApp.DataAccess.dll
-C:\Users\pabloperfalc\Documents\TallerDiseno\BlogApp.DataAccess\obj\Debug\BlogApp.DataAccess.pdb
-C:\Users\pabloperfalc\Documents\TallerDiseno\BlogApp.DataAccess\bin\Debug\BlogApp.DataAccess.dll
-C:\Users\pabloperfalc\Documents\TallerDiseno\BlogApp.DataAccess\bin\Debug\BlogApp.DataAccess.pdb
