@@ -8,3 +8,7 @@
 /BlogApp.Models/obj/Debug
 /BlogApp.Web/obj/Debug
 /packages
+/BlogApp.Manager/bin/Debug
+/BlogApp.UnityInjector/bin/Debug
+/BlogApp.UnityInjector/obj/Debug
+/BlogApp.Web/bin
