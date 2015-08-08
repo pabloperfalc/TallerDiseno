@@ -10,10 +10,13 @@ namespace BlogApp.Web.Controllers
     public class UserController : Controller
     {
         private IUserManager userManager;
+        private BlogApp.ILogger.ILogger logger;
 
-        public UserController(IUserManager userManager)
+        public UserController(IUserManager userManager, BlogApp.ILogger.ILogger logger)
         {
+            
             this.userManager = userManager;
+            this.logger = logger;
         }
 
   
@@ -22,7 +25,9 @@ namespace BlogApp.Web.Controllers
 
         public ActionResult Index()
         {
-           
+            userManager.AddUser("hola");
+
+            logger.Log("hola");
             return View();
         }
 

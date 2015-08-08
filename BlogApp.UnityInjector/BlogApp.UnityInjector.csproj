@@ -89,7 +89,10 @@
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetDir)BlogApp.UnityInjector.dll" "$(SolutionDir)BlogApp.Web\Bin" 
 copy "$(TargetDir)BlogApp.Manager.dll" "$(SolutionDir)BlogApp.Web\Bin"
-copy "$(TargetDir)BlogApp.DataAccess.dll" "$(SolutionDir)BlogApp.Web\Bin"</PostBuildEvent>
+copy "$(TargetDir)BlogApp.DataAccess.dll" "$(SolutionDir)BlogApp.Web\Bin"
+copy "$(TargetDir)BlogApp.Logger.dll" "$(SolutionDir)BlogApp.Web\Bin"
+copy "$(TargetDir)BlogApp.DataAccess.dll" "$(SolutionDir)BlogApp.Web\Bin"
+copy "$(TargetDir)Log4Net.dll" "$(SolutionDir)BlogApp.Web\Bin"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

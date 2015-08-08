@@ -165,9 +165,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BlogApp.Models\BlogApp.Models.csproj">
-      <Project>{445964e7-0321-4075-9883-31930aac6788}</Project>
-      <Name>BlogApp.Models</Name>
+    <ProjectReference Include="..\BlogApp.ILogger\BlogApp.ILogger.csproj">
+      <Project>{fb5c8245-1fac-4c44-9720-4082521db839}</Project>
+      <Name>BlogApp.ILogger</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

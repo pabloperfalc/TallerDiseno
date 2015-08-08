@@ -1,4 +1,5 @@
 ﻿using BlogApp.Utilities;
+using log4net;
 using log4net.Appender;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace BlogApp.Logger
 
         public void Log(string message)
         {
+            GlobalContext.Properties["TestColumn"] = "6";
+
             log.Info(message);
         }
 
