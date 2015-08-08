@@ -25,8 +25,6 @@ namespace BlogApp.Web.Controllers
 
         public ActionResult Index()
         {
-            userManager.AddUser("hola");
-
             logger.Log("hola");
             return View();
         }
