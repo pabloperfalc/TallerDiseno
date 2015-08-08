@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -13,3 +13,6 @@
 /BlogApp.UnityInjector/obj/Debug
 /BlogApp.Web/bin
 /BlogApp.Models/bin/Debug
+BlogApp.ILogger/obj/
+BlogApp.Logger/bin/
+BlogApp.Utilities/obj/
