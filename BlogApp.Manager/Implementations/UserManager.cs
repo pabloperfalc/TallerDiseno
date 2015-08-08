@@ -1,4 +1,5 @@
 ﻿using BlogApp.Manager.RequiredInterfaces;
+using BlogApp.Models;
 using BlogApp.Web.RequiredInterfaces;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,25 @@ namespace BlogApp.Manager.Implementations
     {
         private IUserDataAccess userDataAccess;
 
-        public UserManager(IUserDataAccess userDataAccess)
+       public UserManager(IUserDataAccess userDataAccess)
         {
             this.userDataAccess = userDataAccess;
         }
 
-        public void AddUser(string b)
+        public void AddUser(User user)
         {
-            userDataAccess.AddUser(b);
+            userDataAccess.AddUser(user);
         }
+
+        public void ModifyUser(User user)
+        {
+            userDataAccess.ModifyUser(user);
+        }
+
+        public void RemoveUser(User user) 
+        {
+            userDataAccess.RemoveUser(user);
+        }
+
     }
 }

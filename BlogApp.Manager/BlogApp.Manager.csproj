@@ -53,6 +53,14 @@
     <Compile Include="RequiredInterfaces\IUserDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BlogApp.Models\BlogApp.Models.csproj">
+      <Project>{445964e7-0321-4075-9883-31930aac6788}</Project>
+      <Name>BlogApp.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BlogApp.Utilities\BlogApp.Utilities.csproj">
+      <Project>{a490028a-6970-4f13-994c-d25e1db5cb07}</Project>
+      <Name>BlogApp.Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BlogApp.Web\BlogApp.Web.csproj">
       <Project>{3d2ad378-c54d-411f-8a38-e3d8e3463be4}</Project>
       <Name>BlogApp.Web</Name>

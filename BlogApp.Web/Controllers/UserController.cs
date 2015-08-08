@@ -22,7 +22,7 @@ namespace BlogApp.Web.Controllers
 
         public ActionResult Index()
         {
-            userManager.AddUser("hola");
+           
             return View();
         }
 
