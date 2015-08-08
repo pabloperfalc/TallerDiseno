@@ -16,3 +16,4 @@
 BlogApp.ILogger/obj/
 BlogApp.Logger/bin/
 BlogApp.Utilities/obj/
+/BlogApp.DataAccess/bin/Debug

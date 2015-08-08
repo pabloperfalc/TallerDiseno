@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BlogApp.DataAccess.Implementations
 {
-    public class CommentDataAccess : ICommentDataAccess
+    public class LogDataAccess : ILogDataAccess
     {
     }
 }

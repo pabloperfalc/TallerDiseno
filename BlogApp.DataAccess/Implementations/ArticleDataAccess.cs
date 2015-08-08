@@ -1,4 +1,4 @@
-﻿using BlogApp.DataAccess.Interfaces;
+﻿using BlogApp.Manager.RequiredInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

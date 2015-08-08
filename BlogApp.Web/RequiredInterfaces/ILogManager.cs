@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace BlogApp.DataAccess.Interfaces
+namespace BlogApp.Web.RequiredInterfaces
 {
-    public class IArticleDataAccess
+    public interface ILogManager
     {
     }
 }

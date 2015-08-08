@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BlogApp.DataAccess.Interfaces
+namespace BlogApp.Manager.RequiredInterfaces
 {
-    public class IUserDataAccess
+    public interface IArticleDataAccess
     {
     }
 }

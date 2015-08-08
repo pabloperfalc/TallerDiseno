@@ -45,11 +45,15 @@
     <Compile Include="BlogContext.cs" />
     <Compile Include="Implementations\ArticleDataAccess.cs" />
     <Compile Include="Implementations\CommentDataAccess.cs" />
+    <Compile Include="Implementations\LogDataAccess.cs" />
     <Compile Include="Implementations\UserDataAccess.cs" />
-    <Compile Include="Interfaces\IArticleDataAccess.cs" />
-    <Compile Include="Interfaces\ICommentDataAccess.cs" />
-    <Compile Include="Interfaces\IUserDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlogApp.Manager\BlogApp.Manager.csproj">
+      <Project>{355d318b-0f58-49f4-a09a-bffaa3d5686d}</Project>
+      <Name>BlogApp.Manager</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

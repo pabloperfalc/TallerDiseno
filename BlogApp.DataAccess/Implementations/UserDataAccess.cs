@@ -1,4 +1,4 @@
-﻿using BlogApp.DataAccess.Interfaces;
+﻿using BlogApp.Manager.RequiredInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,5 +8,9 @@ namespace BlogApp.DataAccess.Implementations
 {
     public class UserDataAccess : IUserDataAccess
     {
+        public void AddUser(string b)
+        {
+            var c = b;
+        }
     }
 }

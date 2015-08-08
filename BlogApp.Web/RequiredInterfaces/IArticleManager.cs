@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlogApp.Web.RequiredInterfaces
 {
-    public class IArticleManager
+    public interface IArticleManager
     {
     }
 }

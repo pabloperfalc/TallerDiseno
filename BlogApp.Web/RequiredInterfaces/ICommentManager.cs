@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlogApp.Web.RequiredInterfaces
 {
-    public class ICommentManager
+    public interface ICommentManager
     {
     }
 }

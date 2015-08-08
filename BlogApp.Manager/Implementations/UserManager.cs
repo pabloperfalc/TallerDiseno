@@ -1,4 +1,5 @@
-﻿using BlogApp.Web.RequiredInterfaces;
+﻿using BlogApp.Manager.RequiredInterfaces;
+using BlogApp.Web.RequiredInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,16 @@ namespace BlogApp.Manager.Implementations
 {
     public class UserManager : IUserManager
     {
+        private IUserDataAccess userDataAccess;
+
+        public UserManager(IUserDataAccess userDataAccess)
+        {
+            this.userDataAccess = userDataAccess;
+        }
+
         public void AddUser(string b)
         {
-            
-                var a = b;
-            
+            userDataAccess.AddUser(b);
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlogApp.Logger
 {
-    public class Logger
+    public class Logger: BlogApp.ILogger.ILogger
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 

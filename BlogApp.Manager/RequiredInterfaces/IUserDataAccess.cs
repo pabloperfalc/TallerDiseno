@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BlogApp.Web.RequiredInterfaces
+namespace BlogApp.Manager.RequiredInterfaces
 {
-    public interface IUserManager
+    public interface IUserDataAccess
     {
         void AddUser(string b);
     }

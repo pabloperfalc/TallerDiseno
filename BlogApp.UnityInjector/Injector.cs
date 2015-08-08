@@ -1,4 +1,6 @@
-﻿using BlogApp.Manager.Implementations;
+﻿using BlogApp.DataAccess.Implementations;
+using BlogApp.Manager.Implementations;
+using BlogApp.Manager.RequiredInterfaces;
 using BlogApp.UnityInjector;
 using BlogApp.Web;
 using BlogApp.Web.Controllers;
@@ -10,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//Copiar dll UnityINjetor al bin del WEB
+//Copy dll UnityINjetor al bin del WEB
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Injector), "Inject")]
 
 namespace BlogApp.UnityInjector
@@ -22,6 +24,14 @@ namespace BlogApp.UnityInjector
             var container = new UnityContainer();
 
             container.RegisterType<IUserManager, UserManager>();
+            container.RegisterType<IArticleManager, ArticleManager>();
+            container.RegisterType<ICommentManager, CommentManager>();
+            
+            container.RegisterType<IUserDataAccess, UserDataAccess>();
+            container.RegisterType<IArticleDataAccess, ArticleDataAccess>();
+            container.RegisterType<ICommentDataAccess, CommentDataAccess>();
+
+            container.RegisterType<BlogApp.ILogger.ILogger, BlogApp.Logger.Logger>(); 
 
             InjectorResolver.SetResolver(container);
         }
