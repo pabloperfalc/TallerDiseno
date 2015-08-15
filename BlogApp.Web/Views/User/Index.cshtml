@@ -1,0 +1,14 @@
+﻿@model BlogApp.Models.User
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@Video.Silverlight(
+        path: "ClientBin/BlogApp.VideoPlayer.xap",
+        width: "400",
+        height: "600",
+        bgColor: "red",
+        autoUpgrade: true)
+

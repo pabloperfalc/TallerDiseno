@@ -25,8 +25,14 @@ namespace BlogApp.Web.Controllers
 
         public ActionResult Index()
         {
+            userManager.AddUser(new Models.User());
             logger.Log("hola");
             return View();
+        }
+
+        public ActionResult GetVideoPath(int index)
+        {
+            return Json(new List<string>() { "http://localhost:51295/wildlife.wmv", "http://localhost:51295/wildlife.wmv", "http://localhost:51295/wildlife.wmv" },JsonRequestBehavior.AllowGet);
         }
 
     }
