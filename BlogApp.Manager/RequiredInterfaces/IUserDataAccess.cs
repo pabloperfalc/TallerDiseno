@@ -13,5 +13,6 @@ namespace BlogApp.Manager.RequiredInterfaces
         void AddUser(User user);
         void ModifyUser(User user);
         void RemoveUser(User user);
+        List<User> GetUsers();
     }
 }
