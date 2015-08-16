@@ -64,6 +64,10 @@
     <Compile Include="Migrations\201508152152576_Change.Designer.cs">
       <DependentUpon>201508152152576_Change.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508152317564_paswod.cs" />
+    <Compile Include="Migrations\201508152317564_paswod.Designer.cs">
+      <DependentUpon>201508152317564_paswod.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -91,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508152152576_Change.resx">
       <DependentUpon>201508152152576_Change.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508152317564_paswod.resx">
+      <DependentUpon>201508152317564_paswod.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

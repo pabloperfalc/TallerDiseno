@@ -15,9 +15,11 @@ namespace BlogApp.Models
         public string SureName { get; set; }
 
         [StringLength(12, ErrorMessage="Maximo 12 caracteres")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please"), Required]
         public string Username { get; set; }
 
-        public string Passwod { get; set; }
+        [Required]
+        public string Password { get; set; }
 
         public int RoleId { get; set; }
 

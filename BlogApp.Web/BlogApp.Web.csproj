@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="AuthorizationAttribute.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="InjectorResolver.cs" />
     <Compile Include="Global.asax.cs">
@@ -203,6 +204,7 @@
     </Content>
     <Content Include="Wildlife.wmv" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <Content Include="Views\User\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

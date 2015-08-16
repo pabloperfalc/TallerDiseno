@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data.Entity;
 
 namespace BlogApp.DataAccess.Implementations
 {
@@ -11,20 +12,12 @@ namespace BlogApp.DataAccess.Implementations
     {
         public void AddUser(User user) 
         {
-            try
+            using (var db = new BlogContext())
             {
-                using (var db = new BlogContext())
-                {
-                    db.Users.Add(user);
-                    db.SaveChanges();
+                db.Users.Add(user);
+                db.SaveChanges();
 
-                }
             }
-            catch (Exception)
-            {
-                //capturar
-            }
-        
         }
 
         public void ModifyUser(User user) 
@@ -34,36 +27,33 @@ namespace BlogApp.DataAccess.Implementations
 
         public void RemoveUser(User user) 
         {
-            try
+            using (var db = new BlogContext())
             {
-                using (var db = new BlogContext())
-                {
-                    db.Users.Attach(user);
-                    user.IsActive = false;
-                    db.SaveChanges();
-
-                }
-            }
-            catch (Exception)
-            {
+                db.Users.Attach(user);
+                user.IsActive = false;
+                db.SaveChanges();
 
             }
         }
         public List<User> GetUsers() 
         {
-            try
+            using (var db = new BlogContext())
             {
-                using (var db = new BlogContext())
-                {
-                    var query = from u in db.Users
-                                where u.IsActive == true
-                                select u;
-                    return query.ToList<User>();
-                }
+                var query = from u in db.Users
+                            where u.IsActive == true
+                            select u;
+                return query.ToList<User>();
             }
-            catch (Exception)
+        }
+
+        public User GetUserByUsername(string username)
+        {
+            using (var db = new BlogContext())
             {
-                return new List<User>();
+                var query = from u in db.Users.Include(u => u.Role)
+                            where u.IsActive == true && u.Username.Trim() == username.Trim()
+                            select u;
+                return query.FirstOrDefault();
             }
         }
     }

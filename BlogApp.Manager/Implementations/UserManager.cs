@@ -32,5 +32,11 @@ namespace BlogApp.Manager.Implementations
             userDataAccess.RemoveUser(user);
         }
 
+        public bool ValidateLogin(ref User user)
+        {
+            var existingUser = userDataAccess.GetUserByUsername(user.Username);
+            user = existingUser;
+            return existingUser != null;
+        }
     }
 }

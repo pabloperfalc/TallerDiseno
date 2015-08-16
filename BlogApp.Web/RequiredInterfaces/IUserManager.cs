@@ -9,6 +9,7 @@ namespace BlogApp.Web.RequiredInterfaces
     {
         void AddUser(User user);
         void ModifyUser(User user);
-        void RemoveUser(User user); 
+        void RemoveUser(User user);
+        bool ValidateLogin(ref User user);
     }
 }
