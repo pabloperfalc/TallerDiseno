@@ -163,11 +163,18 @@ namespace BlogApp.Web.Controllers
         {
             if (!String.IsNullOrEmpty(searchString))
             {
-               User foundUser = userManager.GetUserByUsername(searchString);
-               return View(foundUser);
+               User foundUser = userManager.GetUserByUsername(searchString.Trim());
+               if (foundUser != null)
+               {
+                   return View(foundUser);
+               }
+               else
+               {
+                   ModelState.AddModelError(string.Empty, "No user found by: "+ searchString);
+                   return View(); 
+               }
             }
-
-
+         
             return View();
         }
 
