@@ -11,5 +11,9 @@ namespace BlogApp.Web.RequiredInterfaces
         void ModifyUser(User user);
         void RemoveUser(User user);
         bool ValidateLogin(ref User user);
+        bool ValidateRegistration(User user);
+        bool ValidateEmail(User user);
+        string GetHash(User user);
+        User GetUserByUsername(string username);
     }
 }

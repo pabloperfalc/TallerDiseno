@@ -26,11 +26,11 @@ namespace BlogApp.UnityInjector
             container.RegisterType<IUserManager, UserManager>();
             container.RegisterType<IArticleManager, ArticleManager>();
             container.RegisterType<ICommentManager, CommentManager>();
-            
+            container.RegisterType<IRoleManager, RoleManager>();
             container.RegisterType<IUserDataAccess, UserDataAccess>();
             container.RegisterType<IArticleDataAccess, ArticleDataAccess>();
             container.RegisterType<ICommentDataAccess, CommentDataAccess>();
-
+            container.RegisterType<IRoleDataAccess, RoleDataAccess>();
             container.RegisterType<BlogApp.ILogger.ILogger, BlogApp.Logger.Logger>(); 
 
             InjectorResolver.SetResolver(container);

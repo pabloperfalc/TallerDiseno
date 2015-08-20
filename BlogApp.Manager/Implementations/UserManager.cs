@@ -4,6 +4,7 @@ using BlogApp.Web.RequiredInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace BlogApp.Manager.Implementations
@@ -19,7 +20,12 @@ namespace BlogApp.Manager.Implementations
 
         public void AddUser(User user)
         {
-            userDataAccess.AddUser(user);
+            var existsUser = GetUserByUsername(user.Username);
+            if (existsUser == null)
+            {
+                user.IsActive = true;
+                userDataAccess.AddUser(user);
+            }
         }
 
         public void ModifyUser(User user)
@@ -34,9 +40,57 @@ namespace BlogApp.Manager.Implementations
 
         public bool ValidateLogin(ref User user)
         {
-            var existingUser = userDataAccess.GetUserByUsername(user.Username);
-            user = existingUser;
-            return existingUser != null;
+            if (user.Username != null && user.Password != null)
+            {
+                var existingUser = GetUserByUsername(user.Username);
+                string hashedPassword = GetHash(user);
+                if (existingUser.Password.Equals(hashedPassword))
+                {
+                    user = existingUser;
+                }
+                return existingUser != null;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public User GetUserByUsername(string username)
+        {
+            return userDataAccess.GetUserByUsername(username);
+        }
+
+        public bool ValidateRegistration(User user)
+        {
+            if (user.Name == string.Empty || user.Surname == string.Empty || user.Email == string.Empty)
+                return false;
+            if (user.Username == string.Empty || user.Password == string.Empty)
+                return false;           
+
+            return true;
+        }
+
+        public bool ValidateEmail(User user)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(user.Email);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public string GetHash(User user)
+        {
+            byte[] input = Encoding.UTF8.GetBytes(user.Password);
+            HashAlgorithm algorithm = new MD5CryptoServiceProvider();
+            byte[] hashedBytes = algorithm.ComputeHash(input);
+            return BitConverter.ToString(input);
+            //return Util.GetHash(user.Password);
         }
     }
 }

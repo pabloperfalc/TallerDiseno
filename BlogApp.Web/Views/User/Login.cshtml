@@ -1,28 +1,87 @@
 ﻿@model BlogApp.Models.User
-
-<div class="row">
-    @Html.DisplayFor(m => m.Username)
-    <div class="col-lg-5">
-        @using (Html.BeginForm("Login", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+@{
+    Layout = "~/Views/User/LoginLayout.cshtml"; 
+  }
+<div class ="form-signin">
+    @Html.DisplayFor(m=>m.Username)
+    <div class="form-control">
+        @using (Html.BeginForm("Login", "user", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
         {
-            <h4>Login</h4>
+            <h4>Signin</h4>
+            <hr/>
+           
+                 @Html.LabelFor(m => m.Username)
+                 @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                 @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+            
+            
+                 @Html.LabelFor(m => m.Password)
+                 @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+       
+             <hr />
+                <input type="submit" value="Log in" class="btn btn-primary btn-lg btn-block" />
             <hr />
-            <div class="form-group">
-                @Html.LabelFor(m => m.Username)
-                @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })  
-            </div>
-            <div class="form-group">
-                    <input type="submit" value="Log in" class="btn btn-primary" />
+            
+            <div class="row">
+                      <p class="text-center">Don't have a BlogApp account?@Html.ActionLink("Register","Register", null,new { @class="btn btn-link btn-large" })</p>
             </div>
         }
+
     </div>
 </div>
+
+<div class="row">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger"})
+</div>
+
+
+
+
+
+@*
+@{
+       Layout = "~/Views/User/LoginLayout.cshtml";
+       
+
+<form class="form-signin">
+    @*    @Html.DisplayFor(m => m.Username)
+       
+            @using (Html.BeginForm("Login", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+            {
+                <div class="row">
+                    <h2 class="form-signin-heading">Login</h2>
+                    
+               
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Username)
+                            <div class=".col-xs-6 .col-sm-4">
+                            @Html.TextBoxFor(m => m.Username, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                                </div>
+                        </div>
+               
+                    
+                       <div class="form-group">
+                            @Html.LabelFor(m => m.Password)
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })  
+                        </div>
+
+                      <div class="form-group">
+                            <input type="submit" value="Login" class="btn btn-lg btn-primary btn-block"/>
+                      </div>
+                </div>
+                
+                <div class="row">
+                  <div class="form-group">
+                      <p class="text-left">Don't have a BlogApp account?@Html.ActionLink("Register","Register", null,new { @class="btn btn-link btn-large" })</p>
+                  </div>
+                </div>
+            }
+</form>
 <div class=" row">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 </div>
+*@
+

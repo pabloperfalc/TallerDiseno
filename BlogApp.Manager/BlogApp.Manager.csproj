@@ -44,12 +44,14 @@
   <ItemGroup>
     <Compile Include="Implementations\CommentManager.cs" />
     <Compile Include="Implementations\LogManager.cs" />
+    <Compile Include="Implementations\RoleManager.cs" />
     <Compile Include="Implementations\UserManager.cs" />
     <Compile Include="Implementations\ArticleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequiredInterfaces\IArticleDataAccess.cs" />
     <Compile Include="RequiredInterfaces\ICommentDataAccess.cs" />
     <Compile Include="RequiredInterfaces\ILogDataAccess.cs" />
+    <Compile Include="RequiredInterfaces\IRoleDataAccess.cs" />
     <Compile Include="RequiredInterfaces\IUserDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>

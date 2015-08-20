@@ -16,7 +16,6 @@ namespace BlogApp.DataAccess.Implementations
             {
                 db.Users.Add(user);
                 db.SaveChanges();
-
             }
         }
 
