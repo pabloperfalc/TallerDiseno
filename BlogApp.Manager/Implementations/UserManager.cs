@@ -12,10 +12,12 @@ namespace BlogApp.Manager.Implementations
     public class UserManager : IUserManager
     {
         private IUserDataAccess userDataAccess;
+        private IRoleDataAccess roleDataAccess;
 
-       public UserManager(IUserDataAccess userDataAccess)
+       public UserManager(IUserDataAccess userDataAccess, IRoleDataAccess roleDataAccess)
         {
             this.userDataAccess = userDataAccess;
+            this.roleDataAccess = roleDataAccess;
         }
 
         public void AddUser(User user)
@@ -24,6 +26,8 @@ namespace BlogApp.Manager.Implementations
             if (existsUser == null)
             {
                 user.IsActive = true;
+                var role = roleDataAccess.GetRoleByDescription("Blogger");
+                user.Role = role;
                 userDataAccess.AddUser(user);
             }
         }
@@ -91,6 +95,11 @@ namespace BlogApp.Manager.Implementations
             byte[] hashedBytes = algorithm.ComputeHash(input);
             return BitConverter.ToString(input);
             //return Util.GetHash(user.Password);
+        }
+
+        public List<User> GetUsers()
+        {
+            return userDataAccess.GetUsers();
         }
     }
 }

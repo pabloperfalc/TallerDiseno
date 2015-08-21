@@ -13,6 +13,7 @@ namespace BlogApp.Manager.RequiredInterfaces
         void ModifyRole(Role user);
         void RemoveRole(Role user);
         List<Role> GetRoles();
+        Role GetRoleByDescription(string description);
         
     }
 }

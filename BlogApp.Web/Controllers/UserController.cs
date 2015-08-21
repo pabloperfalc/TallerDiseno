@@ -11,19 +11,21 @@ namespace BlogApp.Web.Controllers
 {
     public class UserController : Controller
     {
-        private IUserManager userManager;
-        private IRoleManager roleManager;
+        private readonly IUserManager userManager;
+        private readonly IRoleManager roleManager;
+        private readonly IArticleManager articleManager;
         
-        public UserController(IUserManager userManager, IRoleManager roleManager)
+        public UserController(IUserManager userManager, IRoleManager roleManager, IArticleManager articleManager)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.articleManager = articleManager;
         }
 
   
         //
         // GET: /User/
-        [Authorization(Role = "Administrative")]
+        [Authorization(Role = "Administrator")]
         public ActionResult Index()
         {
            
@@ -40,7 +42,7 @@ namespace BlogApp.Web.Controllers
             return View();
         }
 
-        [Authorization(Role="Admin")]
+        [Authorization(Role = "Administrator")]
         public ActionResult Test()
         {
             return View();
@@ -52,7 +54,7 @@ namespace BlogApp.Web.Controllers
             if (userManager.ValidateLogin(ref user))
             {
                 Session["Login"] = user;
-                return RedirectToAction("Index");
+                return RedirectToAction("Home");
             }
             else
             {
@@ -78,41 +80,32 @@ namespace BlogApp.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Register(User user)
         {
-            if (userManager.ValidateRegistration(user))
+            //if (userManager.ValidateRegistration(user))
+            //{
+            //    ModelState.AddModelError(string.Empty, "All fields must be completed");
+            //}
+
+            if (!userManager.ValidateEmail(user))
             {
-                if (userManager.ValidateEmail(user))
-                {
-                    if (userManager.GetUserByUsername(user.Username) == null)
-                    {
-                        string hashedPassword = userManager.GetHash(user);
-                        user.Password = hashedPassword;
-                        List<Role> lstRoles = roleManager.GetRoles();
-                        foreach (Role r in lstRoles)
-                        {
-                            if (r.Description.Equals("Blogger"))
-                                user.RoleId = r.Id;
-                        }
-                        userManager.AddUser(user);
-                        return RedirectToAction("Login");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Username already exists");
-                   //     PopulateDropDownList();
-                        return View(user);
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Check email format. Eg: jack@hello.com");
-                 //   PopulateDropDownList();
-                    return View(user);
-                }
+                ModelState.AddModelError("Email", "Check email format. Eg: jack@hello.com");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(user);
+            }
+
+                
+            if (userManager.GetUserByUsername(user.Username) == null)
+            {
+                string hashedPassword = userManager.GetHash(user);
+                user.Password = hashedPassword;
+                userManager.AddUser(user);
+                return RedirectToAction("Login");
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "All fields must be completed");
-               // PopulateDropDownList();
+                ModelState.AddModelError("Username", "Username already exists");
                 return View(user);
             }
         }
@@ -123,7 +116,7 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpPost]
-        [Authorization(Role="Administrative")]
+        [Authorization(Role = "Administrator")]
         public async Task<ActionResult> AddUser(User user, string returnUrl)
         {
             if (userManager.ValidateRegistration(user))
@@ -178,16 +171,17 @@ namespace BlogApp.Web.Controllers
             return View();
         }
 
-
-        private void PopulateDropDownList()
+        
+        public ActionResult Home()
         {
-            List<SelectListItem> lstItem = new List<SelectListItem>();
-            List<Role> lstRoles = roleManager.GetRoles();
-            foreach (Role r in lstRoles)
-            {
-                lstItem.Add(new SelectListItem { Text = r.Description, Value = r.Id.ToString() });
-            }
-            ViewData["RoleId"] = lstItem;
+            return View(articleManager.GetLatest(10));
         }
+
+        public ActionResult List()
+        {
+            var users = userManager.GetUsers();
+            return View(users);
+        }
+
     }
 }

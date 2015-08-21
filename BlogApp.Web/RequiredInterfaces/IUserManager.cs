@@ -15,5 +15,6 @@ namespace BlogApp.Web.RequiredInterfaces
         bool ValidateEmail(User user);
         string GetHash(User user);
         User GetUserByUsername(string username);
+        List<User> GetUsers();
     }
 }

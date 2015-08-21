@@ -34,5 +34,16 @@ namespace BlogApp.DataAccess.Implementations
                 return roles.ToList();
             }
         }
+
+
+        public Role GetRoleByDescription(string description)
+        {
+            using (var db = new BlogContext())
+            {
+                return (from p in db.Roles 
+                where p.Description == description 
+                select p).FirstOrDefault();
+            }
+        }
     }
 }
