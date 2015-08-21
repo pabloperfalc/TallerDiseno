@@ -47,17 +47,17 @@ namespace BlogApp.Manager.Implementations
             if (user.Username != null && user.Password != null)
             {
                 var existingUser = GetUserByUsername(user.Username);
-                string hashedPassword = GetHash(user);
-                if (existingUser.Password.Equals(hashedPassword))
+                if(existingUser != null)
                 {
-                    user = existingUser;
+                    string hashedPassword = GetHash(user);
+                    if (existingUser.Password.Equals(hashedPassword))
+                    {
+                        user = existingUser;
+                    }
+                    return true;
                 }
-                return existingUser != null;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public User GetUserByUsername(string username)
