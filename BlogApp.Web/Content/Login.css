@@ -49,3 +49,7 @@ a.text-danger:hover,
 a.text-danger:focus {
   color: #843534;
 }
+
+.form-label{
+    display:block;
+}

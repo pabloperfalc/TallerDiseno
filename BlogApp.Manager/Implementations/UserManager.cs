@@ -27,7 +27,7 @@ namespace BlogApp.Manager.Implementations
             {
                 user.IsActive = true;
                 var role = roleDataAccess.GetRoleByDescription("Blogger");
-                user.Role = role;
+                user.Roles = new List<Role>(){ role };
                 userDataAccess.AddUser(user);
             }
         }

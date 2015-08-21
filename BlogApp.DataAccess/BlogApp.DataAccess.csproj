@@ -73,6 +73,10 @@
     <Compile Include="Migrations\201508162225460_changeSurname.Designer.cs">
       <DependentUpon>201508162225460_changeSurname.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508212232255_Multiple_Roles.cs" />
+    <Compile Include="Migrations\201508212232255_Multiple_Roles.Designer.cs">
+      <DependentUpon>201508212232255_Multiple_Roles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -106,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508162225460_changeSurname.resx">
       <DependentUpon>201508162225460_changeSurname.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508212232255_Multiple_Roles.resx">
+      <DependentUpon>201508212232255_Multiple_Roles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

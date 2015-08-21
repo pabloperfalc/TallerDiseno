@@ -28,7 +28,11 @@ namespace WebApplication1
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css", "~/Content/DataTables/jquery.dataTables.min.css"));
+
+            bundles.Add(new StyleBundle("~/Content/preloading/css").Include(
+                      "~/Content/bootstrap.css",
+                      "~/Content/Login.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

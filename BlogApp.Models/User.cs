@@ -23,9 +23,7 @@ namespace BlogApp.Models
         [Required]
         public string Password { get; set; }
 
-        public int RoleId { get; set; }
-
-        public Role Role { get; set; }
+        public List<Role> Roles { get; set; }
 
         [Required]
         public string Email { get; set; }

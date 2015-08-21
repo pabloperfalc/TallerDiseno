@@ -128,7 +128,7 @@ namespace BlogApp.Web.Controllers
                         string hashedPassword = userManager.GetHash(user);
                         user.Password = hashedPassword;
                         ///ver como hacer checkbox con MVC 4 para ROLES
-                        user.RoleId = 2;
+                        //user.RoleId = 2;
                         /***************************************/
                         userManager.AddUser(user);
                         return RedirectToAction("Index");

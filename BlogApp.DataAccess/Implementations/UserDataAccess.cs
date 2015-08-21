@@ -49,7 +49,7 @@ namespace BlogApp.DataAccess.Implementations
         {
             using (var db = new BlogContext())
             {
-                var query = from u in db.Users.Include(u => u.Role)
+                var query = from u in db.Users.Include(u => u.Roles)
                             where u.IsActive == true && u.Username.Trim() == username.Trim()
                             select u;
                 return query.FirstOrDefault();
