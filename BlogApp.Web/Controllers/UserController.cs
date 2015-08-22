@@ -108,20 +108,20 @@ namespace BlogApp.Web.Controllers
             //{
             //    ModelState.AddModelError(string.Empty, "All fields must be completed");
             //}
-            List<Tuple<string,string>> errors = userManager.ValidateUser(user);
+            List<Tuple<string, string>> errors = userManager.ValidateUser(userViewModel.User);
             if (errors.Count == 0)
             {
-                if (userManager.GetUserByUsername(user.Username) == null)
+                if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
                 {
-                    string hashedPassword = userManager.GetHash(user);
-                    user.Password = hashedPassword;
-                    userManager.AddUser(user);
+                    string hashedPassword = userManager.GetHash(userViewModel.User);
+                    userViewModel.User.Password = hashedPassword;
+                    userManager.AddUser(userViewModel.User);
                     return RedirectToAction("Login");
                 }
                 else
                 {
                     ModelState.AddModelError("Username", "Username already exists");
-                    return View(user);
+                    return View(userViewModel);
                 }
             }
             else
@@ -130,25 +130,12 @@ namespace BlogApp.Web.Controllers
                 {
                     ModelState.AddModelError(t.Item1, t.Item2);
                 }
-                return View(user);
+                return View(userViewModel);
             }
             //if (!ModelState.IsValid)
             //{
             //    return View(user);
             //}
-
-            if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
-            {
-                string hashedPassword = userManager.GetHash(userViewModel.User);
-                userViewModel.User.Password = hashedPassword;
-                userManager.AddUser(userViewModel.User);
-                return RedirectToAction("Login");
-            }
-            else
-            {
-                ModelState.AddModelError("Username", "Username already exists");
-                return View(userViewModel);
-            }
         }
 
         public ActionResult AddUser()
