@@ -12,7 +12,7 @@ namespace BlogApp.Web.RequiredInterfaces
         void RemoveUser(User user);
         bool ValidateLogin(ref User user);
         bool ValidateRegistration(User user);
-        bool ValidateEmail(User user);
+        List<Tuple<string, string>> ValidateUser(User user);
         string GetHash(User user);
         User GetUserByUsername(string username);
         List<User> GetUsers();

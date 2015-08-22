@@ -84,30 +84,36 @@ namespace BlogApp.Web.Controllers
             //{
             //    ModelState.AddModelError(string.Empty, "All fields must be completed");
             //}
-
-            if (!userManager.ValidateEmail(user))
+            List<Tuple<string,string>> errors = userManager.ValidateUser(user);
+            if (errors.Count == 0)
             {
-                ModelState.AddModelError("Email", "Check email format. Eg: jack@hello.com");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return View(user);
-            }
-
-                
-            if (userManager.GetUserByUsername(user.Username) == null)
-            {
-                string hashedPassword = userManager.GetHash(user);
-                user.Password = hashedPassword;
-                userManager.AddUser(user);
-                return RedirectToAction("Login");
+                if (userManager.GetUserByUsername(user.Username) == null)
+                {
+                    string hashedPassword = userManager.GetHash(user);
+                    user.Password = hashedPassword;
+                    userManager.AddUser(user);
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    ModelState.AddModelError("Username", "Username already exists");
+                    return View(user);
+                }
             }
             else
             {
-                ModelState.AddModelError("Username", "Username already exists");
+                foreach (Tuple<string, string> t in errors)
+                {
+                    ModelState.AddModelError(t.Item1, t.Item2);
+                }
                 return View(user);
             }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(user);
+            //}
+
+
         }
 
         public ActionResult AddUser()
@@ -119,37 +125,37 @@ namespace BlogApp.Web.Controllers
         [Authorization(Role = "Administrator")]
         public async Task<ActionResult> AddUser(User user, string returnUrl)
         {
-            if (userManager.ValidateRegistration(user))
+
+
+            List<Tuple<string, string>> errors = userManager.ValidateUser(user);
+            if (errors.Count == 0)
             {
-                if (userManager.ValidateEmail(user))
+                if (userManager.GetUserByUsername(user.Username) == null)
                 {
-                    if (userManager.GetUserByUsername(user.Username) == null)
-                    {
-                        string hashedPassword = userManager.GetHash(user);
-                        user.Password = hashedPassword;
-                        ///ver como hacer checkbox con MVC 4 para ROLES
-                        //user.RoleId = 2;
-                        /***************************************/
-                        userManager.AddUser(user);
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Username already exists");
-                        return View(user);
-                    }
+
+                    string hashedPassword = userManager.GetHash(user);
+                    user.Password = hashedPassword;
+                    ///ver como hacer checkbox con MVC 4 para ROLES
+                    //user.RoleId = 2;
+                    /***************************************/
+                    userManager.AddUser(user);
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Check email format. Eg: jack@hello.com");
+                    ModelState.AddModelError(string.Empty, "Username already exists");
                     return View(user);
                 }
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "All fields must be completed");
+                foreach (Tuple<string, string> t in errors)
+                {
+                    ModelState.AddModelError(t.Item1, t.Item2);
+                }
                 return View(user);
             }
+
         }
 
         public ActionResult ModifyorDelete(string searchString, string returnUrl)

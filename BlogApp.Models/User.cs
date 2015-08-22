@@ -10,22 +10,18 @@ namespace BlogApp.Models
     {
         public int Id { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
-        [Required]
         public string Surname { get; set; }
 
         [StringLength(12, ErrorMessage="Maximun lenght is 12 characters")]
-        [RegularExpression(@"^[a-zA-Z][a-zA-Z0-9]*$", ErrorMessage = "Use letters and numbers only, please"), Required]
+        [RegularExpression(@"^[a-zA-Z][a-zA-Z0-9]*$", ErrorMessage = "Use letters and numbers only, please")]
         public string Username { get; set; }
 
-        [Required]
         public string Password { get; set; }
 
         public List<Role> Roles { get; set; }
 
-        [Required]
         public string Email { get; set; }
 
         public string PicturePath { get; set; }

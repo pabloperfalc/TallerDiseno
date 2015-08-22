@@ -75,17 +75,40 @@ namespace BlogApp.Manager.Implementations
             return true;
         }
 
-        public bool ValidateEmail(User user)
+        public List<Tuple<string, string>> ValidateUser(User user)
         {
+            List<Tuple<string, string>> errors = new List<Tuple<string, string>>();
+
+            if (user.Name == null || user.Name.Equals(String.Empty))
+            {
+                errors.Add(new Tuple<string, string>("Name", "The Name field is required"));
+            }
+
+            if (user.Surname == null || user.Surname.Equals(String.Empty))
+            {
+                errors.Add(new Tuple<string, string>("Surname", "The Surname field is required"));
+            }
+
+            if (user.Username == null || user.Username.Equals(String.Empty))
+            {
+                errors.Add(new Tuple<string, string>("Username", "The Username field is required"));
+            }
+
+            if (user.Password == null || user.Password.Equals(String.Empty))
+            {
+                errors.Add(new Tuple<string, string>("Password", "The Password field is required"));
+            }
+
             try
             {
                 var addr = new System.Net.Mail.MailAddress(user.Email);
-                return true;
             }
             catch
             {
-                return false;
+                errors.Add(new Tuple<string, string>("Email", "The Email field is required, Ej: jack@sparrow.com"));
             }
+
+            return errors;
         }
 
         public string GetHash(User user)
