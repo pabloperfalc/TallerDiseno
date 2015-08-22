@@ -298,6 +298,8 @@
     <Content Include="Views\User\ModifyorDelete.cshtml" />
     <Content Include="Views\User\Home.cshtml" />
     <Content Include="Views\User\List.cshtml" />
+    <Content Include="Views\Article\CreateArticle.cshtml" />
+    <Content Include="Views\Article\Import.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -318,7 +320,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Article\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Layout.cshtml" />

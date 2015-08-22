@@ -12,7 +12,11 @@ namespace BlogApp.DataAccess.Implementations
     {
         public void AddArticle(Article article) 
         {
-            
+            using (var db = new BlogContext())
+            {
+                db.Articles.Add(article);
+                db.SaveChanges();
+            }
         }
         public void ModifyArticle(Article article) 
         {

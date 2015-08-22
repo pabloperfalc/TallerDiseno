@@ -61,6 +61,7 @@ namespace BlogApp.Web.Controllers
             {
                 if (user.Username == null || user.Password == null)
                 {
+                    ModelState.AddModelError(string.Empty, "All fields are required");
                     return View();
                 }
                 else
@@ -84,26 +85,12 @@ namespace BlogApp.Web.Controllers
             return View("Register",viewModel);
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Edit(int userId)
-        {
-            var user = userManager.GetUserById(userId);
-            var viewModel = new RegisterUserViewModel
-                                {
-                                    User = user,
-                                    IsAdmin = user.Roles.Any(r => r.Description == "Administrator"),
-                                    IsBlogger = user.Roles.Any(r => r.Description == "Blogger"),
-                                    Title = "Edit",
-                                    EditMode = true,
-                                    AdminMode =Session["Login"] == null || ((User)Session["Login"]).Roles == null || !((User)Session["Login"]).Roles.Any(role => role.Description == "Administrator"),
-                                };
-            
-            return View("Register",viewModel);
-        }
-
         [HttpPost]
         public async Task<ActionResult> Register(RegisterUserViewModel userViewModel)
         {
+            userViewModel.Title = "Register";
+            userViewModel.EditMode = false;
+            userViewModel.AdminMode = false;
             //if (userManager.ValidateRegistration(user))
             //{
             //    ModelState.AddModelError(string.Empty, "All fields must be completed");
@@ -138,6 +125,25 @@ namespace BlogApp.Web.Controllers
             //}
         }
 
+        [HttpGet]
+        public async Task<ActionResult> Edit(int userId)
+        {
+            var user = userManager.GetUserById(userId);
+            var viewModel = new RegisterUserViewModel
+                                {
+                                    User = user,
+                                    IsAdmin = user.Roles.Any(r => r.Description == "Administrator"),
+                                    IsBlogger = user.Roles.Any(r => r.Description == "Blogger"),
+                                    Title = "Edit",
+                                    EditMode = true,
+                                    AdminMode =Session["Login"] == null || ((User)Session["Login"]).Roles == null || !((User)Session["Login"]).Roles.Any(role => role.Description == "Administrator"),
+                                };
+            
+            return View("Register",viewModel);
+        }
+
+        
+
         public ActionResult AddUser()
         {
             var viewModel = new RegisterUserViewModel
@@ -152,28 +158,26 @@ namespace BlogApp.Web.Controllers
 
         [HttpPost]
         [Authorization(Role = "Administrator")]
-        public async Task<ActionResult> AddUser(User user, string returnUrl)
+        public async Task<ActionResult> AddUser(RegisterUserViewModel userViewModel, string returnUrl)
         {
 
 
-            List<Tuple<string, string>> errors = userManager.ValidateUser(user);
+            List<Tuple<string, string>> errors = userManager.ValidateUser(userViewModel.User);
             if (errors.Count == 0)
             {
-                if (userManager.GetUserByUsername(user.Username) == null)
+                if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
                 {
 
-                    string hashedPassword = userManager.GetHash(user);
-                    user.Password = hashedPassword;
-                    ///ver como hacer checkbox con MVC 4 para ROLES
-                    //user.RoleId = 2;
-                    /***************************************/
-                    userManager.AddUser(user);
+                    string hashedPassword = userManager.GetHash(userViewModel.User);
+                    userViewModel.User.Password = hashedPassword;
+
+                    userManager.AddUser(userViewModel.User);
                     return RedirectToAction("Index");
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Username already exists");
-                    return View(user);
+                    return View(userViewModel.User);
                 }
             }
             else
@@ -182,9 +186,8 @@ namespace BlogApp.Web.Controllers
                 {
                     ModelState.AddModelError(t.Item1, t.Item2);
                 }
-                return View(user);
+                return View(userViewModel);
             }
-
         }
 
         public ActionResult ModifyorDelete(string searchString, string returnUrl)
