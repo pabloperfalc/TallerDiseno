@@ -38,7 +38,7 @@ namespace BlogApp.DataAccess.Implementations
         {
             using (var db = new BlogContext())
             {
-                var query = from u in db.Users
+                var query = from u in db.Users.Include(u=>u.Roles)
                             where u.IsActive == true
                             select u;
                 return query.ToList<User>();
@@ -51,6 +51,18 @@ namespace BlogApp.DataAccess.Implementations
             {
                 var query = from u in db.Users.Include(u => u.Roles)
                             where u.IsActive == true && u.Username.Trim() == username.Trim()
+                            select u;
+                return query.FirstOrDefault();
+            }
+        }
+
+
+        public User GetUserById(int userId)
+        {
+            using (var db = new BlogContext())
+            {
+                var query = from u in db.Users.Include(u => u.Roles)
+                            where u.IsActive == true && u.Id == userId
                             select u;
                 return query.FirstOrDefault();
             }

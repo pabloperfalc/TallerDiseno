@@ -15,6 +15,7 @@ namespace BlogApp.Web.RequiredInterfaces
         List<Tuple<string, string>> ValidateUser(User user);
         string GetHash(User user);
         User GetUserByUsername(string username);
+        User GetUserById(int userId);
         List<User> GetUsers();
     }
 }

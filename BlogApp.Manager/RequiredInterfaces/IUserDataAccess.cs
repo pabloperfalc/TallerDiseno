@@ -15,6 +15,6 @@ namespace BlogApp.Manager.RequiredInterfaces
         void RemoveUser(User user);
         List<User> GetUsers();
         User GetUserByUsername(string username);
-        
+        User GetUserById(int userId);
     }
 }

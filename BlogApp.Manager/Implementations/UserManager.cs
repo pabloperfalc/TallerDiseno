@@ -124,5 +124,11 @@ namespace BlogApp.Manager.Implementations
         {
             return userDataAccess.GetUsers();
         }
+
+
+        public User GetUserById(int userId)
+        {
+            return userDataAccess.GetUserById(userId);
+        }
     }
 }

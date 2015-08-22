@@ -1,4 +1,5 @@
 ﻿using BlogApp.Models;
+using BlogApp.Web.Models;
 using BlogApp.Web.RequiredInterfaces;
 using System;
 using System.Collections.Generic;
@@ -73,12 +74,35 @@ namespace BlogApp.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Register()
         {
-           // PopulateDropDownList();
-            return View();
+            var viewModel = new RegisterUserViewModel
+            {
+                Title = "Register",
+                EditMode = false,
+                AdminMode = false,
+            };
+            
+            return View("Register",viewModel);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(int userId)
+        {
+            var user = userManager.GetUserById(userId);
+            var viewModel = new RegisterUserViewModel
+                                {
+                                    User = user,
+                                    IsAdmin = user.Roles.Any(r => r.Description == "Administrator"),
+                                    IsBlogger = user.Roles.Any(r => r.Description == "Blogger"),
+                                    Title = "Edit",
+                                    EditMode = true,
+                                    AdminMode =Session["Login"] == null || ((User)Session["Login"]).Roles == null || !((User)Session["Login"]).Roles.Any(role => role.Description == "Administrator"),
+                                };
+            
+            return View("Register",viewModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register(User user)
+        public async Task<ActionResult> Register(RegisterUserViewModel userViewModel)
         {
             //if (userManager.ValidateRegistration(user))
             //{
@@ -113,12 +137,30 @@ namespace BlogApp.Web.Controllers
             //    return View(user);
             //}
 
-
+            if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
+            {
+                string hashedPassword = userManager.GetHash(userViewModel.User);
+                userViewModel.User.Password = hashedPassword;
+                userManager.AddUser(userViewModel.User);
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                ModelState.AddModelError("Username", "Username already exists");
+                return View(userViewModel);
+            }
         }
 
         public ActionResult AddUser()
-        { 
-            return View();
+        {
+            var viewModel = new RegisterUserViewModel
+                                {
+                                    Title= "Add New User",
+                                    EditMode  = false,
+                                    AdminMode = true,
+                                };
+            
+            return View("Register", viewModel);
         }
 
         [HttpPost]

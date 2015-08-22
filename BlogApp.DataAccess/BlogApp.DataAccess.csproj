@@ -77,6 +77,10 @@
     <Compile Include="Migrations\201508212232255_Multiple_Roles.Designer.cs">
       <DependentUpon>201508212232255_Multiple_Roles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508212359533_Multiple_Roles_users.cs" />
+    <Compile Include="Migrations\201508212359533_Multiple_Roles_users.Designer.cs">
+      <DependentUpon>201508212359533_Multiple_Roles_users.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -113,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508212232255_Multiple_Roles.resx">
       <DependentUpon>201508212232255_Multiple_Roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508212359533_Multiple_Roles_users.resx">
+      <DependentUpon>201508212359533_Multiple_Roles_users.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
