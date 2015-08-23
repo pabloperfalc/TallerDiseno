@@ -89,7 +89,7 @@ namespace BlogApp.Web.Controllers
             if (file !=null)
             {
                 string fileName = Path.GetFileName(file.FileName);
-                string path = Path.Combine(Server.MapPath("~/App_Data"), Path.GetFileName(file.FileName));
+                string path = Path.Combine(Server.MapPath("~/App_Data"), fileName);
                 file.SaveAs(path);
                 var doc = new XmlDocument();
                 doc.Load(Server.MapPath("~/App_Data/"+fileName));
