@@ -1,4 +1,4 @@
-﻿@model BlogApp.Models.User
+﻿@model BlogApp.Web.Models.RegisterUserViewModel
 
 @{
     ViewBag.Title = "AddUser";
@@ -9,36 +9,36 @@
     <div class="col-lg-5">
         @using (Html.BeginForm("AddUser","User", new { ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post))
         {
-            <h4>Add new user</h4>
+            <h4>@Model.Title</h4>
             <hr />
             <div class="form-group">
-                 @Html.LabelFor(m => m.Name)
-                 @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                 @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                 @Html.LabelFor(m => m.User.Name)
+                 @Html.TextBoxFor(m => m.User.Name, new { @class = "form-control" })
+                 @Html.ValidationMessageFor(m => m.User.Name, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                 @Html.LabelFor(m => m.Surname)
-                 @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
-                 @Html.ValidationMessageFor(m => m.Surname, "", new { @class = "text-danger" })
+                 @Html.LabelFor(m => m.User.Surname)
+                 @Html.TextBoxFor(m => m.User.Surname, new { @class = "form-control" })
+                 @Html.ValidationMessageFor(m => m.User.Surname, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                 @Html.LabelFor(m => m.Username)
-                 @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
-                 @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                 @Html.LabelFor(m => m.User.Username)
+                 @Html.TextBoxFor(m => m.User.Username, new { @class = "form-control" })
+                 @Html.ValidationMessageFor(m => m.User.Username, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                 @Html.LabelFor(m => m.Email)
-                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                 @Html.LabelFor(m => m.User.Email)
+                 @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control" })
+                 @Html.ValidationMessageFor(m => m.User.Email, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                 @Html.LabelFor(m => m.Password)
-                 @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
-                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                 @Html.LabelFor(m => m.User.Password)
+                 @Html.TextBoxFor(m => m.User.Password, new { @class = "form-control" })
+                 @Html.ValidationMessageFor(m => m.User.Password, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.PicturePath)
-                @Html.TextBoxFor(m => m.PicturePath, null, new { type="file", @class="input-file" })
+                @Html.LabelFor(m => m.User.PicturePath)
+                @Html.TextBoxFor(m => m.User.PicturePath, null, new { type="file", @class="input-file" })
             </div>
            @* 
            <div class="form-group">

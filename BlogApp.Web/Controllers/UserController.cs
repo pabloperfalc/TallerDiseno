@@ -3,6 +3,7 @@ using BlogApp.Web.Models;
 using BlogApp.Web.RequiredInterfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -26,7 +27,7 @@ namespace BlogApp.Web.Controllers
   
         //
         // GET: /User/
-        [Authorization(Role = "Administrator")]
+        [Authorization(Role = RoleType.Administrator)]
         public ActionResult Index()
         {
            
@@ -43,7 +44,7 @@ namespace BlogApp.Web.Controllers
             return View();
         }
 
-        [Authorization(Role = "Administrator")]
+        [Authorization(Role = RoleType.Administrator)]
         public ActionResult Test()
         {
             return View();
@@ -61,6 +62,7 @@ namespace BlogApp.Web.Controllers
             {
                 if (user.Username == null || user.Password == null)
                 {
+                    ModelState.AddModelError(string.Empty, "All fields are required");
                     return View();
                 }
                 else
@@ -84,6 +86,58 @@ namespace BlogApp.Web.Controllers
             return View("Register",viewModel);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Register(RegisterUserViewModel userViewModel, HttpPostedFileBase image)
+        {
+            List<Tuple<string, string>> errors = userManager.ValidateUser(userViewModel.User);
+            foreach (Tuple<string, string> t in errors)
+            {
+                ModelState.AddModelError(t.Item1, t.Item2);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(userViewModel);
+            }
+
+            if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
+            {
+                string hashedPassword = userManager.GetHash(userViewModel.User);
+                userViewModel.User.Password = hashedPassword;
+
+                var imageData = new byte[image.ContentLength];
+                image.InputStream.Read(imageData, 0, image.ContentLength);
+
+
+                string path = Path.Combine(Server.MapPath("~/ProfilePictures"), userViewModel.User.Username + Path.GetExtension(image.FileName));
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+                image.SaveAs(path);
+
+                userViewModel.User.PicturePath = "~/ProfilePictures/" + userViewModel.User.Username + Path.GetExtension(image.FileName);
+
+                List<RoleType> roles = new List<RoleType>();
+                if (userViewModel.IsAdmin)
+                {
+                    roles.Add(RoleType.Administrator);
+                }
+                if (userViewModel.IsAdmin)
+                {
+                    roles.Add(RoleType.Blogger);
+                }
+
+                userManager.AddUser(userViewModel.User, roles);
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                ModelState.AddModelError("Username", "Username already exists");
+                return View(userViewModel);
+            }
+        }
+
         [HttpGet]
         public async Task<ActionResult> Edit(int userId)
         {
@@ -91,52 +145,17 @@ namespace BlogApp.Web.Controllers
             var viewModel = new RegisterUserViewModel
                                 {
                                     User = user,
-                                    IsAdmin = user.Roles.Any(r => r.Description == "Administrator"),
-                                    IsBlogger = user.Roles.Any(r => r.Description == "Blogger"),
+                                    IsAdmin = user.Roles.Any(r => r.Type == RoleType.Administrator),
+                                    IsBlogger = user.Roles.Any(r => r.Type == RoleType.Blogger),
                                     Title = "Edit",
                                     EditMode = true,
-                                    AdminMode =Session["Login"] == null || ((User)Session["Login"]).Roles == null || !((User)Session["Login"]).Roles.Any(role => role.Description == "Administrator"),
+                                    AdminMode =Session["Login"] == null || ((User)Session["Login"]).Roles == null || !((User)Session["Login"]).Roles.Any(role => role.Type == RoleType.Administrator),
                                 };
             
             return View("Register",viewModel);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Register(RegisterUserViewModel userViewModel)
-        {
-            //if (userManager.ValidateRegistration(user))
-            //{
-            //    ModelState.AddModelError(string.Empty, "All fields must be completed");
-            //}
-            List<Tuple<string, string>> errors = userManager.ValidateUser(userViewModel.User);
-            if (errors.Count == 0)
-            {
-                if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
-                {
-                    string hashedPassword = userManager.GetHash(userViewModel.User);
-                    userViewModel.User.Password = hashedPassword;
-                    userManager.AddUser(userViewModel.User);
-                    return RedirectToAction("Login");
-                }
-                else
-                {
-                    ModelState.AddModelError("Username", "Username already exists");
-                    return View(userViewModel);
-                }
-            }
-            else
-            {
-                foreach (Tuple<string, string> t in errors)
-                {
-                    ModelState.AddModelError(t.Item1, t.Item2);
-                }
-                return View(userViewModel);
-            }
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(user);
-            //}
-        }
+        
 
         public ActionResult AddUser()
         {
@@ -151,29 +170,27 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpPost]
-        [Authorization(Role = "Administrator")]
-        public async Task<ActionResult> AddUser(User user, string returnUrl)
+        //[Authorization(Role = "Administrator")]
+        public async Task<ActionResult> AddUser(RegisterUserViewModel userViewModel, string returnUrl)
         {
 
 
-            List<Tuple<string, string>> errors = userManager.ValidateUser(user);
+            List<Tuple<string, string>> errors = userManager.ValidateUser(userViewModel.User);
             if (errors.Count == 0)
             {
-                if (userManager.GetUserByUsername(user.Username) == null)
+                if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
                 {
 
-                    string hashedPassword = userManager.GetHash(user);
-                    user.Password = hashedPassword;
-                    ///ver como hacer checkbox con MVC 4 para ROLES
-                    //user.RoleId = 2;
-                    /***************************************/
-                    userManager.AddUser(user);
+                    string hashedPassword = userManager.GetHash(userViewModel.User);
+                    userViewModel.User.Password = hashedPassword;
+
+                    userManager.AddUser(userViewModel.User, new List<RoleType>());
                     return RedirectToAction("Index");
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Username already exists");
-                    return View(user);
+                    return View(userViewModel.User);
                 }
             }
             else
@@ -182,9 +199,8 @@ namespace BlogApp.Web.Controllers
                 {
                     ModelState.AddModelError(t.Item1, t.Item2);
                 }
-                return View(user);
+                return View(userViewModel);
             }
-
         }
 
         public ActionResult ModifyorDelete(string searchString, string returnUrl)
@@ -218,5 +234,21 @@ namespace BlogApp.Web.Controllers
             return View(users);
         }
 
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Test(User user, HttpPostedFileBase image)
+        {
+            if (ModelState.IsValid)
+            {
+                if (image != null)
+                {
+                    var imageData = new byte[image.ContentLength];
+                    image.InputStream.Read(imageData, 0, image.ContentLength);
+                }
+                return RedirectToAction("Index");
+            }
+            else
+                return View(user);
+        }
     }
 }

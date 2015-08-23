@@ -53,3 +53,8 @@ a.text-danger:focus {
 .form-label{
     display:block;
 }
+
+.profile-picture {
+    width:100px;
+    margin:5px;
+}

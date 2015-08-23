@@ -20,14 +20,13 @@ namespace BlogApp.Manager.Implementations
             this.roleDataAccess = roleDataAccess;
         }
 
-        public void AddUser(User user)
+        public void AddUser(User user, List<RoleType> roles)
         {
             var existsUser = GetUserByUsername(user.Username);
             if (existsUser == null)
             {
                 user.IsActive = true;
-                var role = roleDataAccess.GetRoleByDescription("Blogger");
-                user.Roles = new List<Role>(){ role };
+                user.Roles = roles.Select(r => roleDataAccess.GetRoleByType(r)).ToList();
                 userDataAccess.AddUser(user);
             }
         }

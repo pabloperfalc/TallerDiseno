@@ -16,9 +16,9 @@ namespace BlogApp.DataAccess.Migrations
         protected override void Seed(BlogApp.DataAccess.BlogContext context)
         {
             context.Roles.AddOrUpdate(
-              r => r.Description,
-              new Role { Description = "Blogger" },
-              new Role { Description = "Administrator" }
+              r => r.Type,
+              new Role { Description = "Administrator", Type= RoleType.Administrator },
+              new Role { Description = "Blogger", Type= RoleType.Blogger }
             );
             
         }
