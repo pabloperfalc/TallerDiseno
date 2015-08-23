@@ -57,33 +57,9 @@
     <Compile Include="Implementations\LogDataAccess.cs" />
     <Compile Include="Implementations\RoleDataAccess.cs" />
     <Compile Include="Implementations\UserDataAccess.cs" />
-    <Compile Include="Migrations\201508152142290_InitialMigration.cs" />
-    <Compile Include="Migrations\201508152142290_InitialMigration.Designer.cs">
-      <DependentUpon>201508152142290_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508152152576_Change.cs" />
-    <Compile Include="Migrations\201508152152576_Change.Designer.cs">
-      <DependentUpon>201508152152576_Change.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508152317564_paswod.cs" />
-    <Compile Include="Migrations\201508152317564_paswod.Designer.cs">
-      <DependentUpon>201508152317564_paswod.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508162225460_changeSurname.cs" />
-    <Compile Include="Migrations\201508162225460_changeSurname.Designer.cs">
-      <DependentUpon>201508162225460_changeSurname.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508212232255_Multiple_Roles.cs" />
-    <Compile Include="Migrations\201508212232255_Multiple_Roles.Designer.cs">
-      <DependentUpon>201508212232255_Multiple_Roles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508212359533_Multiple_Roles_users.cs" />
-    <Compile Include="Migrations\201508212359533_Multiple_Roles_users.Designer.cs">
-      <DependentUpon>201508212359533_Multiple_Roles_users.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508221918479_Multiple_Roles1.cs" />
-    <Compile Include="Migrations\201508221918479_Multiple_Roles1.Designer.cs">
-      <DependentUpon>201508221918479_Multiple_Roles1.cs</DependentUpon>
+    <Compile Include="Migrations\201508231506073_Init.cs" />
+    <Compile Include="Migrations\201508231506073_Init.Designer.cs">
+      <DependentUpon>201508231506073_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -107,26 +83,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508152142290_InitialMigration.resx">
-      <DependentUpon>201508152142290_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508152152576_Change.resx">
-      <DependentUpon>201508152152576_Change.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508152317564_paswod.resx">
-      <DependentUpon>201508152317564_paswod.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508162225460_changeSurname.resx">
-      <DependentUpon>201508162225460_changeSurname.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508212232255_Multiple_Roles.resx">
-      <DependentUpon>201508212232255_Multiple_Roles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508212359533_Multiple_Roles_users.resx">
-      <DependentUpon>201508212359533_Multiple_Roles_users.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508221918479_Multiple_Roles1.resx">
-      <DependentUpon>201508221918479_Multiple_Roles1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508231506073_Init.resx">
+      <DependentUpon>201508231506073_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

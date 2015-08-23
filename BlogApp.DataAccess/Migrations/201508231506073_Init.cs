@@ -3,7 +3,7 @@ namespace BlogApp.DataAccess.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialMigration : DbMigration
+    public partial class Init : DbMigration
     {
         public override void Up()
         {
@@ -31,16 +31,14 @@ namespace BlogApp.DataAccess.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                        SureName = c.String(),
+                        Surname = c.String(),
                         Username = c.String(maxLength: 12),
-                        Passwod = c.String(),
-                        RoleId = c.Int(nullable: false),
+                        Password = c.String(),
                         Email = c.String(),
                         PicturePath = c.String(),
+                        IsActive = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
-                .Index(t => t.RoleId);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Roles",
@@ -48,6 +46,7 @@ namespace BlogApp.DataAccess.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Description = c.String(),
+                        Type = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -85,18 +84,34 @@ namespace BlogApp.DataAccess.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
+            CreateTable(
+                "dbo.RoleUsers",
+                c => new
+                    {
+                        Role_Id = c.Int(nullable: false),
+                        User_Id = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.Role_Id, t.User_Id })
+                .ForeignKey("dbo.Roles", t => t.Role_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.User_Id, cascadeDelete: true)
+                .Index(t => t.Role_Id)
+                .Index(t => t.User_Id);
+            
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.Comments", "Article_Id", "dbo.Articles");
             DropForeignKey("dbo.Comments", "Comment_Id", "dbo.Comments");
-            DropForeignKey("dbo.Users", "RoleId", "dbo.Roles");
+            DropForeignKey("dbo.RoleUsers", "User_Id", "dbo.Users");
+            DropForeignKey("dbo.RoleUsers", "Role_Id", "dbo.Roles");
             DropForeignKey("dbo.Articles", "AuthorId", "dbo.Users");
+            DropIndex("dbo.RoleUsers", new[] { "User_Id" });
+            DropIndex("dbo.RoleUsers", new[] { "Role_Id" });
             DropIndex("dbo.Comments", new[] { "Article_Id" });
             DropIndex("dbo.Comments", new[] { "Comment_Id" });
-            DropIndex("dbo.Users", new[] { "RoleId" });
             DropIndex("dbo.Articles", new[] { "AuthorId" });
+            DropTable("dbo.RoleUsers");
             DropTable("dbo.Videos");
             DropTable("dbo.LogEntries");
             DropTable("dbo.Comments");

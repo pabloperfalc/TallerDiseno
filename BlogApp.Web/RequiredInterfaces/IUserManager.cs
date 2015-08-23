@@ -7,7 +7,7 @@ namespace BlogApp.Web.RequiredInterfaces
 {
     public interface IUserManager
     {
-        void AddUser(User user);
+        void AddUser(User user, List<RoleType> roles);
         void ModifyUser(User user);
         void RemoveUser(User user);
         bool ValidateLogin(ref User user);

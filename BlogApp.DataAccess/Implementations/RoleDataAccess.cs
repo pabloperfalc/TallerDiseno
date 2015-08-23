@@ -35,13 +35,12 @@ namespace BlogApp.DataAccess.Implementations
             }
         }
 
-
-        public Role GetRoleByDescription(string description)
+        public Role GetRoleByType(RoleType type)
         {
             using (var db = new BlogContext())
             {
                 return (from p in db.Roles 
-                where p.Description == description 
+                where p.Type == type 
                 select p).FirstOrDefault();
             }
         }

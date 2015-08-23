@@ -12,5 +12,7 @@ namespace BlogApp.Models
         public string Description { get; set; }
 
         public List<User> Users { get; set; }
+
+        public RoleType Type { get; set; }
     }
 }

@@ -303,6 +303,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ProfilePictures\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
