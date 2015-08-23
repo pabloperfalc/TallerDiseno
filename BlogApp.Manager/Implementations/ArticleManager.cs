@@ -23,7 +23,6 @@ namespace BlogApp.Manager.Implementations
             return articleDataAccess.GetLatest(count);
         }
 
-<<<<<<< HEAD
         public List<Article> Cargar(XmlDocument xml)
         {
             List<Article> listaArticulos = new List<Article>();
@@ -43,7 +42,6 @@ namespace BlogApp.Manager.Implementations
             return listaArticulos;
         }
         
-=======
         public List<Tuple<string, string>> ValidateArticle(Article article)
         {
             List<Tuple<string, string>> errors = new List<Tuple<string, string>>();
@@ -75,6 +73,5 @@ namespace BlogApp.Manager.Implementations
         {
             throw new NotImplementedException();
         }
->>>>>>> 74bd980db486fc924ec24ae1d7b137715d06dd99
     }
 }
