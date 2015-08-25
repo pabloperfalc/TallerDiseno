@@ -11,15 +11,15 @@
             <p class="blog-post-meta">
                 @Html.DisplayFor(x => @Model.ModificationdDate) by @Html.ActionLink(@Model.Author.Name, "list", "article", new { userId = @Model.AuthorId }, null)
             </p>
-                @if (Model.Layout == ArticeLayout.Bottom || Model.Layout == ArticeLayout.NoPicture)
+                @if (Model.Layout == ArticleLayout.Bottom || Model.Layout == ArticleLayout.NoPicture)
                 {
                     @Html.Partial("_AlignBottom", Model);
                 }
-                @if (Model.Layout == ArticeLayout.Top)
+                @if (Model.Layout == ArticleLayout.Top)
                 {
                     @Html.Partial("_AlignTop", Model);
                 }
-                @if (Model.Layout == ArticeLayout.Left)
+                @if (Model.Layout == ArticleLayout.Left)
                 {
                     @Html.Partial("_AlignLeft", Model);
                 }
