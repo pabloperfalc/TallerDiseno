@@ -13,9 +13,12 @@ namespace BlogApp.Manager.Implementations
     {
 
         private readonly IArticleDataAccess articleDataAccess;
-        public ArticleManager(IArticleDataAccess articleDataAccess)
+        private readonly ICommentDataAccess commentDataAccess;
+
+        public ArticleManager(IArticleDataAccess articleDataAccess, ICommentDataAccess commentDataAccess)
         {
             this.articleDataAccess = articleDataAccess;
+            this.commentDataAccess = commentDataAccess;
         }
 
         public List<Article> GetLatest(int count)
@@ -72,6 +75,19 @@ namespace BlogApp.Manager.Implementations
         public void DeleteArticle(Article article)
         {
             throw new NotImplementedException();
+        }
+
+        public Article GetArticleById(int id)
+        {
+            var article = articleDataAccess.GetArticleById(id);
+            var comments = commentDataAccess.GetArticleComments(id);
+            article.Comments = new List<Comment>();
+            foreach (var comment in comments)
+            {
+                if(!comment.ParentId.HasValue)
+                    article.Comments.Add(commentDataAccess.RetriveComments(comment));  
+            }
+            return article;
         }
     }
 }

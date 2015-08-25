@@ -40,5 +40,19 @@ namespace BlogApp.DataAccess.Implementations
                 return articles.ToList();
             }
         }
+
+
+        public Article GetArticleById(int id)
+        {
+            using (var db = new BlogContext())
+            {
+                return (from a in db.Articles.Include(a => a.Author)
+                        select a)
+                        .OrderBy(a => a.ModificationdDate)
+                        .ThenBy(a => a.CreationDate)
+                        .FirstOrDefault();
+
+            }
+        }
     }
 }

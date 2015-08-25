@@ -1,0 +1,43 @@
+﻿@model BlogApp.Models.Article
+
+@{
+    ViewBag.Title = "ArticleView";
+}
+
+<div class="row">
+    <div class="col-md-8 blog-main">
+        <div class="blog-post">
+            <h2 class="blog-post-title">@Html.DisplayFor(x => x.Name)</h2>
+            <p class="blog-post-meta">
+                @Html.DisplayFor(x => @Model.ModificationdDate) by @Html.ActionLink(@Model.Author.Name, "list", "article", new { userId = @Model.AuthorId }, null)
+            </p>
+                @if (Model.Layout == ArticeLayout.Bottom || Model.Layout == ArticeLayout.NoPicture)
+                {
+                    @Html.Partial("_AlignBottom", Model);
+                }
+                @if (Model.Layout == ArticeLayout.Top)
+                {
+                    @Html.Partial("_AlignTop", Model);
+                }
+                @if (Model.Layout == ArticeLayout.Left)
+                {
+                    @Html.Partial("_AlignLeft", Model);
+                }
+            <hr />
+        </div>
+    </div>
+</div>
+<div class="row">
+    @foreach (var comment in Model.Comments)
+    {
+        @Html.Partial("_Comment", comment);
+    }
+</div>
+    @section scripts {
+        @Scripts.Render("~/bundles/dataTables")
+        <script type="text/javascript">
+            function Toggle(id) {
+                $(id).toggle("fast");
+            }
+        </script>
+    }

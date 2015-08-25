@@ -11,5 +11,9 @@ namespace BlogApp.Manager.RequiredInterfaces
     {
         void AddComment(Comment comment);
         void ModifyComment(Comment comment);
+
+        Comment RetriveComments(Comment comment);
+
+        List<Comment> GetArticleComments(int articleId);
     }
 }
