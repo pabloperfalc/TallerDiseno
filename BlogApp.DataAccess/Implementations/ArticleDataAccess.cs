@@ -47,6 +47,7 @@ namespace BlogApp.DataAccess.Implementations
             using (var db = new BlogContext())
             {
                 return (from a in db.Articles.Include(a => a.Author)
+                        where a.Id == id
                         select a)
                         .OrderBy(a => a.ModificationdDate)
                         .ThenBy(a => a.CreationDate)

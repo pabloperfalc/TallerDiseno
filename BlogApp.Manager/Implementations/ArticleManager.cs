@@ -82,7 +82,7 @@ namespace BlogApp.Manager.Implementations
                     byte[] imageByte = Convert.FromBase64String(nodo.SelectSingleNode("Foto").InnerText);
                     art.PicturePath = BytesImage(imageByte, art);
                     articleDataAccess.AddArticle(art);
-                }
+                } 
                 catch (Exception)
                 {
                     errors++;
@@ -113,7 +113,6 @@ namespace BlogApp.Manager.Implementations
 
             return errors;
         }
-
 
         public void AddArticle(Article article)
         {
