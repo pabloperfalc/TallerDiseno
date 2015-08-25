@@ -15,7 +15,7 @@ namespace BlogApp.Models
 
         public string Text { get; set; }
 
-        public ArticeLayout Layout { get; set; }
+        public ArticleLayout Layout { get; set; }
 
         public string PicturePath { get; set; }
 

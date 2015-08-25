@@ -3,6 +3,8 @@ using BlogApp.Models;
 using BlogApp.Web.RequiredInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -23,25 +25,76 @@ namespace BlogApp.Manager.Implementations
             return articleDataAccess.GetLatest(count);
         }
 
-        public List<Article> Cargar(XmlDocument xml)
+        //AGREGAR EL USUARIO CUANDO SE EMPIECE A AUTENTICAR
+        public int ImportArticles(XmlDocument xml)
         {
+            int errors = 0;
             List<Article> listaArticulos = new List<Article>();
             XmlNodeList articulos = xml.SelectNodes("//Articulos/Articulo");
+
             foreach (XmlNode nodo in articulos)
             {
-                Article art = new Article 
-                                    {
-                                        Name = nodo.SelectSingleNode("Nombre").InnerText,
-                                        Text = nodo.SelectSingleNode("Texto").InnerText,
-                                        //Type = nodo.SelectSingleNode("Tipo").InnerText,
-                                        PicturePath = nodo.SelectSingleNode("Foto").InnerText,
-                                        //Layout = nodo.SelectSingleNode("Plantilla").InnerText
-                                    };
-                listaArticulos.Add(art);
+                try
+                {
+                    Article art = new Article
+                                        {
+                                            Name = nodo.SelectSingleNode("Nombre").InnerText,
+                                            Text = nodo.SelectSingleNode("Texto").InnerText
+                                        };
+                    string upper = nodo.SelectSingleNode("Tipo").InnerText;
+                    upper = upper.ToUpper();
+                    switch (upper)
+                    {
+                        case "PUBLICO":
+                            art.Type = ArticleType.Public;
+                            break;
+                        case "PRIVADO":
+                            art.Type = ArticleType.Private;
+                            break;
+                        default: throw new Exception();
+                            break;
+                    }
+                    upper = nodo.SelectSingleNode("Plantilla").InnerText;
+                    upper = upper.ToUpper();
+                    switch (upper)
+                    {
+                        case "INFERIOR":
+                            art.Layout = ArticleLayout.Bottom;
+                            break;
+                        case "IZQUIERDA":
+                            art.Layout = ArticleLayout.Left;
+                            break;
+                        case "":
+                            art.Layout = ArticleLayout.NoPicture;
+                            break;
+                        case "SUPERIOR":
+                            art.Layout = ArticleLayout.Top;
+                            break;
+                        default: throw new Exception();
+                            break;
+                    }
+                    art.CreationDate = DateTime.Now;
+                    art.ModificationdDate = DateTime.Now;
+                    art.AuthorId = 1;
+                    byte[] imageByte = Convert.FromBase64String(nodo.SelectSingleNode("Foto").InnerText);
+                    art.PicturePath = BytesImage(imageByte, art);
+                    articleDataAccess.AddArticle(art);
+                }
+                catch (Exception)
+                {
+                    errors++;
+                }
             }
-            return listaArticulos;
+            return errors;
         }
-        
+
+        public string BytesImage(Byte[] ImgBytes, Article article)
+        {
+            string path = System.AppDomain.CurrentDomain.BaseDirectory + "ArticlePictures/" + article.Id +".jpg";
+            File.WriteAllBytes(path, ImgBytes);
+            return path;
+        }
+
         public List<Tuple<string, string>> ValidateArticle(Article article)
         {
             List<Tuple<string, string>> errors = new List<Tuple<string, string>>();

@@ -1,4 +1,4 @@
-﻿@model BlogApp.Models.Article
+﻿@model int
 
 @{
     ViewBag.Title = "Import";
@@ -13,14 +13,18 @@
         <div class="form-group">
             <div class="form-group">
                 @Html.Label("Select file");
-                <input type ="file" name="file" accept=".xml" />
+                <input type="file" name="file" accept=".xml" />
+                <hr />
                 <input type="submit" value="ImportArticle" class="btn btn-primary">
             </div>
-           
-                    
-           
+        </div>
+        if (@Model != null && @Model > 0)
+        {
+        <div class="alert alert-danger" role="alert">
+            <strong>Warning</strong> @Model articles could not be imported.
         </div>
         }
+    }
 </div>
 
 <div class=" row">

@@ -1,4 +1,4 @@
-﻿public enum ArticeLayout
+﻿public enum ArticleLayout
 { 
     NoPicture,
     Top,
