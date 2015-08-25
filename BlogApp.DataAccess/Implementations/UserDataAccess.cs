@@ -21,7 +21,20 @@ namespace BlogApp.DataAccess.Implementations
 
         public void ModifyUser(User user) 
         {
-            
+            using (var db = new BlogContext())
+            {
+                var query = (from u in db.Users.Include(u => u.Roles)
+                            where u.IsActive == true && u.Id == user.Id
+                            select u).FirstOrDefault<User>();
+                query.Email = user.Email;
+                query.Name = user.Name;
+                query.Surname = user.Surname;
+                query.Password = user.Password;
+                query.Username = user.Username;
+                query.PicturePath = user.PicturePath;
+                query.Roles = user.Roles;
+                db.SaveChanges();
+            }
         }
 
         public void RemoveUser(User user) 
@@ -34,6 +47,7 @@ namespace BlogApp.DataAccess.Implementations
 
             }
         }
+
         public List<User> GetUsers() 
         {
             using (var db = new BlogContext())
@@ -55,7 +69,6 @@ namespace BlogApp.DataAccess.Implementations
                 return query.FirstOrDefault();
             }
         }
-
 
         public User GetUserById(int userId)
         {
