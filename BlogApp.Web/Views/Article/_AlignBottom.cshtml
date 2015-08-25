@@ -1,0 +1,10 @@
+﻿@model BlogApp.Models.Article
+<div class="row" >
+    <p style="height:100px">@Model.Text</p>
+</div>
+@if (Model.PicturePath != null && !Model.PicturePath.Equals(string.Empty))
+{
+    <div class="row">
+        <img src="@Model.PicturePath" alt="picture" style="height:50px" />
+    </div>
+}

@@ -16,12 +16,13 @@ namespace BlogApp.Web.Controllers
     public class ArticleController : Controller
     {
 
-        private IArticleManager articleManager;
-        
+        private readonly IArticleManager articleManager;
+        private readonly ICommentManager commentManager;
 
-        public ArticleController(IArticleManager articleManager)
+        public ArticleController(IArticleManager articleManager, ICommentManager commentManager)
         {
             this.articleManager = articleManager;
+            this.commentManager = commentManager;
         }
 
         //
@@ -112,7 +113,25 @@ namespace BlogApp.Web.Controllers
             return View(0);
         }
 
+        public ActionResult ArticleView(int id)
+        {
+            var article = articleManager.GetArticleById(id);
+            return View(article);
+        }
 
+        [HttpPost]
+        public ActionResult AddComment(Comment comment)
+        {
+            var user = (User)Session["Login"]; 
+            
+            var newComment = new Comment();
+            newComment.Text = comment.Text;
+            newComment.ArticleId = comment.ArticleId;
+            newComment.ParentId = comment.ParentId;
+            commentManager.AddComment(newComment);
+
+            return RedirectToAction("ArticleView", new { id = comment.ArticleId });
+        }
 
     }
 }

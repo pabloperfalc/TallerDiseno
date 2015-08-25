@@ -12,5 +12,6 @@ namespace BlogApp.Manager.RequiredInterfaces
         void ModifyArticle(Article article);
         void RemoveArticle(Article article);
         List<Article> GetLatest(int count);
+        Article GetArticleById(int id);
     }
 }

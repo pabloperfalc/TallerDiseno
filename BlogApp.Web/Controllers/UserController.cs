@@ -92,13 +92,14 @@ namespace BlogApp.Web.Controllers
             List<Tuple<string, string>> errors = userManager.ValidateUser(userViewModel.User);
             foreach (Tuple<string, string> t in errors)
             {
-                ModelState.AddModelError(t.Item1, t.Item2);
+                ModelState.AddModelError("User." + t.Item1, t.Item2);
             }
 
             if (!ModelState.IsValid)
             {
                 return View(userViewModel);
             }
+
 
             if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
             {
@@ -149,7 +150,7 @@ namespace BlogApp.Web.Controllers
                                     IsBlogger = user.Roles.Any(r => r.Type == RoleType.Blogger),
                                     Title = "Edit",
                                     EditMode = true,
-                                    AdminMode =Session["Login"] == null || ((User)Session["Login"]).Roles == null || !((User)Session["Login"]).Roles.Any(role => role.Type == RoleType.Administrator),
+                                    AdminMode =Session["Login"] != null && ((User)Session["Login"]).Roles != null && ((User)Session["Login"]).Roles.Any(role => role.Type == RoleType.Administrator),
                                 };
             
             return View("Register",viewModel);

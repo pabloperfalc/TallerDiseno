@@ -63,6 +63,14 @@
     <Compile Include="Migrations\201508231506073_Init.Designer.cs">
       <DependentUpon>201508231506073_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508240225479_Add_articleincomments.cs" />
+    <Compile Include="Migrations\201508240225479_Add_articleincomments.Designer.cs">
+      <DependentUpon>201508240225479_Add_articleincomments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508240250256_add_parent-id.cs" />
+    <Compile Include="Migrations\201508240250256_add_parent-id.Designer.cs">
+      <DependentUpon>201508240250256_add_parent-id.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -87,6 +95,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201508231506073_Init.resx">
       <DependentUpon>201508231506073_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508240225479_Add_articleincomments.resx">
+      <DependentUpon>201508240225479_Add_articleincomments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508240250256_add_parent-id.resx">
+      <DependentUpon>201508240250256_add_parent-id.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

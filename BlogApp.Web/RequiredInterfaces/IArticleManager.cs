@@ -15,5 +15,6 @@ namespace BlogApp.Web.RequiredInterfaces
         void AddArticle(Article article);
         void UpdateArticle(Article article);
         void DeleteArticle(Article article);
+        Article GetArticleById(int id);
     }
 }
