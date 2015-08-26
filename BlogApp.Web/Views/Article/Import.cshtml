@@ -20,9 +20,15 @@
         </div>
         if (@Model != null && @Model > 0)
         {
-        <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger" role="alert">
             <strong>Warning</strong> @Model articles could not be imported.
-        </div>
+            </div>
+        }
+        if (@Model != null && @Model == 0)
+        {
+            <div class="alert alert-success" role="alert">
+            <strong>Success</strong> The importation was successful.
+            </div>
         }
     }
 </div>

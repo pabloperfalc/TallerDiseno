@@ -54,17 +54,19 @@ namespace BlogApp.Web.Controllers
                     image.InputStream.Read(imageData, 0, image.ContentLength);
 
                     article.AuthorId = 1;
-                    string path = Path.Combine(Server.MapPath("~/ArticlePictures"), Guid.NewGuid().ToString() + Path.GetExtension(image.FileName));
+                    string name = Guid.NewGuid().ToString();
+                    string path = Path.Combine(Server.MapPath("~/ArticlePictures"), name + Path.GetExtension(image.FileName));
                     if (System.IO.File.Exists(path))
                     {
                         System.IO.File.Delete(path);
                     }
                     image.SaveAs(path);
-
+                    
                     //var user = new User();
                     //user = (User)Session["Login"];
                     //article.Author = user;
                     //article.AuthorId = user.Id;
+                    article.PicturePath = "~/ArticlePictures/" + name + Path.GetExtension(image.FileName);
                     article.ModificationdDate = DateTime.Now;
                     article.CreationDate = DateTime.Now;
                     article.Layout = ViewBag.Layout;
@@ -94,7 +96,7 @@ namespace BlogApp.Web.Controllers
 
         public ActionResult Import()
         {
-            return View(0);
+            return View(-1);
         }
 
         [HttpPost]
@@ -116,6 +118,7 @@ namespace BlogApp.Web.Controllers
         public ActionResult ArticleView(int id)
         {
             var article = articleManager.GetArticleById(id);
+            
             return View(article);
         }
 

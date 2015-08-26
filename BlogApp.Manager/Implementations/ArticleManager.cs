@@ -93,8 +93,10 @@ namespace BlogApp.Manager.Implementations
 
         public string BytesImage(Byte[] ImgBytes, Article article)
         {
-            string path = System.AppDomain.CurrentDomain.BaseDirectory + "ArticlePictures/" + article.Id +".jpg";
+            string name = Guid.NewGuid().ToString() + ".jpg";
+            string path = System.AppDomain.CurrentDomain.BaseDirectory + "ArticlePictures/" + name;
             File.WriteAllBytes(path, ImgBytes);
+            path = "~/ArticlePictures/" + name;
             return path;
         }
 

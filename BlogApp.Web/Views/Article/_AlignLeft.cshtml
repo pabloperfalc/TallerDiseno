@@ -1,5 +1,5 @@
 ﻿@model BlogApp.Models.Article
 <div class="row" >
-    <img src="@Model.PicturePath" alt="picture" style="height:200px; margin:5px" align="left"/>
+    <img src="@Url.Content(@Model.PicturePath)" alt="picture" style="height:200px; margin:5px" align="left"/>
     <p style="height:150px">@Model.Text</p>
 </div>
