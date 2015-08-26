@@ -74,13 +74,19 @@ namespace BlogApp.Manager.Implementations
                             art.Layout = ArticleLayout.Top;
                             break;
                         default: throw new Exception();
-                            break;
                     }
                     art.CreationDate = DateTime.Now;
                     art.ModificationdDate = DateTime.Now;
                     art.AuthorId = 1;
-                    byte[] imageByte = Convert.FromBase64String(nodo.SelectSingleNode("Foto").InnerText);
-                    art.PicturePath = BytesImage(imageByte, art);
+                    if (!nodo.SelectSingleNode("Foto").InnerText.Equals(String.Empty))
+                    {
+                        byte[] imageByte = Convert.FromBase64String(nodo.SelectSingleNode("Foto").InnerText);
+                        art.PicturePath = BytesImage(imageByte, art);
+                    }
+                    else
+                    {
+                        art.PicturePath = String.Empty;
+                    }
                     articleDataAccess.AddArticle(art);
                 } 
                 catch (Exception)
@@ -91,12 +97,12 @@ namespace BlogApp.Manager.Implementations
             return errors;
         }
 
-        public string BytesImage(Byte[] ImgBytes, Article article)
+        private string BytesImage(Byte[] ImgBytes, Article article)
         {
             string name = Guid.NewGuid().ToString() + ".jpg";
             string path = System.AppDomain.CurrentDomain.BaseDirectory + "ArticlePictures/" + name;
             File.WriteAllBytes(path, ImgBytes);
-            path = "~/ArticlePictures/" + name;
+            path = "/ArticlePictures/" + name;
             return path;
         }
 
