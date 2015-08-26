@@ -12,6 +12,6 @@ namespace BlogApp.Models
         public DateTime Date {get;set;}
         public string Thread {get;set;}
         public string Level {get; set;}
-        public LogEntry LogType { get; set;}
+        public string LogType { get; set;}
     }
 }

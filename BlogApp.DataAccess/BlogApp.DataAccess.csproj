@@ -71,6 +71,14 @@
     <Compile Include="Migrations\201508240250256_add_parent-id.Designer.cs">
       <DependentUpon>201508240250256_add_parent-id.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508261928287_prueba.cs" />
+    <Compile Include="Migrations\201508261928287_prueba.Designer.cs">
+      <DependentUpon>201508261928287_prueba.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508262249563_otroTest.cs" />
+    <Compile Include="Migrations\201508262249563_otroTest.Designer.cs">
+      <DependentUpon>201508262249563_otroTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -105,6 +113,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508240250256_add_parent-id.resx">
       <DependentUpon>201508240250256_add_parent-id.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508261928287_prueba.resx">
+      <DependentUpon>201508261928287_prueba.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508262249563_otroTest.resx">
+      <DependentUpon>201508262249563_otroTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

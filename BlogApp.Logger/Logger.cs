@@ -16,16 +16,17 @@ namespace BlogApp.Logger
     public class Logger: BlogApp.ILogger.ILogger
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private readonly ILogDataAccess logDataAccess;
         public Logger(ILogDataAccess logDataAcces)
         {
-            
+            this.logDataAccess = logDataAcces; 
         }
-        public void Log(LogType logType)
+        public void Log(string message, LogType logType)
         {
-            GlobalContext.Properties["LogTyoe"] = (int)logType;
-
-            log.Info(null);
+            GlobalContext.Properties["LogType"] = logType.ToString();
+            
+            log.Info(message);
         }
 
         public List<string> GetLog(DateTime from, DateTime to)

@@ -1,0 +1,24 @@
+﻿@model BlogApp.Web.Models.ReportAdminViewModel
+
+@{
+    ViewBag.Title = "QueryRankingMostActive";
+}
+
+<h2>Ranking: Most active users</h2>
+<div class="row">
+    @using (Html.BeginForm("QueryRankingMostActive", "Report", FormMethod.Get))
+    {
+
+        @Html.LabelFor(x => x.FromDate)
+        @Html.TextBoxFor(x => x.FromDate, new { type = "date" })
+        @Html.ValidationMessageFor(x => x.FromDate)
+
+        @Html.LabelFor(x => x.ToDate)
+        @Html.TextBoxFor(x => x.ToDate, new { type = "date" })
+        @Html.ValidationMessageFor(x => x.ToDate)
+
+        <button type="submit">OK</button>
+    }
+</div>
+
+

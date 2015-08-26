@@ -1,6 +1,7 @@
 ﻿using BlogApp.Models;
 using BlogApp.Web.Models;
 using BlogApp.Web.RequiredInterfaces;
+using BlogApp.ILogger;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,13 +17,15 @@ namespace BlogApp.Web.Controllers
         private readonly IUserManager userManager;
         private readonly IRoleManager roleManager;
         private readonly IArticleManager articleManager;
+        private readonly ILogger.ILogger logger;
         
 
-        public UserController(IUserManager userManager, IRoleManager roleManager, IArticleManager articleManager)
+        public UserController(IUserManager userManager, IRoleManager roleManager, IArticleManager articleManager, ILogger.ILogger logger)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.articleManager = articleManager;
+            this.logger = logger;
         }
 
         [Authorization(Role = RoleType.Administrator)]
@@ -47,6 +50,8 @@ namespace BlogApp.Web.Controllers
         {
             if (userManager.ValidateLogin(ref user))
             {
+                //string message = LogType.Login.ToString();
+                logger.Log("", LogType.Login);
                 Session["Login"] = user;
                 return RedirectToAction("Home");
             }
