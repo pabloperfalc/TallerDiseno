@@ -159,12 +159,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="AuthorizationAttribute.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="InjectorResolver.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\RegisterUserViewModel.cs" />
+    <Compile Include="Models\ReportAdminViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequiredInterfaces\IArticleManager.cs" />
     <Compile Include="RequiredInterfaces\ICommentManager.cs" />
@@ -305,6 +307,8 @@
     <Content Include="Views\Article\_AlignTop.cshtml" />
     <Content Include="Views\Article\_AlignBottom.cshtml" />
     <Content Include="Views\Article\_AlignLeft.cshtml" />
+    <Content Include="Views\Report\QueryByMonthPerYear.cshtml" />
+    <Content Include="Views\Report\QueryRankingMostActive.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

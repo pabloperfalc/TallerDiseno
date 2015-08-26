@@ -1,0 +1,28 @@
+﻿@model BlogApp.Web.Models.ReportAdminViewModel
+
+@{
+    ViewBag.Title = "QueryByMonthPerYear";
+}
+
+<h2>Articles by month per year</h2>
+
+@using (Html.BeginForm("QueryByMonthPerYear", "Report", FormMethod.Get))
+{
+    @Html.LabelFor(x => x.Year)
+    @* @Html.DropDownListDropDownList("Year", ViewBag.Years, null)
+    *@
+    @Html.DropDownList("Year", Model.Years)
+
+    <div class="form-group">
+        <input type="submit" value="Confirm" class="btn btn-primary" />
+    </div>
+
+
+}
+
+@if (ViewBag.SelectedYear != null)
+{
+
+    <img src="@Url.Action("CreateChartByMonthPerYear", new { year = ViewBag.SelectedYear })" alt="chart" />
+
+}
