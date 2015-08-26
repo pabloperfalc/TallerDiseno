@@ -1,8 +1,11 @@
-﻿public enum ArticleLayout
-{ 
-    NoPicture,
-    Top,
-    Bottom,
-    Left
-  
+﻿namespace BlogApp.Models
+{
+    public enum ArticleLayout
+    {
+        NoPicture,
+        Top,
+        Bottom,
+        Left
+
+    }
 }

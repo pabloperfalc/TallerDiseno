@@ -9,5 +9,9 @@ namespace BlogApp.Models
     public class LogEntry
     {
         public int Id { get; set; }
+        public DateTime Date {get;set;}
+        public string Thread {get;set;}
+        public string Level {get; set;}
+        public LogEntry LogType { get; set;}
     }
 }

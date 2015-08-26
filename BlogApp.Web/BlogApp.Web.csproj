@@ -168,7 +168,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequiredInterfaces\IArticleManager.cs" />
     <Compile Include="RequiredInterfaces\ICommentManager.cs" />
-    <Compile Include="RequiredInterfaces\ILogManager.cs" />
     <Compile Include="RequiredInterfaces\IRoleManager.cs" />
     <Compile Include="RequiredInterfaces\IUserManager.cs" />
   </ItemGroup>
@@ -297,7 +296,6 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\LoginLayout.cshtml" />
     <Content Include="Views\User\AddUser.cshtml" />
-    <Content Include="Views\User\ModifyorDelete.cshtml" />
     <Content Include="Views\User\Home.cshtml" />
     <Content Include="Views\User\List.cshtml" />
     <Content Include="Views\Article\CreateArticle.cshtml" />

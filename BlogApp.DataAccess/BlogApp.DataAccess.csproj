@@ -75,6 +75,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BlogApp.Logger\BlogApp.Logger.csproj">
+      <Project>{fec18373-c961-4cc6-b6d7-40b3c22c9dc5}</Project>
+      <Name>BlogApp.Logger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BlogApp.Manager\BlogApp.Manager.csproj">
       <Project>{355d318b-0f58-49f4-a09a-bffaa3d5686d}</Project>
       <Name>BlogApp.Manager</Name>

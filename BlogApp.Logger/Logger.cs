@@ -1,4 +1,5 @@
-﻿using BlogApp.Utilities;
+﻿using BlogApp.ILogger;
+using BlogApp.Utilities;
 using log4net;
 using log4net.Appender;
 using System;
@@ -15,50 +16,23 @@ namespace BlogApp.Logger
     public class Logger: BlogApp.ILogger.ILogger
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        public void Log(string message)
+        private readonly ILogDataAccess logDataAccess;
+        public Logger(ILogDataAccess logDataAcces)
         {
-            GlobalContext.Properties["TestColumn"] = "6";
+            
+        }
+        public void Log(LogType logType)
+        {
+            GlobalContext.Properties["LogTyoe"] = (int)logType;
 
-            log.Info(message);
+            log.Info(null);
         }
 
         public List<string> GetLog(DateTime from, DateTime to)
         {
             string route = (log4net.LogManager.GetCurrentLoggers()[0].Logger.Repository.GetAppenders()[0] as FileAppender).File;
-            return ReadFile(route, from, to);
+            return null;
         }
 
-        private List<string> ReadFile(string route, DateTime from, DateTime to)
-        {
-            try
-            {
-                Stream stream = File.Open(route, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                StreamReader file = new StreamReader(stream);
-                string line = file.ReadLine();
-                List<string> result = new List<string>();
-                while (line != null)
-                {
-                    string[] strParams = line.Split(new string[] { " INFO " }, StringSplitOptions.None);
-                    DateTime date = DateTime.Parse(strParams[0].Substring(0, 19));
-                    string userinfo = strParams[1];
-                    if (from.Date <= date.Date && date.Date <= to.Date)
-                    {
-                        string strLog = date.ToString() + " " + userinfo;
-                        result.Add(strLog);
-                    }
-                    line = file.ReadLine();
-                }
-                return result;
-            }
-            catch (FileNotFoundException)
-            {
-                throw new BlogException("No se ha podido encontrar el archivo de log.");
-            }
-            catch (Exception)
-            {
-                throw new BlogException("Ha ocurrido un error al leer el archivo de log.");
-            }
-        }
     }
 }
