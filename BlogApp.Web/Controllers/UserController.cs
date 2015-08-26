@@ -17,6 +17,7 @@ namespace BlogApp.Web.Controllers
         private readonly IRoleManager roleManager;
         private readonly IArticleManager articleManager;
         
+
         public UserController(IUserManager userManager, IRoleManager roleManager, IArticleManager articleManager)
         {
             this.userManager = userManager;
@@ -24,19 +25,16 @@ namespace BlogApp.Web.Controllers
             this.articleManager = articleManager;
         }
 
-  
-        //
-        // GET: /User/
         [Authorization(Role = RoleType.Administrator)]
         public ActionResult Index()
         {
-           
+
             return View();
         }
 
         public ActionResult GetVideoPath(int index)
         {
-            return Json(new List<string>() { "http://localhost:51295/wildlife.wmv", "http://localhost:51295/wildlife.wmv", "http://localhost:51295/wildlife.wmv" },JsonRequestBehavior.AllowGet);
+            return Json(new List<string>() { "http://localhost:51295/wildlife.wmv", "http://localhost:51295/wildlife.wmv", "http://localhost:51295/wildlife.wmv" }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Login()
@@ -44,14 +42,8 @@ namespace BlogApp.Web.Controllers
             return View();
         }
 
-        [Authorization(Role = RoleType.Administrator)]
-        public ActionResult Test()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public async Task<ActionResult> Login(User user, string returnUrl)
+        public ActionResult Login(User user, string returnUrl)
         {
             if (userManager.ValidateLogin(ref user))
             {
@@ -74,20 +66,55 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Register()
+        public ActionResult Register()
         {
             var viewModel = new RegisterUserViewModel
             {
                 Title = "Register",
                 EditMode = false,
                 AdminMode = false,
+                PostAction = "Register",
             };
-            
-            return View("Register",viewModel);
+
+            return View("Register", viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult AddUser()
+        {
+            var viewModel = new RegisterUserViewModel
+            {
+                Title = "Add New User",
+                EditMode = false,
+                AdminMode = true,
+                PostAction = "AddEditUser",
+
+            };
+
+            return View("Register", viewModel);
+        }
+
+        public ActionResult Edit(int userId)
+        {
+            var user = userManager.GetUserById(userId);
+            var adminMode = Session["Login"] != null && ((User)Session["Login"]).Roles != null && ((User)Session["Login"]).Roles.Any(role => role.Type == RoleType.Administrator);
+            var postAction = adminMode ? "AddEditUser" : "Register";
+            var viewModel = new RegisterUserViewModel
+            {
+                User = user,
+                IsAdmin = user.Roles.Any(r => r.Type == RoleType.Administrator),
+                IsBlogger = user.Roles.Any(r => r.Type == RoleType.Blogger),
+                Title = "Edit",
+                EditMode = true,
+                AdminMode = adminMode,
+                PostAction = postAction
+            };
+
+            return View("Register", viewModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register(RegisterUserViewModel userViewModel, HttpPostedFileBase image)
+        public ActionResult Register(RegisterUserViewModel userViewModel, HttpPostedFileBase image)
         {
             List<Tuple<string, string>> errors = userManager.ValidateUser(userViewModel.User);
             foreach (Tuple<string, string> t in errors)
@@ -100,34 +127,12 @@ namespace BlogApp.Web.Controllers
                 return View(userViewModel);
             }
 
-
             if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
             {
-                string hashedPassword = userManager.GetHash(userViewModel.User);
-                userViewModel.User.Password = hashedPassword;
-
-                var imageData = new byte[image.ContentLength];
-                image.InputStream.Read(imageData, 0, image.ContentLength);
-
-
-                string path = Path.Combine(Server.MapPath("~/ProfilePictures"), userViewModel.User.Username + Path.GetExtension(image.FileName));
-                if (System.IO.File.Exists(path))
-                {
-                    System.IO.File.Delete(path);
-                }
-                image.SaveAs(path);
-
-                userViewModel.User.PicturePath = "~/ProfilePictures/" + userViewModel.User.Username + Path.GetExtension(image.FileName);
-
+                AddingUserFields(userViewModel, image);
                 List<RoleType> roles = new List<RoleType>();
-                if (userViewModel.IsAdmin)
-                {
-                    roles.Add(RoleType.Administrator);
-                }
-                if (userViewModel.IsAdmin)
-                {
-                    roles.Add(RoleType.Blogger);
-                }
+
+                roles.Add(RoleType.Blogger);
 
                 userManager.AddUser(userViewModel.User, roles);
                 return RedirectToAction("Login");
@@ -139,40 +144,9 @@ namespace BlogApp.Web.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Edit(int userId)
-        {
-            var user = userManager.GetUserById(userId);
-            var viewModel = new RegisterUserViewModel
-                                {
-                                    User = user,
-                                    IsAdmin = user.Roles.Any(r => r.Type == RoleType.Administrator),
-                                    IsBlogger = user.Roles.Any(r => r.Type == RoleType.Blogger),
-                                    Title = "Edit",
-                                    EditMode = true,
-                                    AdminMode =Session["Login"] != null && ((User)Session["Login"]).Roles != null && ((User)Session["Login"]).Roles.Any(role => role.Type == RoleType.Administrator),
-                                };
-            
-            return View("Register",viewModel);
-        }
-
-        
-
-        public ActionResult AddUser()
-        {
-            var viewModel = new RegisterUserViewModel
-                                {
-                                    Title= "Add New User",
-                                    EditMode  = false,
-                                    AdminMode = true,
-                                };
-            
-            return View("Register", viewModel);
-        }
-
         [HttpPost]
         //[Authorization(Role = "Administrator")]
-        public async Task<ActionResult> AddUser(RegisterUserViewModel userViewModel, string returnUrl)
+        public ActionResult AddEditUser(RegisterUserViewModel userViewModel, HttpPostedFileBase image)
         {
 
 
@@ -182,8 +156,17 @@ namespace BlogApp.Web.Controllers
                 if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
                 {
 
-                    string hashedPassword = userManager.GetHash(userViewModel.User);
-                    userViewModel.User.Password = hashedPassword;
+                    AddingUserFields(userViewModel, image);
+
+                    List<RoleType> roles = new List<RoleType>();
+                    if (userViewModel.IsAdmin)
+                    {
+                        roles.Add(RoleType.Administrator);
+                    }
+                    if (userViewModel.IsAdmin)
+                    {
+                        roles.Add(RoleType.Blogger);
+                    }
 
                     userManager.AddUser(userViewModel.User, new List<RoleType>());
                     return RedirectToAction("Index");
@@ -204,26 +187,6 @@ namespace BlogApp.Web.Controllers
             }
         }
 
-        public ActionResult ModifyorDelete(string searchString, string returnUrl)
-        {
-            if (!String.IsNullOrEmpty(searchString))
-            {
-               User foundUser = userManager.GetUserByUsername(searchString.Trim());
-               if (foundUser != null)
-               {
-                   return View(foundUser);
-               }
-               else
-               {
-                   ModelState.AddModelError(string.Empty, "No user found by: "+ searchString);
-                   return View(); 
-               }
-            }
-         
-            return View();
-        }
-
-        
         public ActionResult Home()
         {
             return View(articleManager.GetLatest(10));
@@ -235,21 +198,27 @@ namespace BlogApp.Web.Controllers
             return View(users);
         }
 
-
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Test(User user, HttpPostedFileBase image)
+        private void AddingUserFields(RegisterUserViewModel userViewModel, HttpPostedFileBase image)
         {
-            if (ModelState.IsValid)
+            string hashedPassword = userManager.GetHash(userViewModel.User);
+            userViewModel.User.Password = hashedPassword;
+
+            if (image != null)
             {
-                if (image != null)
+                var imageData = new byte[image.ContentLength];
+                image.InputStream.Read(imageData, 0, image.ContentLength);
+
+
+                string path = Path.Combine(Server.MapPath("~/ProfilePictures"), userViewModel.User.Username + Path.GetExtension(image.FileName));
+                if (System.IO.File.Exists(path))
                 {
-                    var imageData = new byte[image.ContentLength];
-                    image.InputStream.Read(imageData, 0, image.ContentLength);
+                    System.IO.File.Delete(path);
                 }
-                return RedirectToAction("Index");
+                image.SaveAs(path);
+
+                userViewModel.User.PicturePath = "~/ProfilePictures/" + userViewModel.User.Username + Path.GetExtension(image.FileName);
             }
-            else
-                return View(user);
         }
+
     }
 }

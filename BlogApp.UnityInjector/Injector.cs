@@ -1,4 +1,6 @@
 ﻿using BlogApp.DataAccess.Implementations;
+using BlogApp.ILogger;
+using BlogApp.Logger;
 using BlogApp.Manager.Implementations;
 using BlogApp.Manager.RequiredInterfaces;
 using BlogApp.UnityInjector;
@@ -31,7 +33,8 @@ namespace BlogApp.UnityInjector
             container.RegisterType<IArticleDataAccess, ArticleDataAccess>();
             container.RegisterType<ICommentDataAccess, CommentDataAccess>();
             container.RegisterType<IRoleDataAccess, RoleDataAccess>();
-            container.RegisterType<BlogApp.ILogger.ILogger, BlogApp.Logger.Logger>(); 
+            container.RegisterType<BlogApp.ILogger.ILogger, BlogApp.Logger.Logger>();
+            container.RegisterType<ILogDataAccess, LogDataAccess>();
 
             InjectorResolver.SetResolver(container);
         }

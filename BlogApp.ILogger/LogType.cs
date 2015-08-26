@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlogApp.ILogger
 {
-    enum LogType
+    public enum LogType
     {
         Login,
         Search
