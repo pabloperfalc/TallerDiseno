@@ -30,7 +30,20 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        <div class="row">
+            <div class="col-lg-10">
+                @RenderBody()
+            </div>
+            <div class="col-lg-2">
+                @Video.Silverlight(
+                path: @Url.Content("/ClientBin/BlogApp.VideoPlayer.xap"),
+                width: "300",
+                height: "300",
+                bgColor: "red",
+                autoUpgrade: true)
+            </div>
+        </div>
+            
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>

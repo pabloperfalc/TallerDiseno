@@ -3,4 +3,12 @@
     padding-bottom: 20px;
 }
 
+.ellipsis { 
+  display: block; 
+  white-space: nowrap; 
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis; 
+  overflow: hidden;
+}
 
