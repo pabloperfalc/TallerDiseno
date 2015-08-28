@@ -22,9 +22,10 @@ namespace BlogApp.Logger
         {
             this.logDataAccess = logDataAcces; 
         }
-        public void Log(string message, LogType logType)
+        public void Log(string message, LogType logType, int userId)
         {
             GlobalContext.Properties["LogType"] = logType.ToString();
+            GlobalContext.Properties["UserId"] = userId.ToString();
             
             log.Info(message);
         }

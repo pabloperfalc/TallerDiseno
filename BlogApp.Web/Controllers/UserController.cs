@@ -51,7 +51,7 @@ namespace BlogApp.Web.Controllers
             if (userManager.ValidateLogin(ref user))
             {
                 //string message = LogType.Login.ToString();
-                logger.Log("", LogType.Login);
+                logger.Log("", LogType.Login, user.Id);
                 Session["Login"] = user;
                 return RedirectToAction("Home");
             }

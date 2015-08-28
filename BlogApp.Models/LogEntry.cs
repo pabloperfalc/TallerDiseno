@@ -13,5 +13,6 @@ namespace BlogApp.Models
         public string Thread {get;set;}
         public string Level {get; set;}
         public string LogType { get; set;}
+        public string UserId { get; set; }
     }
 }

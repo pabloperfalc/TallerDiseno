@@ -13,14 +13,19 @@ namespace BlogApp.Web.Controllers
     public class ReportController : Controller
     {
         private readonly IUserManager userManager;
+        private readonly IArticleManager articleManager;
+
+        public ReportController(IArticleManager articleManager, IUserManager userManager)
+        {
+            this.userManager = userManager;
+            this.articleManager = articleManager;
+        }
 
         [HttpGet]
         public ActionResult Reports()
         {
             return View();
         }
-
-
 
         [HttpGet]
         public ActionResult QueryRankingMostActive(DateTime? fromDate, DateTime? toDate)
@@ -40,9 +45,12 @@ namespace BlogApp.Web.Controllers
         [HttpGet]
         public ActionResult CreateChartByMonthPerYear(int year)
         {
-            new Chart(width: 500, height: 300).AddTitle(year.ToString()).AddSeries(chartType: "column", xValue: new[] { "Janury", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }, yValues: new[] { "10", "20", "30", "30", "30", "30", "30", "30", "30", "30", "30", "30" }).Write("bmp");
-            return null;
+            List<int> lstArticlesCount = articleManager.GetArticlesPerMonth(year);
+           
 
+            new Chart(width: 900, height: 300).AddTitle(year.ToString()).AddSeries(chartType: "column", xValue: new[] { "Janury", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }, yValues: lstArticlesCount).Write("bmp");
+            return null;
+            //"10", "20", "30", "30", "30", "30", "30", "30", "30", "30", "30", "30"
         }
 
         [HttpGet]

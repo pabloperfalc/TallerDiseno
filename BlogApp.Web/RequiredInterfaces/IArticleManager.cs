@@ -16,5 +16,7 @@ namespace BlogApp.Web.RequiredInterfaces
         void UpdateArticle(Article article);
         void DeleteArticle(Article article);
         Article GetArticleById(int id);
+        List<int> GetArticlesPerMonth(int year);
+
     }
 }

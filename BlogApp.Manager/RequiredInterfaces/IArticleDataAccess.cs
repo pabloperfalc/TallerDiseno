@@ -13,5 +13,6 @@ namespace BlogApp.Manager.RequiredInterfaces
         void RemoveArticle(Article article);
         List<Article> GetLatest(int count);
         Article GetArticleById(int id);
+        List<int> GetArticlesPerMonth(int year);
     }
 }

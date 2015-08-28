@@ -55,5 +55,59 @@ namespace BlogApp.DataAccess.Implementations
 
             }
         }
+
+        //public Tuple<int,(Tuple<int,int>,Tuple<int,int>,Tuple<int,int>,Tuple<int,int>,Tuple<int,int>,Tuple<int,int>,Tuple<int,int>,Tuple<int,int>,Tuple<int,int>,Tuple<int,int>,Tuple<int,int>,Tuple<int,int>)> GetArticlesByMonthPerYear(int year){
+        
+        public List<int> GetArticlesPerMonth(int year)
+        {
+            using (var db = new BlogContext())
+            {
+         
+                var allMonths = Enumerable.Range(1, 12);
+
+                var query = db.Articles.Where(a => a.CreationDate.Year == year)
+                                        .GroupBy((o => new
+                                        {
+                                            Month = o.CreationDate.Month,
+                                            Year = o.CreationDate.Year
+                                        }))
+                                        .Select(g => new
+                                        {
+                                            Month = g.Key.Month,
+                                            Year = g.Key.Year,
+                                            Total = g.Count()
+                                        })
+                                        .OrderByDescending(a => a.Year)
+                                        .ThenByDescending(a => a.Month)
+                                        .ToList();
+                    
+                    
+                    /*(from a in db.Articles
+                             where a.CreationDate.Year == year)
+                             .GroupBy((o => new 
+                                        { 
+                                            Month = o.OrderDate.Month, 
+                                            Year = o.OrderDate.Year 
+                                        })
+                            .select()
+
+                             group a by new  a.CreationDate into p
+                              select new {Date = p.Key , Quantity = p.Count()}).ToList();*/
+                
+               var value = (from months in allMonths
+                            join date in query on months equals date.Month into d
+                            from date in d.DefaultIfEmpty()
+                                select new
+                                {
+                                    Date = months,
+                                    Count = ( date == null) ? 0 : date.Total
+                                })
+                                .OrderBy(a=>a.Date)
+                                .ToList().Select(p=>p.Count).ToList();
+                
+               
+                return value;
+            }
+        }
     }
 }

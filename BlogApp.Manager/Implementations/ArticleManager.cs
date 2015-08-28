@@ -149,5 +149,10 @@ namespace BlogApp.Manager.Implementations
             }
             return article;
         }
+
+        public List<int> GetArticlesPerMonth(int year) 
+        {
+            return articleDataAccess.GetArticlesPerMonth(year);
+        }
     }
 }
