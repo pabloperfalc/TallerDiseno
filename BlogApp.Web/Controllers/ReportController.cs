@@ -47,8 +47,21 @@ namespace BlogApp.Web.Controllers
         {
             List<int> lstArticlesCount = articleManager.GetArticlesPerMonth(year);
            
+            string temp = @"<Chart BackColor=""LightGray"" ForeColor=""LightBlue"">
+                      <ChartAreas>
+                        <ChartArea Name=""Default"" _Template_=""All"">
+                          <AxisY>
+                            <LabelStyle Font=""Verdana, 15px"" />
+                          </AxisY>
+                          <AxisX LineColor=""64, 64, 64, 64"" Interval=""1"">
+                            <LabelStyle Font=""Verdana, 14px"" />
+                          </AxisX>
+                        </ChartArea>
+                      </ChartAreas>
+                    </Chart>";
 
-            new Chart(width: 900, height: 300).AddTitle(year.ToString()).AddSeries(chartType: "column", xValue: new[] { "Janury", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }, yValues: lstArticlesCount).Write("bmp");
+            Chart chartPerMonth = new Chart(width: 1000, height: 500, theme: temp).AddTitle(year.ToString()).AddSeries(chartType: "column",xValue: new[] { "Janury", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" },yValues: lstArticlesCount).Write("bmp");
+           
             return null;
             //"10", "20", "30", "30", "30", "30", "30", "30", "30", "30", "30", "30"
         }
