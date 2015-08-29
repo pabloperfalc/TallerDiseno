@@ -21,7 +21,18 @@ namespace BlogApp.DataAccess.Implementations
         
         public void ModifyArticle(Article article)
         {
-           
+            using (var db = new BlogContext())
+            {
+                var query = (from a in db.Articles
+                             where a.Id == article.Id
+                             select a).First();
+                query.Layout = article.Layout;
+                query.ModificationdDate = DateTime.Now;
+                query.Name = article.Name;
+                query.Text = article.Text;
+                query.Type = article.Type;
+                db.SaveChanges();
+            }
         }
 
         public List<Article> GetLatest(int count)
