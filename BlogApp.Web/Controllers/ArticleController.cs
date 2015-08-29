@@ -138,5 +138,13 @@ namespace BlogApp.Web.Controllers
             return RedirectToAction("ArticleView", new { id = comment.ArticleId });
         }
 
+        [HttpGet]
+        [Authorization(Role = RoleType.Blogger)]
+        public ActionResult List(int id)
+        {
+            List<Article> lstPublicArticles = articleManager.GetPublicArticles(id);
+            return View(lstPublicArticles);
+
+        }
     }
 }

@@ -157,5 +157,10 @@ namespace BlogApp.Manager.Implementations
         {
             return articleDataAccess.GetArticlesPerMonth(year);
         }
+
+        public List<Article> GetPublicArticles(int id)
+        {
+            return articleDataAccess.GetPublicArticles(id);
+        }
     }
 }
