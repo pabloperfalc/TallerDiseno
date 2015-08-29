@@ -32,11 +32,10 @@ namespace BlogApp.VideoPlayer
         {
             player.Stop();
             index++;
-            if(index >= videoList.Count )
+            if (index >= videoList.Count)
             {
                 index = 0;
             }
-
             player.Source = new Uri(videoList[index]);
             player.Play();
         }
@@ -48,16 +47,6 @@ namespace BlogApp.VideoPlayer
             player.Source = new Uri(videoList[0]);
             player.Play();
         }
-
-        //void downloader_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
-        //{
-
-        //    if (e.Error == null)
-        //    {
-        //        player.Source = new Uri(e.Result);
-        //        player.Play();
-        //    }
-        //}
 
         private void player_MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
