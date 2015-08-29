@@ -35,11 +35,6 @@ namespace BlogApp.Web.Controllers
             return View();
         }
 
-        public ActionResult GetVideoPath(int index)
-        {
-            return Json(new List<string>() { "http://localhost:51295/wildlife.wmv", "http://localhost:51295/wildlife.wmv", "http://localhost:51295/wildlife.wmv" }, JsonRequestBehavior.AllowGet);
-        }
-
         public ActionResult Login()
         {
             return View();

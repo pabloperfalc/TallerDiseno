@@ -21,7 +21,7 @@ namespace BlogApp.VideoPlayer
         {
             InitializeComponent();
 
-            Uri serviceUri = new Uri("/user/getvideoPath?index=1", UriKind.Relative);
+            Uri serviceUri = new Uri("/video/getVideoPaths", UriKind.Relative);
             WebClient downloader = new WebClient();
             
             downloader.OpenReadCompleted += downloader_OpenReadCompleted;
