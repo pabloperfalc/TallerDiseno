@@ -1,0 +1,55 @@
+﻿@model BlogApp.Web.Models.ReportAdminViewModel
+
+@{
+    ViewBag.Title = "QueryLoginSearch";
+}
+
+<h2>Log and Searchs</h2>
+<div class="row">
+    @using (Html.BeginForm("QueryLoginSearch", "Report", FormMethod.Get))
+    {
+
+        @Html.LabelFor(x => x.FromDate)
+        @Html.TextBoxFor(x => x.FromDate, new { type = "date" })
+        @Html.ValidationMessageFor(x => x.FromDate)
+
+        @Html.LabelFor(x => x.ToDate)
+        @Html.TextBoxFor(x => x.ToDate, new { type = "date" })
+        @Html.ValidationMessageFor(x => x.ToDate)
+
+        <button type="submit">OK</button>
+    }
+</div>
+@if (Model != null)
+{
+    <div class="row">
+        <table class="table table-hover" id="queryTable">
+            <thead>
+                <tr>
+                    <th>UserUsername</th>
+                    <th>Date</th>
+                    <th>LogType</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var log in Model.LogEntries)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(u => log.UserUsername)</td>
+                        <td>@Html.DisplayFor(u => log.Date)</td>
+                        <td>@Html.DisplayFor(u => log.LogType)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/dataTables")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#queryTable').DataTable();
+        });
+    </script>
+}
