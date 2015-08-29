@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlogApp.Web.RequiredInterfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,13 @@ namespace BlogApp.Web.Controllers
 {
     public class VideoController : Controller
     {
+        private readonly IVideoManager videoManager;
+
+        public VideoController(IVideoManager videoManager)
+        {
+            this.videoManager = videoManager;
+        }
+
         public ActionResult GetVideoPaths()
         {
             return Json(new List<string>() 

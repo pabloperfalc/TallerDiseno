@@ -35,6 +35,8 @@ namespace BlogApp.UnityInjector
             container.RegisterType<IRoleDataAccess, RoleDataAccess>();
             container.RegisterType<BlogApp.ILogger.ILogger, BlogApp.Logger.Logger>();
             container.RegisterType<ILogDataAccess, LogDataAccess>();
+            container.RegisterType<IVideoManager, VideoManager>();
+            container.RegisterType<IVideoDataAccess, VideoDataAccess>();
 
             InjectorResolver.SetResolver(container);
         }
