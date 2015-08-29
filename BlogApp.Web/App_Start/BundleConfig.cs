@@ -9,7 +9,7 @@ namespace WebApplication1
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js","~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/dataTables").Include(
             "~/Scripts/DataTables/jquery.dataTables.js"));
@@ -22,10 +22,13 @@ namespace WebApplication1
             //bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
             //            "~/Scripts/modernizr-*"));
 
+            bundles.Add(new StyleBundle("~/Content/themes/base/jqueryui")
+                        .Include("~/Content/themes/base/all.css"));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
                         //,"~/Scripts/respond.js"));
-
+            
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css", "~/Content/DataTables/jquery.dataTables.min.css"));
