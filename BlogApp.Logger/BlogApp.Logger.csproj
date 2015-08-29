@@ -81,14 +81,6 @@
       <Project>{fb5c8245-1fac-4c44-9720-4082521db839}</Project>
       <Name>BlogApp.ILogger</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BlogApp.Models\BlogApp.Models.csproj">
-      <Project>{445964e7-0321-4075-9883-31930aac6788}</Project>
-      <Name>BlogApp.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BlogApp.Utilities\BlogApp.Utilities.csproj">
-      <Project>{a490028a-6970-4f13-994c-d25e1db5cb07}</Project>
-      <Name>BlogApp.Utilities</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201508291436506_d.resx">
