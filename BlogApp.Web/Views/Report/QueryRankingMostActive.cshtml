@@ -10,11 +10,11 @@
     {
 
         @Html.LabelFor(x => x.FromDate)
-        @Html.TextBoxFor(x => x.FromDate, new { type = "date" })
+        @Html.TextBoxFor(x => x.FromDate, new { Id = "datepickerFrom" });
         @Html.ValidationMessageFor(x => x.FromDate)
 
         @Html.LabelFor(x => x.ToDate)
-        @Html.TextBoxFor(x => x.ToDate, new { type = "date" })
+        @Html.TextBoxFor(x => x.ToDate, new {Id = "datepickerTo" })
         @Html.ValidationMessageFor(x => x.ToDate)
 
         <button type="submit">OK</button>
@@ -49,6 +49,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#queryTable').DataTable();
+            $('#datepickerFrom').datepicker();
+            $('#datepickerTo').datepicker();
+
         });
     </script>
 }

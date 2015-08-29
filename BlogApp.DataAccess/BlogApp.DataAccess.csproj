@@ -58,6 +58,7 @@
     <Compile Include="Implementations\CommentDataAccess.cs" />
     <Compile Include="Implementations\RoleDataAccess.cs" />
     <Compile Include="Implementations\UserDataAccess.cs" />
+    <Compile Include="Implementations\VideoDataAccess.cs" />
     <Compile Include="Migrations\201508231506073_Init.cs" />
     <Compile Include="Migrations\201508231506073_Init.Designer.cs">
       <DependentUpon>201508231506073_Init.cs</DependentUpon>
