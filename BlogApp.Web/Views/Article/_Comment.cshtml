@@ -1,18 +1,22 @@
 ﻿@model BlogApp.Models.Comment
-<div class="col-lg-12" style="margin-left:15px">
+<div class="col-lg-12" style="margin-left:30px">
     <div class="row">
-        @Html.DisplayFor(m => m.Text)
+        <div class="well">
+            <p>@Html.DisplayFor(m => m.Text)</p>
+        </div>
+       
         <a onclick="Toggle('#comment-@Model.Id')">Comment</a>
         <a onclick="Toggle('#children-@Model.Id')">Show more</a>
     </div>
     <div class="row" id="comment-@Model.Id" style="display:none">
         @using (Html.BeginForm("AddComment", "Article", FormMethod.Post))
         {
-            @Html.TextArea("Text", "", null);
-            @Html.Hidden("ParentId", Model.Id);
-            @Html.HiddenFor(m => m.ArticleId);
-
-            <input type="submit" value="Comment" class="btn btn-primary" />
+            <div class="form-group">
+                    @Html.TextArea("Text", "", new { @class = "form-control", rows=3})
+                    @Html.Hidden("ParentId", Model.Id)
+                    @Html.HiddenFor(m => m.ArticleId)
+                </div>
+            <input type="submit" value="Comment" class="btn btn-default" />
         }
     </div>
     <div class="row" id="children-@Model.Id" style="display:none">

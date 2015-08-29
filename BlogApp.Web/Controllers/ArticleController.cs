@@ -51,7 +51,7 @@ namespace BlogApp.Web.Controllers
                         System.IO.File.Delete(path);
                     }
                     image.SaveAs(path);
-                    
+
                     //var user = new User();
                     //user = (User)Session["Login"];
                     //article.Author = user;
@@ -94,24 +94,24 @@ namespace BlogApp.Web.Controllers
         [Authorization(Role = RoleType.Blogger)]
         public async Task<ActionResult> Import(HttpPostedFileBase file)
         {
-            if (file !=null)
+            if (file != null)
             {
                 string fileName = Path.GetFileName(file.FileName);
                 string path = Path.Combine(Server.MapPath("~/App_Data"), fileName);
                 file.SaveAs(path);
                 var doc = new XmlDocument();
-                doc.Load(Server.MapPath("~/App_Data/"+fileName));
+                doc.Load(Server.MapPath("~/App_Data/" + fileName));
                 int errors = articleManager.ImportArticles(doc);
                 return View(errors);
             }
             return View(0);
         }
-       
+
         [Authorization(Role = RoleType.Blogger)]
         public ActionResult ArticleView(int id)
         {
             var article = articleManager.GetArticleById(id);
-            if ( article == null || article.Type == ArticleType.Private)
+            if (article == null || article.Type == ArticleType.Private)
             {
                 ViewBag.ErrorTitle = "No article was found!";
                 ViewBag.ErrorDescription = "";
@@ -127,8 +127,8 @@ namespace BlogApp.Web.Controllers
         [Authorization(Role = RoleType.Blogger)]
         public ActionResult AddComment(Comment comment)
         {
-            var user = (User)Session["Login"]; 
-            
+            var user = (User)Session["Login"];
+
             var newComment = new Comment();
             newComment.Text = comment.Text;
             newComment.ArticleId = comment.ArticleId;
@@ -137,6 +137,21 @@ namespace BlogApp.Web.Controllers
 
             return RedirectToAction("ArticleView", new { id = comment.ArticleId });
         }
+
+
+
+        [HttpPost]
+        [Authorization(Role = RoleType.Blogger)]
+        public ActionResult CommentArticle(Comment comment)
+        {
+            var user = (User)Session["Login"];
+
+           
+            commentManager.AddComment(comment);
+
+            return RedirectToAction("ArticleView", new { id = comment.ArticleId });
+        }
+
 
         [HttpGet]
         [Authorization(Role = RoleType.Blogger)]
