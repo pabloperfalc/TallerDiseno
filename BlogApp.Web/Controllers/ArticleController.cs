@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using BlogApp.Models;
 using System.Xml;
 using System.IO;
+using BlogApp.Web.Models;
 
 namespace BlogApp.Web.Controllers
 {
@@ -22,10 +23,34 @@ namespace BlogApp.Web.Controllers
             this.commentManager = commentManager;
         }
 
+        [HttpGet]
+        public ActionResult EditArticle()
+        {
+            var viewModel = new RegisterArticleViewModel
+            {
+                Title = "Edit Article",
+                EditMode = true,
+                PostAction = "EditArticle",
+
+            };
+            return View("CreateArticle", viewModel);
+        }
+
         [Authorization(Role = RoleType.Blogger)]
         public ActionResult CreateArticle()
         {
+            var viewModel = new RegisterArticleViewModel
+            {
+                Title = "Create Article",
+                EditMode = false,
+                PostAction = "CreateArticle",
 
+            };
+            return View("CreateArticle", viewModel);
+        }
+
+        public ActionResult EditArticle(RegisterArticleViewModel userViewModel, HttpPostedFileBase image)
+        {
             return View();
         }
 
@@ -44,24 +69,17 @@ namespace BlogApp.Web.Controllers
                     image.InputStream.Read(imageData, 0, image.ContentLength);
 
                     article.AuthorId = 1;
-                    string name = Guid.NewGuid().ToString();
-                    string path = Path.Combine(Server.MapPath("~/ArticlePictures"), name + Path.GetExtension(image.FileName));
-                    if (System.IO.File.Exists(path))
-                    {
-                        System.IO.File.Delete(path);
-                    }
-                    image.SaveAs(path);
+
+                    article.ModificationdDate = DateTime.Now;
+                    article.CreationDate = DateTime.Now;
+                    article.Layout = ViewBag.Layout;
+                    article.Type = ViewBag.Type;
                     
                     //var user = new User();
                     //user = (User)Session["Login"];
                     //article.Author = user;
                     //article.AuthorId = user.Id;
-                    article.PicturePath = "~/ArticlePictures/" + name + Path.GetExtension(image.FileName);
-                    article.ModificationdDate = DateTime.Now;
-                    article.CreationDate = DateTime.Now;
-                    article.Layout = ViewBag.Layout;
-                    article.Type = ViewBag.Type;
-                    articleManager.AddArticle(article);
+                    articleManager.CreateArticle(article, imageData);
                     return RedirectToAction("Home"); //cambiar esto
                 }
                 else
@@ -72,7 +90,6 @@ namespace BlogApp.Web.Controllers
                     }
                     return View(article);
                 }
-
             }
             else
             {

@@ -128,12 +128,7 @@ namespace BlogApp.Manager.Implementations
 
         public void UpdateArticle(Article article)
         {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteArticle(Article article)
-        {
-            throw new NotImplementedException();
+            articleDataAccess.ModifyArticle(article);
         }
 
         public Article GetArticleById(int id)
@@ -161,6 +156,16 @@ namespace BlogApp.Manager.Implementations
         public List<Article> GetPublicArticles(int id)
         {
             return articleDataAccess.GetPublicArticles(id);
+        }
+
+        public void CreateArticle(Article article, Byte[] ImageBytes)
+        {
+
+            string name = Guid.NewGuid().ToString() + ".jpg";
+            string path = System.AppDomain.CurrentDomain.BaseDirectory + "ArticlePictures/" + name;
+
+            article.PicturePath = "/ArticlePictures/" + name;
+            AddArticle(article);
         }
     }
 }
