@@ -101,6 +101,18 @@ namespace BlogApp.DataAccess.Implementations
             }
         }
 
+        public List<Article> GetPublicArticles(int id)
+        {
+            using (var db = new BlogContext())
+            {
+                var query = (from a in db.Articles.Include(x => x.Author)
+                             where a.AuthorId == id && a.Type == ArticleType.Public
+                             select a).OrderBy(y=>y.ModificationdDate).ToList();
+
+                return query;
+            }
+
+        }
         
     }
 }

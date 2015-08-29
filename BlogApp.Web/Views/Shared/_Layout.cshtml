@@ -22,9 +22,31 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Home", "Home", "User")</li>
+                    
+                    @if (Session["Login"] != null && ((BlogApp.Models.User)Session["Login"]).Roles.Any(r => r.Type == BlogApp.Models.RoleType.Administrator))
+                    {
+                        <li>@Html.ActionLink("Add new user", "AddUser", "User")</li>
+
+                        <li>@Html.ActionLink("Users information", "List", "User")</li>
+
+                        <li>@Html.ActionLink("Manage videos", "ImportVideos", "Video")</li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Article distribution per month by year", "QueryByMonthPerYear", "Report")</li>
+                                <li>@Html.ActionLink("Audit log", "QueryLoginSearch", "Report")</li>
+                                <li>@Html.ActionLink("Ranking for most active users", "QueryRankingMostActive", "Report")</li>
+                            </ul>
+                        </li>
+                    }
+                    @if (Session["Login"] != null && ((BlogApp.Models.User)Session["Login"]).Roles.Any(r => r.Type == BlogApp.Models.RoleType.Blogger))
+                    {
+
+                        <li>@Html.ActionLink("Edit profile", "Edit", "User", new { Id = ((BlogApp.Models.User)Session["Login"]).Id },null)</li>
+                        <li>@Html.ActionLink("My Articles", "MyArticles", "Article")</li>
+                    }
                 </ul>
                 @*@Html.Partial("_LoginPartial")*@
             </div>
@@ -32,19 +54,19 @@
     </div>
     <div class="container body-content">
         <div class="row">
-            <div class="col-lg-10">
+            <div class="col-lg-9">
                 @RenderBody()
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 @Video.Silverlight(
                 path: @Url.Content("/ClientBin/BlogApp.VideoPlayer.xap"),
                 width: "300",
                 height: "300",
                 bgColor: "red",
-                autoUpgrade: true)
+                autoUpgrade: true, options: new { windowless = "true" })
             </div>
         </div>
-            
+
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>

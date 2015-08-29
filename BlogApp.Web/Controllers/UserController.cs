@@ -95,21 +95,28 @@ namespace BlogApp.Web.Controllers
 
         public ActionResult Edit(int userId)
         {
-            var user = userManager.GetUserById(userId);
-            var adminMode = Session["Login"] != null && ((User)Session["Login"]).Roles != null && ((User)Session["Login"]).Roles.Any(role => role.Type == RoleType.Administrator);
-            var postAction = adminMode ? "AddEditUser" : "Register";
-            var viewModel = new RegisterUserViewModel
-            {
-                User = user,
-                IsAdmin = user.Roles.Any(r => r.Type == RoleType.Administrator),
-                IsBlogger = user.Roles.Any(r => r.Type == RoleType.Blogger),
-                Title = "Edit",
-                EditMode = true,
-                AdminMode = adminMode,
-                PostAction = postAction
-            };
+             var isAdmin =  Session["Login"] != null && ((User)Session["Login"]).Roles != null && ((User)Session["Login"]).Roles.Any(role => role.Type == RoleType.Administrator);
 
-            return View("Register", viewModel);
+             if (isAdmin || ((User)Session["Login"]).Id == userId)
+             {
+
+                 var user = userManager.GetUserById(userId);
+                 var adminMode = isAdmin;
+                 var postAction = adminMode ? "AddEditUser" : "Register";
+                 var viewModel = new RegisterUserViewModel
+                 {
+                     User = user,
+                     IsAdmin = user.Roles.Any(r => r.Type == RoleType.Administrator),
+                     IsBlogger = user.Roles.Any(r => r.Type == RoleType.Blogger),
+                     Title = "Edit",
+                     EditMode = true,
+                     AdminMode = adminMode,
+                     PostAction = postAction
+                 };
+                 return View("Register", viewModel);
+             }
+
+             return RedirectToAction("Login");
         }
 
         [HttpPost]
@@ -144,7 +151,7 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpPost]
-        //[Authorization(Role = "Administrator")]
+        [Authorization(Role = RoleType.Administrator)]
         public ActionResult AddEditUser(RegisterUserViewModel userViewModel, HttpPostedFileBase image)
         {
 

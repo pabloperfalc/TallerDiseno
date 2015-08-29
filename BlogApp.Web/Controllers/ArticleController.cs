@@ -22,14 +22,7 @@ namespace BlogApp.Web.Controllers
             this.commentManager = commentManager;
         }
 
-        //
-        // GET: /Article/
-
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+        [Authorization(Role = RoleType.Blogger)]
         public ActionResult CreateArticle()
         {
 
@@ -37,7 +30,7 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpPost]
-        // [Authorization(Role = "Blogger")]
+        [Authorization(Role = RoleType.Blogger)]
         public async Task<ActionResult> CreateArticle(Article article, HttpPostedFileBase image)
         {
             if (Request.Form["Confirm"] != null)
@@ -91,12 +84,14 @@ namespace BlogApp.Web.Controllers
             }
         }
 
+        [Authorization(Role = RoleType.Blogger)]
         public ActionResult Import()
         {
             return View(-1);
         }
 
         [HttpPost]
+        [Authorization(Role = RoleType.Blogger)]
         public async Task<ActionResult> Import(HttpPostedFileBase file)
         {
             if (file !=null)
@@ -111,15 +106,25 @@ namespace BlogApp.Web.Controllers
             }
             return View(0);
         }
-
+       
+        [Authorization(Role = RoleType.Blogger)]
         public ActionResult ArticleView(int id)
         {
             var article = articleManager.GetArticleById(id);
-            
-            return View(article);
+            if ( article == null || article.Type == ArticleType.Private)
+            {
+                ViewBag.ErrorTitle = "No article was found!";
+                ViewBag.ErrorDescription = "";
+                return View("~/Views/Shared/ErrorPage.cshtml");
+            }
+            else
+            {
+                return View(article);
+            }
         }
 
         [HttpPost]
+        [Authorization(Role = RoleType.Blogger)]
         public ActionResult AddComment(Comment comment)
         {
             var user = (User)Session["Login"]; 
@@ -133,5 +138,13 @@ namespace BlogApp.Web.Controllers
             return RedirectToAction("ArticleView", new { id = comment.ArticleId });
         }
 
+        [HttpGet]
+        [Authorization(Role = RoleType.Blogger)]
+        public ActionResult List(int id)
+        {
+            List<Article> lstPublicArticles = articleManager.GetPublicArticles(id);
+            return View(lstPublicArticles);
+
+        }
     }
 }

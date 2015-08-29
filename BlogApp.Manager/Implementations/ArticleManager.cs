@@ -139,19 +139,28 @@ namespace BlogApp.Manager.Implementations
         public Article GetArticleById(int id)
         {
             var article = articleDataAccess.GetArticleById(id);
-            var comments = commentDataAccess.GetArticleComments(id);
-            article.Comments = new List<Comment>();
-            foreach (var comment in comments)
+            if (article != null)
             {
-                if(!comment.ParentId.HasValue)
-                    article.Comments.Add(commentDataAccess.RetriveComments(comment));  
+                var comments = commentDataAccess.GetArticleComments(id);
+                article.Comments = new List<Comment>();
+                foreach (var comment in comments)
+                {
+                    if (!comment.ParentId.HasValue)
+                        article.Comments.Add(commentDataAccess.RetriveComments(comment));
+                }
+                return article;
             }
-            return article;
+            return null;
         }
 
         public List<int> GetArticlesPerMonth(int year) 
         {
             return articleDataAccess.GetArticlesPerMonth(year);
+        }
+
+        public List<Article> GetPublicArticles(int id)
+        {
+            return articleDataAccess.GetPublicArticles(id);
         }
     }
 }

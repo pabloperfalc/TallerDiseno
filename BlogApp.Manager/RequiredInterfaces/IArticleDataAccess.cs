@@ -13,5 +13,7 @@ namespace BlogApp.Manager.RequiredInterfaces
         List<Article> GetLatest(int count);
         Article GetArticleById(int id);
         List<int> GetArticlesPerMonth(int year);
+
+        List<Article> GetPublicArticles(int id);
     }
 }
