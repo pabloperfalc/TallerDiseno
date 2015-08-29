@@ -14,17 +14,43 @@ namespace BlogApp.Web.Controllers
     {
         private readonly IUserManager userManager;
         private readonly IArticleManager articleManager;
+        private readonly ILogger.ILogger logger;
 
-        public ReportController(IArticleManager articleManager, IUserManager userManager)
+        public ReportController(IArticleManager articleManager, IUserManager userManager, ILogger.ILogger logger)
         {
             this.userManager = userManager;
             this.articleManager = articleManager;
+            this.logger = logger;
         }
 
         [HttpGet]
         public ActionResult Reports()
         {
             return View();
+        }
+
+
+        public ActionResult QueryLoginSearch(DateTime? fromDate, DateTime? toDate)
+        {
+            if (fromDate == null || toDate == null)
+            {
+                return View();
+            }
+            else
+            {
+                ReportAdminViewModel model = new ReportAdminViewModel();
+                model.FromDate = fromDate.Value;
+                model.ToDate = toDate.Value;
+
+                return View(model);
+            }
+        }
+
+        
+        public ActionResult QueryRankingMostActive()
+        {
+            return View();
+
         }
 
         [HttpGet]
@@ -36,8 +62,11 @@ namespace BlogApp.Web.Controllers
             }
             else
             {
-
-                return View();
+                ReportAdminViewModel model = new ReportAdminViewModel();
+                model.FromDate = fromDate.Value;
+                model.ToDate = toDate.Value;
+                model.MostActives = userManager.GetMostActiveUsers(fromDate.Value, toDate.Value);
+                return View(model);
             }
         }
 
@@ -63,7 +92,6 @@ namespace BlogApp.Web.Controllers
             Chart chartPerMonth = new Chart(width: 1000, height: 500, theme: temp).AddTitle(year.ToString()).AddSeries(chartType: "column",xValue: new[] { "Janury", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" },yValues: lstArticlesCount).Write("bmp");
            
             return null;
-            //"10", "20", "30", "30", "30", "30", "30", "30", "30", "30", "30", "30"
         }
 
         [HttpGet]

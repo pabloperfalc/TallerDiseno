@@ -24,7 +24,7 @@ namespace BlogApp.Logger
         }
         public void Log(string message, LogType logType, int userId)
         {
-            GlobalContext.Properties["LogType"] = logType.ToString();
+            GlobalContext.Properties["LogType"] = ((int)logType).ToString();
             GlobalContext.Properties["UserId"] = userId.ToString();
             
             log.Info(message);
@@ -32,9 +32,10 @@ namespace BlogApp.Logger
 
         public List<string> GetLog(DateTime from, DateTime to)
         {
-            string route = (log4net.LogManager.GetCurrentLoggers()[0].Logger.Repository.GetAppenders()[0] as FileAppender).File;
+            
             return null;
         }
 
+         
     }
 }

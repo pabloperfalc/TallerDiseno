@@ -9,8 +9,6 @@
 @using (Html.BeginForm("QueryByMonthPerYear", "Report", FormMethod.Get))
 {
     @Html.LabelFor(x => x.Year)
-    @* @Html.DropDownListDropDownList("Year", ViewBag.Years, null)
-    *@
     @Html.DropDownList("Year", Model.Years)
 
     <div class="form-group">

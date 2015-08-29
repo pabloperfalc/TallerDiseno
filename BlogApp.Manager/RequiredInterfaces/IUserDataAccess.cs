@@ -16,5 +16,6 @@ namespace BlogApp.Manager.RequiredInterfaces
         List<User> GetUsers();
         User GetUserByUsername(string username);
         User GetUserById(int userId);
+        List<Tuple<User, int>> GetMostActiveUsers(DateTime fromDate, DateTime toDate);
     }
 }

@@ -48,5 +48,6 @@ namespace BlogApp.DataAccess.Implementations
                 return db.Comments.Where(c => c.ArticleId == articleId && c.Parent == null).ToList();
             }
         }
+
     }
 }

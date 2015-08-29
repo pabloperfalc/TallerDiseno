@@ -79,6 +79,10 @@
     <Compile Include="Migrations\201508262249563_otroTest.Designer.cs">
       <DependentUpon>201508262249563_otroTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508290022268_CambiosEnUser.cs" />
+    <Compile Include="Migrations\201508290022268_CambiosEnUser.Designer.cs">
+      <DependentUpon>201508290022268_CambiosEnUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -119,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508262249563_otroTest.resx">
       <DependentUpon>201508262249563_otroTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508290022268_CambiosEnUser.resx">
+      <DependentUpon>201508290022268_CambiosEnUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

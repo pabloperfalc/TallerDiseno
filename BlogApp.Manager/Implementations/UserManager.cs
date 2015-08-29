@@ -129,5 +129,10 @@ namespace BlogApp.Manager.Implementations
         {
             return userDataAccess.GetUserById(userId);
         }
+
+        public List<Tuple<User, int>> GetMostActiveUsers(DateTime fromDate, DateTime toDate)
+        {
+            return userDataAccess.GetMostActiveUsers(fromDate, toDate);
+        }
     }
 }

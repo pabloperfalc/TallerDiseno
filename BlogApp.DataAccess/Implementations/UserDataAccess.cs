@@ -10,7 +10,7 @@ namespace BlogApp.DataAccess.Implementations
 {
     public class UserDataAccess : IUserDataAccess
     {
-        public void AddUser(User user) 
+        public void AddUser(User user)
         {
             using (var db = new BlogContext())
             {
@@ -19,13 +19,13 @@ namespace BlogApp.DataAccess.Implementations
             }
         }
 
-        public void ModifyUser(User user) 
+        public void ModifyUser(User user)
         {
             using (var db = new BlogContext())
             {
                 var query = (from u in db.Users.Include(u => u.Roles)
-                            where u.IsActive == true && u.Id == user.Id
-                            select u).FirstOrDefault<User>();
+                             where u.IsActive == true && u.Id == user.Id
+                             select u).FirstOrDefault<User>();
                 query.Email = user.Email;
                 query.Name = user.Name;
                 query.Surname = user.Surname;
@@ -37,7 +37,7 @@ namespace BlogApp.DataAccess.Implementations
             }
         }
 
-        public void RemoveUser(User user) 
+        public void RemoveUser(User user)
         {
             using (var db = new BlogContext())
             {
@@ -48,11 +48,11 @@ namespace BlogApp.DataAccess.Implementations
             }
         }
 
-        public List<User> GetUsers() 
+        public List<User> GetUsers()
         {
             using (var db = new BlogContext())
             {
-                var query = from u in db.Users.Include(u=>u.Roles)
+                var query = from u in db.Users.Include(u => u.Roles)
                             where u.IsActive == true
                             select u;
                 return query.ToList<User>();
@@ -78,6 +78,44 @@ namespace BlogApp.DataAccess.Implementations
                             where u.IsActive == true && u.Id == userId
                             select u;
                 return query.FirstOrDefault();
+            }
+        }
+
+        public List<Tuple<User,int>> GetMostActiveUsers(DateTime fromDate, DateTime toDate)
+        {
+
+            using (var db = new BlogContext())
+            {
+
+                var lstArticles = (from u in db.Users.Include("Articles").Include("Comments")
+                                   select u).ToList<User>();
+
+                List<Tuple<User, int>> lstMostActive = new List<Tuple<User, int>>();
+
+                foreach (User u in lstArticles)
+                {
+                    int counter = 0;
+                    foreach (var article in u.Articles)
+                    {
+                        if (article.CreationDate >= fromDate && article.CreationDate <= toDate)
+                            counter++;
+
+                    }
+
+                    foreach (var comment in u.Comments)
+                    {
+                        if (comment.CreationDate >= fromDate && comment.CreationDate <= toDate)
+                            counter++;
+                    }
+
+                    if (counter > 0)
+                    {
+                        lstMostActive.Add(new Tuple<User, int>(u, counter));
+                    }
+                }
+
+                return lstMostActive;
+
             }
         }
     }

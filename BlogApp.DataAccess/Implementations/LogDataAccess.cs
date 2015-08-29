@@ -12,19 +12,17 @@ namespace BlogApp.DataAccess.Implementations
 {
     public class LogDataAccess : ILogDataAccess
     {
-      /*  public List<LogEntry> GetLog(DateTime fromDate, DateTime toDate)
+      
+        public List<LogEntry> GetLog(DateTime fromDate, DateTime toDate)
         {
             using (var db = new BlogContext())
             {
-               // var query = from u in db.LogEntries
-                            //where u.
-                throw new NotImplementedException();
+                var query = (from u in db.LogEntries
+                            where u.Date <= toDate && u.Date >= fromDate
+                             select u).ToList();
+
+                return query;
             }
-            
-        }*/
-        public List<LogEntry> GetLog(DateTime fromDate, DateTime toDate)
-        {
-            throw new NotImplementedException();
         }
     }
 }

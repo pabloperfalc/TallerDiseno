@@ -15,5 +15,9 @@ namespace BlogApp.Web.Models
         public DateTime ToDate { get; set; }
         public DateTime Year { get; set; }
         public List<SelectListItem> Years { get; set; }
+        public List<Tuple<User, int>> MostActives { get; set; }
+        public List<LogEntry> LogEntries { get; set; }
+
+
     }
 }
