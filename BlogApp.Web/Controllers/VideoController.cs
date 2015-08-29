@@ -26,5 +26,11 @@ namespace BlogApp.Web.Controllers
                     }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult ImportVideos()
+        {
+
+            return View();
+        }
+
     }
 }
