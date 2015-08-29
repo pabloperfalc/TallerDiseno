@@ -28,7 +28,9 @@ namespace BlogApp.Models
 
         public List<Article> Articles { get; set; }
 
-        public bool IsActive { get; set; }
         public List<Comment> Comments { get; set; }
+
+        public bool IsActive { get; set; }
+
     }
 }

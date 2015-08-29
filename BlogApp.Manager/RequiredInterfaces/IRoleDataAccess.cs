@@ -9,9 +9,6 @@ namespace BlogApp.Manager.RequiredInterfaces
 {
     public interface IRoleDataAccess
     {
-        void AddRole(Role role);
-        void ModifyRole(Role user);
-        void RemoveRole(Role user);
         List<Role> GetRoles();
         Role GetRoleByType(RoleType type);
         

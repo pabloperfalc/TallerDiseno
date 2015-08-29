@@ -15,12 +15,13 @@ namespace BlogApp.Logger
     public class Logger: BlogApp.ILogger.ILogger
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
         private readonly LogDataAccess logDataAccess;
+      
         public Logger(LogDataAccess logDataAcces)
         {
             this.logDataAccess = logDataAcces; 
         }
+        
         public void Log(string message, LogType logType, string userUsername)
         {
             GlobalContext.Properties["LogType"] = logType.ToString();

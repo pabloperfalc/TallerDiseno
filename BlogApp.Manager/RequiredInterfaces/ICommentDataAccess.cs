@@ -10,7 +10,6 @@ namespace BlogApp.Manager.RequiredInterfaces
     public interface ICommentDataAccess
     {
         void AddComment(Comment comment);
-        void ModifyComment(Comment comment);
 
         Comment RetriveComments(Comment comment);
 

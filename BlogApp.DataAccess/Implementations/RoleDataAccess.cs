@@ -10,22 +10,6 @@ namespace BlogApp.DataAccess.Implementations
 {
     public class RoleDataAccess : IRoleDataAccess
     {
-
-        public void AddRole(Role role)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ModifyRole(Role user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveRole(Role user)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Role> GetRoles()
         {
             using (var db = new BlogContext())

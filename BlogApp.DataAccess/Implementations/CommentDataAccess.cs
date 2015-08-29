@@ -14,16 +14,10 @@ namespace BlogApp.DataAccess.Implementations
         {
             using (var db = new BlogContext())
             {
-                comment.ModificationdDate = DateTime.UtcNow;
                 comment.CreationDate = DateTime.UtcNow;
                 db.Comments.Add(comment);
                 db.SaveChanges();
             }
-        }
-
-        public void ModifyComment(Comment comment) 
-        {
-        
         }
 
         public Comment RetriveComments(Comment comment)

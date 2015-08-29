@@ -18,13 +18,10 @@ namespace BlogApp.DataAccess.Implementations
                 db.SaveChanges();
             }
         }
+        
         public void ModifyArticle(Article article)
         {
            
-        }
-        public void RemoveArticle(Article article)
-        {
-
         }
 
         public List<Article> GetLatest(int count)
@@ -41,7 +38,6 @@ namespace BlogApp.DataAccess.Implementations
             }
         }
 
-
         public Article GetArticleById(int id)
         {
             using (var db = new BlogContext())
@@ -52,10 +48,8 @@ namespace BlogApp.DataAccess.Implementations
                         .OrderBy(a => a.ModificationdDate)
                         .ThenBy(a => a.CreationDate)
                         .FirstOrDefault();
-
             }
         }
-
       
         public List<int> GetArticlesPerMonth(int year)
         {

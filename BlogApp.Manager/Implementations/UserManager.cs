@@ -14,7 +14,7 @@ namespace BlogApp.Manager.Implementations
         private IUserDataAccess userDataAccess;
         private IRoleDataAccess roleDataAccess;
 
-       public UserManager(IUserDataAccess userDataAccess, IRoleDataAccess roleDataAccess)
+        public UserManager(IUserDataAccess userDataAccess, IRoleDataAccess roleDataAccess)
         {
             this.userDataAccess = userDataAccess;
             this.roleDataAccess = roleDataAccess;
@@ -123,7 +123,6 @@ namespace BlogApp.Manager.Implementations
         {
             return userDataAccess.GetUsers();
         }
-
 
         public User GetUserById(int userId)
         {

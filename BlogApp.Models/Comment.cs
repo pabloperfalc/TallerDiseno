@@ -13,8 +13,6 @@ namespace BlogApp.Models
         
         public DateTime CreationDate { get; set; }
 
-        public DateTime ModificationdDate { get; set; }
-
         public List<Comment> Comments { get; set; }
 
         public int? ParentId { get; set; }
@@ -22,6 +20,7 @@ namespace BlogApp.Models
         public Comment Parent { get; set; }
 
         public int ArticleId { get; set; }
+
         public Article Article { get; set; }
         
       
