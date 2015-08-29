@@ -7,7 +7,7 @@ namespace BlogApp.ILogger
 {
     public interface ILogger
     {
-        void Log(string message, LogType logType, int userId);
+        void Log(string message, LogType logType, string userUsername);
         List<ILogEntry> GetLog(DateTime from, DateTime to);
     }
 }
