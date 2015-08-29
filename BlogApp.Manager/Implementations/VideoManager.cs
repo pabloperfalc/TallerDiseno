@@ -18,12 +18,6 @@ namespace BlogApp.Manager.Implementations
         {
             this.videoDataAccess = videoDataAccess;
         }
-       
-        public void AddVideo(Video video)
-        {
-            
-            videoDataAccess.AddVideo(video);
-        }
 
         public void Import(Byte[] VideoBytes)
         {
@@ -34,8 +28,13 @@ namespace BlogApp.Manager.Implementations
             Video video = new Video();
             video.Path = path;
 
-            this.AddVideo(video);
+            videoDataAccess.AddVideo(video);
 
+        }
+
+        public List<Video> GetVideos()
+        {
+            return videoDataAccess.GetVideos();
         }
     }
 }

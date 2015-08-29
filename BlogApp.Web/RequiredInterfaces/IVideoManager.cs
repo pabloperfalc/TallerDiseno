@@ -8,8 +8,7 @@ namespace BlogApp.Web.RequiredInterfaces
 {
     public interface IVideoManager
     {
-        void AddVideo(Video video);
         void Import(Byte[] VideoBytes);
-       
+        List<Video> GetVideos();
     }
 }

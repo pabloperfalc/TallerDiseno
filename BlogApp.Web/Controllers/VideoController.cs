@@ -20,12 +20,10 @@ namespace BlogApp.Web.Controllers
 
         public ActionResult GetVideoPaths()
         {
-            return Json(new List<string>() 
-                    { 
-                        "http://localhost:51295/wildlife.wmv", 
-                        "http://localhost:51295/wildlife.wmv", 
-                        "http://localhost:51295/wildlife.wmv" 
-                    }, JsonRequestBehavior.AllowGet);
+            var uri = Request.Url;
+            var host = uri.GetLeftPart(UriPartial.Authority);
+            var videos = videoManager.GetVideos().Select(v => host + v.Path).ToList<string>();
+            return Json(videos, JsonRequestBehavior.AllowGet);
         }
        
 
