@@ -8,6 +8,6 @@ namespace BlogApp.ILogger
     public interface ILogger
     {
         void Log(string message, LogType logType, int userId);
-        List<string> GetLog(DateTime from, DateTime to);
+        List<ILogEntry> GetLog(DateTime from, DateTime to);
     }
 }

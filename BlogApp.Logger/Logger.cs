@@ -17,23 +17,22 @@ namespace BlogApp.Logger
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private readonly ILogDataAccess logDataAccess;
-        public Logger(ILogDataAccess logDataAcces)
+        private readonly LogDataAccess logDataAccess;
+        public Logger(LogDataAccess logDataAcces)
         {
             this.logDataAccess = logDataAcces; 
         }
         public void Log(string message, LogType logType, int userId)
         {
-            GlobalContext.Properties["LogType"] = ((int)logType).ToString();
+            GlobalContext.Properties["LogType"] = logType.ToString();
             GlobalContext.Properties["UserId"] = userId.ToString();
             
             log.Info(message);
         }
 
-        public List<string> GetLog(DateTime from, DateTime to)
+        public List<ILogEntry> GetLog(DateTime from, DateTime to)
         {
-            
-            return null;
+            return logDataAccess.GetLog(from, to);
         }
 
          

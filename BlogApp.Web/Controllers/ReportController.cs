@@ -1,4 +1,5 @@
-﻿using BlogApp.Models;
+﻿using BlogApp.ILogger;
+using BlogApp.Models;
 using BlogApp.Web.Models;
 using BlogApp.Web.RequiredInterfaces;
 using System;
@@ -41,7 +42,8 @@ namespace BlogApp.Web.Controllers
                 ReportAdminViewModel model = new ReportAdminViewModel();
                 model.FromDate = fromDate.Value;
                 model.ToDate = toDate.Value;
-
+                model.LogEntries = logger.GetLog(fromDate.Value, toDate.Value);
+                
                 return View(model);
             }
         }

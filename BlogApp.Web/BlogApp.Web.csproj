@@ -309,6 +309,7 @@
     <Content Include="Views\Article\_AlignLeft.cshtml" />
     <Content Include="Views\Report\QueryByMonthPerYear.cshtml" />
     <Content Include="Views\Report\QueryRankingMostActive.cshtml" />
+    <Content Include="Views\Report\QueryLoginSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -26,16 +26,16 @@
         <table class="table table-hover" id="queryTable">
             <thead>
                 <tr>
-                    <th>Username</th>
-                    <th>Quantity</th>
+                    <th>Date</th>
+                    <th>LogType</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var user in Model.MostActives)
+                @foreach (var log in Model.LogEntries)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(u => user.Item1.Username)</td>
-                        <td>@Html.DisplayFor(u => user.Item2)</td>
+                        <td>@Html.DisplayFor(u => log.Date)</td>
+                        <td>@Html.DisplayFor(u => log.LogType)</td>
 
                     </tr>
                 }

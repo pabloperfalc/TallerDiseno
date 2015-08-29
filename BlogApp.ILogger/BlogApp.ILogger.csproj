@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILogEntry.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="LogType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

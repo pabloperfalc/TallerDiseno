@@ -56,7 +56,6 @@
     <Compile Include="BlogContext.cs" />
     <Compile Include="Implementations\ArticleDataAccess.cs" />
     <Compile Include="Implementations\CommentDataAccess.cs" />
-    <Compile Include="Implementations\LogDataAccess.cs" />
     <Compile Include="Implementations\RoleDataAccess.cs" />
     <Compile Include="Implementations\UserDataAccess.cs" />
     <Compile Include="Migrations\201508231506073_Init.cs" />
@@ -82,6 +81,10 @@
     <Compile Include="Migrations\201508290022268_CambiosEnUser.cs" />
     <Compile Include="Migrations\201508290022268_CambiosEnUser.Designer.cs">
       <DependentUpon>201508290022268_CambiosEnUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508291410438_fueAlvarez.cs" />
+    <Compile Include="Migrations\201508291410438_fueAlvarez.Designer.cs">
+      <DependentUpon>201508291410438_fueAlvarez.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -126,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508290022268_CambiosEnUser.resx">
       <DependentUpon>201508290022268_CambiosEnUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508291410438_fueAlvarez.resx">
+      <DependentUpon>201508291410438_fueAlvarez.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

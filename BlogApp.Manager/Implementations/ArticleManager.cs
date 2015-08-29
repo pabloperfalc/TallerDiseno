@@ -55,7 +55,6 @@ namespace BlogApp.Manager.Implementations
                             art.Type = ArticleType.Private;
                             break;
                         default: throw new Exception();
-                            break;
                     }
                     upper = nodo.SelectSingleNode("Plantilla").InnerText;
                     upper = upper.ToUpper();

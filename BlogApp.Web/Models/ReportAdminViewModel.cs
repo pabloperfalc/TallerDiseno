@@ -1,4 +1,5 @@
-﻿using BlogApp.Models;
+﻿using BlogApp.ILogger;
+using BlogApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,7 @@ namespace BlogApp.Web.Models
         public DateTime Year { get; set; }
         public List<SelectListItem> Years { get; set; }
         public List<Tuple<User, int>> MostActives { get; set; }
-        public List<LogEntry> LogEntries { get; set; }
-
+        public List<ILogEntry> LogEntries { get; set; }
 
     }
 }
