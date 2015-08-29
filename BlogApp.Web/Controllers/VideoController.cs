@@ -20,7 +20,9 @@ namespace BlogApp.Web.Controllers
 
         public ActionResult GetVideoPaths()
         {
-            var videos = videoManager.GetVideos().Select(v => "http://localhost:51295" + v.Path).ToList<string>();
+            var uri = Request.Url;
+            var host = uri.GetLeftPart(UriPartial.Authority);
+            var videos = videoManager.GetVideos().Select(v => host + v.Path).ToList<string>();
             return Json(videos, JsonRequestBehavior.AllowGet);
         }
        
