@@ -19,5 +19,12 @@ namespace BlogApp.DataAccess.Implementations
             }
         }
 
+        public List<Video> GetVideos()
+        {
+            using (var db = new BlogContext())
+            {
+                return db.Videos.ToList();
+            }
+        }
     }
 }

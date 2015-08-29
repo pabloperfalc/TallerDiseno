@@ -10,5 +10,6 @@ namespace BlogApp.Manager.RequiredInterfaces
     public interface IVideoDataAccess
     {
         void AddVideo(Video video);
+        List<Video> GetVideos();
     }
 }

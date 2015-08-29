@@ -36,5 +36,10 @@ namespace BlogApp.Manager.Implementations
             this.AddVideo(video);
 
         }
+
+        public List<Video> GetVideos()
+        {
+            return videoDataAccess.GetVideos();
+        }
     }
 }

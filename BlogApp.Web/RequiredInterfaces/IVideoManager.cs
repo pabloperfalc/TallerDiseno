@@ -10,6 +10,6 @@ namespace BlogApp.Web.RequiredInterfaces
     {
         void AddVideo(Video video);
         void Import(Byte[] VideoBytes);
-       
+        List<Video> GetVideos();
     }
 }

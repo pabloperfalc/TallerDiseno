@@ -32,6 +32,11 @@ namespace BlogApp.VideoPlayer
         {
             player.Stop();
             index++;
+            if(index >= videoList.Count )
+            {
+                index = 0;
+            }
+
             player.Source = new Uri(videoList[index]);
             player.Play();
         }
