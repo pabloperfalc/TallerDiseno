@@ -348,6 +348,7 @@
     <Content Include="Views\Report\QueryRankingMostActive.cshtml" />
     <Content Include="Views\Report\QueryLoginSearch.cshtml" />
     <Content Include="Views\Video\ImportVideos.cshtml" />
+    <Content Include="Views\Shared\ErrorPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

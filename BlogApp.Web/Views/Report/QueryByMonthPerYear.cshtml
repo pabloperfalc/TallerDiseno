@@ -9,7 +9,7 @@
 @using (Html.BeginForm("QueryByMonthPerYear", "Report", FormMethod.Get))
 {
     @Html.LabelFor(x => x.Year)
-    @Html.DropDownList("Year", Model.Years)
+    @Html.DropDownList("Year", Model.Years, "---")
 
     <div class="form-group">
         <input type="submit" value="Confirm" class="btn btn-primary" />

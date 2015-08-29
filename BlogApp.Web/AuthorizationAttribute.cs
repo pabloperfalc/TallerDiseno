@@ -19,10 +19,14 @@ namespace BlogApp.Web
             {
                 if (session["Login"] == null || ((User)session["Login"]).Roles == null || !((User)session["Login"]).Roles.Any(role=>role.Type == Role))
                 { 
-                    controller.HttpContext.Response.Redirect("./Login");
+                    filterContext.Result = new RedirectResult("~/User/Login");
+                    return;
                 }
+                
             }
-            base.OnActionExecuting(filterContext); 
+            
+            base.OnActionExecuting(filterContext);
+            
         }
     }
 }
