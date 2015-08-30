@@ -9,9 +9,9 @@
         <div class="blog-post">
             <h2 class="blog-post-title">@Html.DisplayFor(x => x.Name)</h2>
             <p class="blog-post-meta">
-                @Html.DisplayFor(x => @Model.ModificationdDate) by @Html.ActionLink(@Model.Author.Name, "list", "article", new { userId = @Model.AuthorId }, null)
+                @Html.DisplayFor(x => @Model.ModificationdDate) by @Html.ActionLink(@Model.Author.Name, "list", "article", new { Id = @Model.AuthorId }, null)
             </p>
-            @if (Model.PicturePath.Equals(String.Empty))
+            @if (Model.PicturePath != null && Model.PicturePath.Equals(String.Empty))
             {
                 @Html.Partial("_AlignBottom", Model);
             }
@@ -35,16 +35,30 @@
     </div>
 </div>
 <div class="row">
+
+    @using (Html.BeginForm("CommentArticle", "Article", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label for="Text">Comment this article</label>
+            
+            @Html.TextArea("Text", "", new { @class = "form-control", rows=3})
+            @Html.Hidden("ArticleId", Model.Id)
+        </div>
+         <input type="submit" value="Comment" class="btn btn-default" />
+    }
+
+</div>
+
+<div class="row">
     @foreach (var comment in Model.Comments)
     {
         @Html.Partial("_Comment", comment);
     }
 </div>
-    @section scripts {
-        @Scripts.Render("~/bundles/dataTables")
-        <script type="text/javascript">
-            function Toggle(id) {
-                $(id).toggle("fast");
-            }
-        </script>
-    }
+@section scripts {
+    <script type="text/javascript">
+        function Toggle(id) {
+            $(id).toggle("fast");
+        }
+    </script>
+}

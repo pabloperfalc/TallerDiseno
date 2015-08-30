@@ -11,33 +11,18 @@
     {
         <div class="form-group">
             @Html.LabelFor(m => m.Article.Name)
-            @if(!Model.EditMode)
-                { 
-                    @Html.TextBoxFor(m => m.Article.Name, new { @class = "form-control" })
-                }
-                else
-                {
-                    @Html.TextBoxFor(m => m.Article.Name, new { @class = "form-control", disabled = "disabled" })
-                }
+            @Html.TextBoxFor(m => m.Article.Name, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.Article.Name, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
             @Html.Label("Content")
-            @if (!Model.EditMode)
-            {
-                @Html.TextAreaFor(m => m.Article.Text, new { @class = "form-control", rows = 5, columns = 2 })
-            }
-            else
-            {
-                @Html.TextAreaFor(m => m.Article.Text, new { @class = "form-control", rows = 5, columns = 2 })
-            }
+            @Html.TextAreaFor(m => m.Article.Text, new { @class = "form-control", rows = 5, columns = 2 })
             @Html.ValidationMessageFor(m => m.Article.Text, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
             @Html.LabelFor(m => m.Article.Type):
-
            <div class="btn-group" data-toggle="buttons">
                <label class="btn btn-primary active">
                    <input type="radio" name="Public" id="1" checked>
@@ -74,7 +59,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Article.PicturePath)
             @Html.TextBox("image", null, new { type = "file", accept = "image/*", @class = "input-file" })
-            @if (@Model != null)
+            @if (@Model.Article != null && @Model.Article.PicturePath != null && !@Model.Article.PicturePath.Equals(String.Empty))
                 {
                     <img src="@Url.Content(Model.Article.PicturePath)" alt="Article Picture"/>
                 }
@@ -82,10 +67,14 @@
         <br />
         <div class="form-group">
             <input type="submit" name="Confirm" value="Confirm" class="btn btn-primary" />
-            <div class="form-group">
-                <p class="text-right">
-                    <input type="submit" name="Import" value="Import article" class="btn btn-primary"></p>
-            </div>
+            @if (!Model.EditMode)
+            {
+                <div class="form-group">
+                    <p class="text-right">
+                        <input type="submit" name="Import" value="Import article" class="btn btn-primary">
+                    </p>
+                </div>
+            }
         </div>
         }
 </div>

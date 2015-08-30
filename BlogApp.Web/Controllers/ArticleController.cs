@@ -24,10 +24,11 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditArticle()
+        public ActionResult EditArticle(int articleId)
         {
             var viewModel = new RegisterArticleViewModel
             {
+                Article = articleManager.GetArticleById(articleId),
                 Title = "Edit Article",
                 EditMode = true,
                 PostAction = "EditArticle",
@@ -36,7 +37,7 @@ namespace BlogApp.Web.Controllers
             return View("CreateArticle", viewModel);
         }
 
-        [Authorization(Role = RoleType.Blogger)]
+        //[Authorization(Role = RoleType.Blogger)]
         public ActionResult CreateArticle()
         {
             var viewModel = new RegisterArticleViewModel
@@ -49,13 +50,40 @@ namespace BlogApp.Web.Controllers
             return View("CreateArticle", viewModel);
         }
 
-        public ActionResult EditArticle(RegisterArticleViewModel userViewModel, HttpPostedFileBase image)
+        [HttpPost]
+        public async Task<ActionResult> EditArticle(Article article, HttpPostedFileBase image)
         {
-            return View();
+            List<Tuple<string, string>> errors = articleManager.ValidateArticle(article);
+            if (errors.Count == 0)
+            {
+                article.ModificationdDate = DateTime.Now;
+                article.CreationDate = DateTime.Now;
+                //article.Layout = ViewBag.Layout;
+                //article.Type = ViewBag.Type;
+                if (image != null)
+                    {
+                        var imageData = new byte[image.ContentLength];
+                        image.InputStream.Read(imageData, 0, image.ContentLength);
+                        articleManager.UpdateArticle(article,imageData);
+                    }
+                    else
+                    {
+                        articleManager.UpdateArticle(article,null);
+                    }
+                return RedirectToAction("ArticleView", new { id = article.Id });
+            }
+            else
+            {
+                foreach (Tuple<string, string> t in errors)
+                {
+                    ModelState.AddModelError(t.Item1, t.Item2);
+                }
+                return View(article);
+            }
         }
 
         [HttpPost]
-        [Authorization(Role = RoleType.Blogger)]
+        //[Authorization(Role = RoleType.Blogger)]
         public async Task<ActionResult> CreateArticle(Article article, HttpPostedFileBase image)
         {
             if (Request.Form["Confirm"] != null)
@@ -65,22 +93,28 @@ namespace BlogApp.Web.Controllers
                 List<Tuple<string, string>> errors = articleManager.ValidateArticle(article);
                 if (errors.Count == 0)
                 {
-                    var imageData = new byte[image.ContentLength];
-                    image.InputStream.Read(imageData, 0, image.ContentLength);
-
+                    //var user = new User();
+                    //user = (User)Session["Login"];
+                    //article.Author = user;
+                    //article.AuthorId = user.Id;
                     article.AuthorId = 1;
 
                     article.ModificationdDate = DateTime.Now;
                     article.CreationDate = DateTime.Now;
                     article.Layout = ViewBag.Layout;
-                    article.Type = ViewBag.Type;
-                    
-                    //var user = new User();
-                    //user = (User)Session["Login"];
-                    //article.Author = user;
-                    //article.AuthorId = user.Id;
-                    articleManager.CreateArticle(article, imageData);
-                    return RedirectToAction("Home"); //cambiar esto
+                    //article.Type = ViewBag.Type;
+
+                    if (image != null)
+                    {
+                        var imageData = new byte[image.ContentLength];
+                        image.InputStream.Read(imageData, 0, image.ContentLength);
+                        articleManager.CreateArticle(article, imageData);
+                    }
+                    else
+                    {
+                        articleManager.CreateArticle(article, null);
+                    }
+                    return RedirectToAction("ArticleView", new { id = article.Id });
                 }
                 else
                 {
@@ -111,24 +145,24 @@ namespace BlogApp.Web.Controllers
         [Authorization(Role = RoleType.Blogger)]
         public async Task<ActionResult> Import(HttpPostedFileBase file)
         {
-            if (file !=null)
+            if (file != null)
             {
                 string fileName = Path.GetFileName(file.FileName);
                 string path = Path.Combine(Server.MapPath("~/App_Data"), fileName);
                 file.SaveAs(path);
                 var doc = new XmlDocument();
-                doc.Load(Server.MapPath("~/App_Data/"+fileName));
+                doc.Load(Server.MapPath("~/App_Data/" + fileName));
                 int errors = articleManager.ImportArticles(doc);
                 return View(errors);
             }
             return View(0);
         }
-       
-        [Authorization(Role = RoleType.Blogger)]
+
+        //[Authorization(Role = RoleType.Blogger)]
         public ActionResult ArticleView(int id)
         {
             var article = articleManager.GetArticleById(id);
-            if ( article == null || article.Type == ArticleType.Private)
+            if (article == null || article.Type == ArticleType.Private)
             {
                 ViewBag.ErrorTitle = "No article was found!";
                 ViewBag.ErrorDescription = "";
@@ -144,8 +178,8 @@ namespace BlogApp.Web.Controllers
         [Authorization(Role = RoleType.Blogger)]
         public ActionResult AddComment(Comment comment)
         {
-            var user = (User)Session["Login"]; 
-            
+            var user = (User)Session["Login"];
+
             var newComment = new Comment();
             newComment.Text = comment.Text;
             newComment.ArticleId = comment.ArticleId;
@@ -155,13 +189,27 @@ namespace BlogApp.Web.Controllers
             return RedirectToAction("ArticleView", new { id = comment.ArticleId });
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorization(Role = RoleType.Blogger)]
+        public ActionResult CommentArticle(Comment comment)
+        {
+            var user = (User)Session["Login"];
+
+           
+            commentManager.AddComment(comment);
+
+            return RedirectToAction("ArticleView", new { id = comment.ArticleId });
+        }
+
+        [HttpGet]
+        //[Authorization(Role = RoleType.Blogger)]
         public ActionResult List(int id)
         {
             List<Article> lstPublicArticles = articleManager.GetPublicArticles(id);
             return View(lstPublicArticles);
 
         }
+
+
     }
 }

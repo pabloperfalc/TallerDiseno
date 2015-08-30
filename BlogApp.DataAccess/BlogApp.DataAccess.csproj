@@ -87,6 +87,10 @@
     <Compile Include="Migrations\201508291410438_fueAlvarez.Designer.cs">
       <DependentUpon>201508291410438_fueAlvarez.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508292153450_roccaPuto.cs" />
+    <Compile Include="Migrations\201508292153450_roccaPuto.Designer.cs">
+      <DependentUpon>201508292153450_roccaPuto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -125,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508291410438_fueAlvarez.resx">
       <DependentUpon>201508291410438_fueAlvarez.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508292153450_roccaPuto.resx">
+      <DependentUpon>201508292153450_roccaPuto.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

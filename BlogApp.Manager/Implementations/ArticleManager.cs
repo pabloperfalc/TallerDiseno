@@ -80,7 +80,7 @@ namespace BlogApp.Manager.Implementations
                     if (!nodo.SelectSingleNode("Foto").InnerText.Equals(String.Empty))
                     {
                         byte[] imageByte = Convert.FromBase64String(nodo.SelectSingleNode("Foto").InnerText);
-                        art.PicturePath = BytesImage(imageByte, art);
+                        art.PicturePath = BytesImage(imageByte);
                     }
                     else
                     {
@@ -96,7 +96,7 @@ namespace BlogApp.Manager.Implementations
             return errors;
         }
 
-        private string BytesImage(Byte[] ImgBytes, Article article)
+        private string BytesImage(Byte[] ImgBytes)
         {
             string name = Guid.NewGuid().ToString() + ".jpg";
             string path = System.AppDomain.CurrentDomain.BaseDirectory + "ArticlePictures/" + name;
@@ -126,8 +126,24 @@ namespace BlogApp.Manager.Implementations
             articleDataAccess.AddArticle(article);
         }
 
-        public void UpdateArticle(Article article)
+        public void UpdateArticle(Article article, Byte[] ImageBytes)
         {
+            if (ImageBytes != null)
+            {
+                article.PicturePath = BytesImage(ImageBytes);
+            }
+            else //SI TRAE EL PATH EL ART NO ES NECESARIO
+            {
+                Article artAux = articleDataAccess.GetArticleById(article.Id);
+                if (artAux.PicturePath.Equals(String.Empty))
+                {
+                    article.PicturePath = String.Empty;
+                }
+                else
+                {
+                    article.PicturePath = artAux.PicturePath;
+                }
+            }
             articleDataAccess.ModifyArticle(article);
         }
 
@@ -160,11 +176,14 @@ namespace BlogApp.Manager.Implementations
 
         public void CreateArticle(Article article, Byte[] ImageBytes)
         {
-
-            string name = Guid.NewGuid().ToString() + ".jpg";
-            string path = System.AppDomain.CurrentDomain.BaseDirectory + "ArticlePictures/" + name;
-
-            article.PicturePath = "/ArticlePictures/" + name;
+            if (ImageBytes != null)
+            {
+                article.PicturePath = BytesImage(ImageBytes);
+            }
+            else
+            {
+                article.PicturePath = String.Empty;
+            }
             AddArticle(article);
         }
     }

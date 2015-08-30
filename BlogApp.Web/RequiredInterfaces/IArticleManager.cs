@@ -13,7 +13,7 @@ namespace BlogApp.Web.RequiredInterfaces
         int ImportArticles(XmlDocument xml);
         List<Tuple<string, string>> ValidateArticle(Article article);
         void AddArticle(Article article);
-        void UpdateArticle(Article article);
+        void UpdateArticle(Article article, Byte[] ImageBytes);
         Article GetArticleById(int id);
         List<int> GetArticlesPerMonth(int year);
         List<Article> GetPublicArticles(int id);

@@ -29,6 +29,7 @@ namespace BlogApp.DataAccess.Implementations
                 query.Layout = article.Layout;
                 query.ModificationdDate = DateTime.Now;
                 query.Name = article.Name;
+                query.PicturePath = article.PicturePath;
                 query.Text = article.Text;
                 query.Type = article.Type;
                 db.SaveChanges();

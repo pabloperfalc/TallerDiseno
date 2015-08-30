@@ -46,7 +46,8 @@ namespace BlogApp.Web.Controllers
             if (userManager.ValidateLogin(ref user))
             {
                 logger.Log("", LogType.Login, user.Username);
-                Session["Login"] = user;
+                User u = userManager.GetUserByUsername(user.Username);
+                Session["Login"] = u;
                 return RedirectToAction("Home");
             }
             else
@@ -154,14 +155,11 @@ namespace BlogApp.Web.Controllers
         [Authorization(Role = RoleType.Administrator)]
         public ActionResult AddEditUser(RegisterUserViewModel userViewModel, HttpPostedFileBase image)
         {
-
-
             List<Tuple<string, string>> errors = userManager.ValidateUser(userViewModel.User);
             if (errors.Count == 0)
             {
                 if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
                 {
-
                     AddingUserFields(userViewModel, image);
 
                     List<RoleType> roles = new List<RoleType>();
@@ -169,13 +167,13 @@ namespace BlogApp.Web.Controllers
                     {
                         roles.Add(RoleType.Administrator);
                     }
-                    if (userViewModel.IsAdmin)
+                    if (userViewModel.IsBlogger)
                     {
                         roles.Add(RoleType.Blogger);
                     }
 
                     userManager.AddUser(userViewModel.User, new List<RoleType>());
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Home");
                 }
                 else
                 {
