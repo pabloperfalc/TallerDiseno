@@ -13,6 +13,7 @@
                 <p class="blog-post-meta">
                     @Html.DisplayFor(x => article.ModificationdDate) by @Html.ActionLink(article.Author.Name, "list", "article", new { Id = article.AuthorId }, null)
                 </p>
+
                 <p class="ellipsis">@Html.DisplayFor(x => article.Text)</p>
                 <hr />
             </div>

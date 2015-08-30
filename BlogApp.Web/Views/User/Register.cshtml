@@ -3,8 +3,8 @@
 
 
 @{
-    if(Session["Login"] == null)
-    { 
+    if (Session["Login"] == null)
+    {
         Layout = "~/Views/User/LoginLayout.cshtml";
     }
 }
@@ -16,72 +16,76 @@
 <div class="row">
 
     <div class="col-lg-5">
-        @using (Html.BeginForm(Model.PostAction, "User", FormMethod.Post,new { enctype = "multipart/form-data" }))
-        {
             <h4>@Model.Title</h4>
             <hr />
-            <div class="form-group">
-                @Html.LabelFor(m => m.User.Username)
-                @if(!Model.EditMode)
-                { 
-                    @Html.TextBoxFor(m => m.User.Username, new { @class = "form-control" })
-                }
-                else
-                {
-                    @Html.TextBoxFor(m => m.User.Username, new { @class = "form-control", disabled = "disabled" })
-                }
-                
-                @Html.ValidationMessageFor(m => m.User.Username, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                 @Html.LabelFor(m => m.User.Name)
-                 @Html.TextBoxFor(m => m.User.Name, new { @class = "form-control" })
-                 @Html.ValidationMessageFor(m => m.User.Name, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                 @Html.LabelFor(m => m.User.Surname)
-                 @Html.TextBoxFor(m => m.User.Surname, new { @class = "form-control" })
-                 @Html.ValidationMessageFor(m => m.User.Surname, "", new { @class = "text-danger" })
-            </div>
+            <div>
 
-            <div class="form-group">
-                 @Html.LabelFor(m => m.User.Email)
-                 @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control" })
-                 @Html.ValidationMessageFor(m => m.User.Email, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                 @Html.LabelFor(m => m.User.Password)
-                 @Html.PasswordFor(m => m.User.Password, new { @class = "form-control" })
-                 @Html.ValidationMessageFor(m => m.User.Password, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.User.PicturePath)
-                @Html.TextBox("image", null, new { type = "file", accept = "image/*", @class = "input-file" })
-                @if (Model.User != null && Model.User.PicturePath != null)
+                @using (Html.BeginForm(Model.PostAction, "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                    <img src="@Url.Content(Model.User.PicturePath)" alt="Profile Picture" class="profile-picture"/>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.User.Username)
+                        @if (!Model.EditMode)
+                        {
+                            @Html.TextBoxFor(m => m.User.Username, new { @class = "form-control" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(m => m.User.Username, new { @class = "form-control", disabled = "disabled" })
+                        }
+
+                        @Html.ValidationMessageFor(m => m.User.Username, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.User.Name)
+                        @Html.TextBoxFor(m => m.User.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.User.Name, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.User.Surname)
+                        @Html.TextBoxFor(m => m.User.Surname, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.User.Surname, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.User.Email)
+                        @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.User.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.User.Password)
+                        @Html.PasswordFor(m => m.User.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.User.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.User.PicturePath)
+                        @Html.TextBox("image", null, new { type = "file", accept = "image/*", @class = "input-file" })
+                        @if (Model.User != null && Model.User.PicturePath != null)
+                        {
+                            <img src="@Url.Content(Model.User.PicturePath)" alt="Profile Picture" class="profile-picture" />
+                        }
+                    </div>
+                    if (@Model.AdminMode)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.IsAdmin)
+                            @Html.CheckBoxFor(m => m.IsAdmin)
+                            @Html.LabelFor(m => m.IsBlogger)
+                            @Html.CheckBoxFor(m => m.IsBlogger)
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <input type="submit" value="Confirm" class="btn btn-primary" />
+                    </div>
+
+                    @Html.HiddenFor(m => m.PostAction);
+                    @Html.HiddenFor(m => m.Title);
+                    @Html.HiddenFor(m => m.EditMode);
+                    @Html.HiddenFor(m => m.AdminMode);
+
                 }
             </div>
-            if (@Model.AdminMode)
-            { 
-                <div class="form-group">
-                    @Html.LabelFor(m=>m.IsAdmin)
-                    @Html.CheckBoxFor(m => m.IsAdmin)
-                    @Html.LabelFor(m => m.IsBlogger)
-                    @Html.CheckBoxFor(m => m.IsBlogger)
-                </div>
-            }
-
-            <div class="form-group">
-                <input type="submit" value="Confirm" class="btn btn-primary" /> 
-            </div>
-            
-            @Html.HiddenFor(m => m.PostAction);
-            @Html.HiddenFor(m => m.Title);
-            @Html.HiddenFor(m => m.EditMode);
-            @Html.HiddenFor(m => m.AdminMode);   
-        }
-    </div>    
+    </div>
 </div>
 <div class=" row">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })

@@ -62,15 +62,15 @@ namespace BlogApp.Web.Controllers
                 //article.Layout = ViewBag.Layout;
                 //article.Type = ViewBag.Type;
                 if (image != null)
-                    {
-                        var imageData = new byte[image.ContentLength];
-                        image.InputStream.Read(imageData, 0, image.ContentLength);
-                        articleManager.UpdateArticle(article,imageData);
-                    }
-                    else
-                    {
-                        articleManager.UpdateArticle(article,null);
-                    }
+                {
+                    var imageData = new byte[image.ContentLength];
+                    image.InputStream.Read(imageData, 0, image.ContentLength);
+                    articleManager.UpdateArticle(article, imageData);
+                }
+                else
+                {
+                    articleManager.UpdateArticle(article, null);
+                }
                 return RedirectToAction("ArticleView", new { id = article.Id });
             }
             else
@@ -196,10 +196,12 @@ namespace BlogApp.Web.Controllers
         {
             var user = (User)Session["Login"];
 
-           
-            commentManager.AddComment(comment);
+           if(comment != null || !String.IsNullOrWhiteSpace(comment.Text))
+                commentManager.AddComment(comment);
 
             return RedirectToAction("ArticleView", new { id = comment.ArticleId });
+           
+            
         }
 
         [HttpGet]
