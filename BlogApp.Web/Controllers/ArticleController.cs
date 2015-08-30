@@ -194,7 +194,7 @@ namespace BlogApp.Web.Controllers
             newComment.ParentId = comment.ParentId;
             
             commentManager.AddComment(newComment);
-            userManager.UpdateUserComments(user.Id, comment);
+            userManager.UpdateUserComments(user.Id, newComment);
             
             return RedirectToAction("ArticleView", new { id = comment.ArticleId });
         }
@@ -213,7 +213,6 @@ namespace BlogApp.Web.Controllers
 
             return RedirectToAction("ArticleView", new { id = comment.ArticleId });
            
-            
         }
 
         [HttpGet]
