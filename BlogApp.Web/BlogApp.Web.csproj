@@ -181,6 +181,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="ClientBin\BlogApp.VideoPlayer.xap" />
+    <Content Include="Content\bell.png" />
     <Content Include="Content\blur-background-6.jpg" />
     <Content Include="Content\blurred-background2.jpg" />
     <Content Include="Content\bootstrap-theme.css" />

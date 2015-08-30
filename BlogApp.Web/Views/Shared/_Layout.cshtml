@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - BlogApp</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/themes/base/jqueryui")
     @*@Scripts.Render("~/bundles/modernizr")*@
@@ -18,10 +18,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("BlogApp", "Home", "User", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" style="float:left">
                     <li>@Html.ActionLink("Home", "Home", "User")</li>
                     
                     @if (Session["Login"] != null && ((BlogApp.Models.User)Session["Login"]).Roles.Any(r => r.Type == BlogApp.Models.RoleType.Administrator))
@@ -44,9 +44,13 @@
                     @if (Session["Login"] != null && ((BlogApp.Models.User)Session["Login"]).Roles.Any(r => r.Type == BlogApp.Models.RoleType.Blogger))
                     {
 
-                        <li>@Html.ActionLink("Edit profile", "Edit", "User", new { Id = ((BlogApp.Models.User)Session["Login"]).Id },null)</li>
+                        <li>@Html.ActionLink("Edit profile", "Edit", "User", new { userId = ((BlogApp.Models.User)Session["Login"]).Id },null)</li>
                         <li>@Html.ActionLink("My Articles", "MyArticles", "Article", new { userId = ((BlogApp.Models.User)Session["Login"]).Id },null)</li>
                     }
+                    </ul>
+                <ul class="nav navbar-nav" style="float:right">
+                    <li><span style="background-image:url('Content/bell.png')"></span></li>
+                    <li>@Html.ActionLink("Log out", "LogOut", "User")</li>
                 </ul>
                 @*@Html.Partial("_LoginPartial")*@
             </div>

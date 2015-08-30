@@ -28,13 +28,6 @@ namespace BlogApp.Web.Controllers
             this.logger = logger;
         }
 
-        [Authorization(Role = RoleType.Administrator)]
-        public ActionResult Index()
-        {
-
-            return View();
-        }
-
         public ActionResult Login()
         {
             return View();
@@ -224,5 +217,10 @@ namespace BlogApp.Web.Controllers
             }
         }
 
+        public ActionResult LogOut()
+        {
+            Session["Login"] = null;
+            return RedirectToAction("Login");
+        }
     }
 }
