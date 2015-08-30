@@ -15,5 +15,6 @@ namespace BlogApp.Manager.RequiredInterfaces
         List<int> GetArticlesPerMonth(int year);
 
         List<Article> GetPublicArticles(int id);
+        List<Article> GetArticles(int userId);
     }
 }

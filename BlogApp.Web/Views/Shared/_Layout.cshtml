@@ -45,7 +45,7 @@
                     {
 
                         <li>@Html.ActionLink("Edit profile", "Edit", "User", new { Id = ((BlogApp.Models.User)Session["Login"]).Id },null)</li>
-                        <li>@Html.ActionLink("My Articles", "MyArticles", "Article")</li>
+                        <li>@Html.ActionLink("My Articles", "MyArticles", "Article", new { userId = ((BlogApp.Models.User)Session["Login"]).Id },null)</li>
                     }
                 </ul>
                 @*@Html.Partial("_LoginPartial")*@

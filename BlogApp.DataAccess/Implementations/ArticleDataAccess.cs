@@ -41,6 +41,7 @@ namespace BlogApp.DataAccess.Implementations
             using (var db = new BlogContext())
             {
                 var articles = (from a in db.Articles.Include(a => a.Author)
+                                where a.Type == ArticleType.Public
                                 select a)
                                 .OrderBy(a => a.ModificationdDate)
                                 .ThenBy(a => a.CreationDate)
@@ -113,6 +114,17 @@ namespace BlogApp.DataAccess.Implementations
                 return query;
             }
 
+        }
+
+        public List<Article> GetArticles(int userId)
+        {
+            using (var db = new BlogContext())
+            {
+                var articles = (from a in db.Articles.Include(a => a.Author)
+                                where a.AuthorId == userId
+                                select a).ToList();
+                return articles;
+            }
         }
         
     }

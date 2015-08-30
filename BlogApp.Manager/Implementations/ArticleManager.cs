@@ -186,5 +186,10 @@ namespace BlogApp.Manager.Implementations
             }
             AddArticle(article);
         }
+
+        public List<Article> GetArticles(int userId)
+        {
+            return articleDataAccess.GetArticles(userId);
+        }
     }
 }

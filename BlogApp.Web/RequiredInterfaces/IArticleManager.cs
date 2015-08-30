@@ -18,6 +18,7 @@ namespace BlogApp.Web.RequiredInterfaces
         List<int> GetArticlesPerMonth(int year);
         List<Article> GetPublicArticles(int id);
         void CreateArticle(Article article, Byte[] ImageBytes);
+        List<Article> GetArticles(int userId);
 
     }
 }

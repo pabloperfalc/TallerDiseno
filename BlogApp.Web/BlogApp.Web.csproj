@@ -351,6 +351,7 @@
     <Content Include="Views\Video\ImportVideos.cshtml" />
     <Content Include="Views\Shared\ErrorPage.cshtml" />
     <Content Include="Views\Article\List.cshtml" />
+    <Content Include="Views\Article\MyArticles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -372,9 +373,6 @@
       <Project>{445964e7-0321-4075-9883-31930aac6788}</Project>
       <Name>BlogApp.Models</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Article\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Layout.cshtml" />

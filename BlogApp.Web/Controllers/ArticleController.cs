@@ -37,7 +37,7 @@ namespace BlogApp.Web.Controllers
             return View("CreateArticle", viewModel);
         }
 
-        //[Authorization(Role = RoleType.Blogger)]
+        [Authorization(Role = RoleType.Blogger)]
         public ActionResult CreateArticle()
         {
             var viewModel = new RegisterArticleViewModel
@@ -51,6 +51,7 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpPost]
+        [Authorization(Role = RoleType.Blogger)]
         public async Task<ActionResult> EditArticle(Article article, HttpPostedFileBase image)
         {
             List<Tuple<string, string>> errors = articleManager.ValidateArticle(article);
@@ -83,7 +84,7 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpPost]
-        //[Authorization(Role = RoleType.Blogger)]
+        [Authorization(Role = RoleType.Blogger)]
         public async Task<ActionResult> CreateArticle(Article article, HttpPostedFileBase image)
         {
             if (Request.Form["Confirm"] != null)
@@ -158,7 +159,7 @@ namespace BlogApp.Web.Controllers
             return View(0);
         }
 
-        //[Authorization(Role = RoleType.Blogger)]
+        [Authorization(Role = RoleType.Blogger)]
         public ActionResult ArticleView(int id)
         {
             var article = articleManager.GetArticleById(id);
@@ -202,10 +203,19 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpGet]
-        //[Authorization(Role = RoleType.Blogger)]
+        [Authorization(Role = RoleType.Blogger)]
         public ActionResult List(int id)
         {
             List<Article> lstPublicArticles = articleManager.GetPublicArticles(id);
+            return View(lstPublicArticles);
+
+        }
+
+        [HttpGet]
+        [Authorization(Role = RoleType.Blogger)]
+        public ActionResult MyArticles(int userId)
+        {
+            List<Article> lstPublicArticles = articleManager.GetArticles(userId);
             return View(lstPublicArticles);
 
         }
