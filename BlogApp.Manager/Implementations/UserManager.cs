@@ -133,5 +133,9 @@ namespace BlogApp.Manager.Implementations
         {
             return userDataAccess.GetMostActiveUsers(fromDate, toDate);
         }
+        public void UpdateUserComments(int userId, Comment comment)
+        {
+            userDataAccess.UpdateUserComments(userId, comment);
+        }
     }
 }

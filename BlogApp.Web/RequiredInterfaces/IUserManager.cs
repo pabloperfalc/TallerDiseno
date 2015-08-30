@@ -18,5 +18,7 @@ namespace BlogApp.Web.RequiredInterfaces
         User GetUserById(int userId);
         List<User> GetUsers();
         List<Tuple<User, int>> GetMostActiveUsers(DateTime fromDate, DateTime toDate);
+        void UpdateUserComments(int userId, Comment comment);
+
     }
 }

@@ -117,5 +117,19 @@ namespace BlogApp.DataAccess.Implementations
 
             }
         }
+
+        public void UpdateUserComments(int userId, Comment comment)
+        {
+            using (var db = new BlogContext())
+            {
+                db.Comments.Attach(comment);
+                var query = (from u in db.Users.Include(u => u.Comments)
+                             where u.IsActive == true && u.Id == userId
+                             select u).FirstOrDefault<User>();
+
+                query.Comments.Add(comment);
+                db.SaveChanges();
+            }
+        }
     }
 }
