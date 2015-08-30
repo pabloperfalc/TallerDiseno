@@ -34,31 +34,42 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row comment-row">
+    <div class="col-lg-12 blog-main">
+        @using (Html.BeginForm("CommentArticle", "Article", FormMethod.Post))
+        {
+            <div class="form-group">
+                <label for="Text">Comment this article</label>
 
-    @using (Html.BeginForm("CommentArticle", "Article", FormMethod.Post))
-    {
-        <div class="form-group">
-            <label for="Text">Comment this article</label>
-            
-            @Html.TextArea("Text", "", new { @class = "form-control", rows=3})
-            @Html.Hidden("ArticleId", Model.Id)
-        </div>
-         <input type="submit" value="Comment" class="btn btn-default" />
-    }
-
+                @Html.TextArea("Text", "", new { @class = "form-control", rows = 3 })
+                @Html.Hidden("ArticleId", Model.Id)
+            </div>
+            <input type="submit" value="Comment" class="btn btn-default" />
+        }
+    </div>
 </div>
 
-<div class="row">
-    @foreach (var comment in Model.Comments)
-    {
-        @Html.Partial("_Comment", comment);
-    }
+<div class="row comment-row">
+    <div class="col-lg-12 blog-main">
+        @foreach (var comment in Model.Comments)
+        {
+            @Html.Partial("_Comment", comment);
+        }
+    </div>
 </div>
 @section scripts {
     <script type="text/javascript">
-        function Toggle(id) {
+        function Toggle(id,element) {
             $(id).toggle("fast");
+
+            if (element) {
+                var el = $(element);
+                el.text() == el.data("text-swap")
+                ? el.text(el.data("text-original"))
+                : el.text(el.data("text-swap"));
+            }
+
+            
         }
     </script>
 }

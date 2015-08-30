@@ -26,14 +26,16 @@ namespace BlogApp.Web.Controllers
         [HttpGet]
         public ActionResult EditArticle(int articleId)
         {
+            var article = articleManager.GetArticleById(articleId);
             var viewModel = new RegisterArticleViewModel
             {
-                Article = articleManager.GetArticleById(articleId),
+                Article = article,
                 Title = "Edit Article",
                 EditMode = true,
                 PostAction = "EditArticle",
-
             };
+            viewModel.IsPrivate = viewModel.Article.Type == ArticleType.Private;
+            viewModel.IsPublic = viewModel.Article.Type == ArticleType.Public;
             return View("CreateArticle", viewModel);
         }
 
@@ -51,27 +53,30 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpPost]
-        [Authorization(Role = RoleType.Blogger)]
-        public async Task<ActionResult> EditArticle(Article article, HttpPostedFileBase image)
+        //[Authorization(Role = RoleType.Blogger)]
+        public ActionResult EditArticle(RegisterArticleViewModel viewModel, HttpPostedFileBase image)
         {
-            List<Tuple<string, string>> errors = articleManager.ValidateArticle(article);
+
+            bool test = ModelState.IsValid;
+
+            List<Tuple<string, string>> errors = articleManager.ValidateArticle(viewModel.Article);
             if (errors.Count == 0)
             {
-                article.ModificationdDate = DateTime.Now;
-                article.CreationDate = DateTime.Now;
+                viewModel.Article.ModificationdDate = DateTime.Now;
+                viewModel.Article.CreationDate = DateTime.Now;
                 //article.Layout = ViewBag.Layout;
                 //article.Type = ViewBag.Type;
                 if (image != null)
-                    {
-                        var imageData = new byte[image.ContentLength];
-                        image.InputStream.Read(imageData, 0, image.ContentLength);
-                        articleManager.UpdateArticle(article,imageData);
-                    }
-                    else
-                    {
-                        articleManager.UpdateArticle(article,null);
-                    }
-                return RedirectToAction("ArticleView", new { id = article.Id });
+                {
+                    var imageData = new byte[image.ContentLength];
+                    image.InputStream.Read(imageData, 0, image.ContentLength);
+                    articleManager.UpdateArticle(viewModel.Article, imageData);
+                }
+                else
+                {
+                    articleManager.UpdateArticle(viewModel.Article, null);
+                }
+                return RedirectToAction("ArticleView", new { id = viewModel.Article.Id });
             }
             else
             {
@@ -79,7 +84,7 @@ namespace BlogApp.Web.Controllers
                 {
                     ModelState.AddModelError(t.Item1, t.Item2);
                 }
-                return View(article);
+                return View(viewModel);
             }
         }
 
@@ -196,10 +201,12 @@ namespace BlogApp.Web.Controllers
         {
             var user = (User)Session["Login"];
 
-           
-            commentManager.AddComment(comment);
+           if(comment != null || !String.IsNullOrWhiteSpace(comment.Text))
+                commentManager.AddComment(comment);
 
             return RedirectToAction("ArticleView", new { id = comment.ArticleId });
+           
+            
         }
 
         [HttpGet]

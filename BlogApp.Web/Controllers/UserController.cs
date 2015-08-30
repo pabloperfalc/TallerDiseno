@@ -39,7 +39,7 @@ namespace BlogApp.Web.Controllers
             if (userManager.ValidateLogin(ref user))
             {
                 logger.Log("", LogType.Login, user.Username);
-                //User u = userManager.GetUserByUsername(user.Username);
+
                 Session["Login"] = user;
                 return RedirectToAction("Home");
             }
@@ -87,14 +87,14 @@ namespace BlogApp.Web.Controllers
             return View("Register", viewModel);
         }
 
-        public ActionResult Edit(int userId)
+        public ActionResult Edit(int Id)
         {
              var isAdmin =  Session["Login"] != null && ((User)Session["Login"]).Roles != null && ((User)Session["Login"]).Roles.Any(role => role.Type == RoleType.Administrator);
 
-             if (isAdmin || ((User)Session["Login"]).Id == userId)
+             if (isAdmin || ((User)Session["Login"]).Id == Id)
              {
 
-                 var user = userManager.GetUserById(userId);
+                 var user = userManager.GetUserById(Id);
                  var adminMode = isAdmin;
                  var postAction = adminMode ? "AddEditUser" : "Register";
                  var viewModel = new RegisterUserViewModel
@@ -164,7 +164,7 @@ namespace BlogApp.Web.Controllers
                     {
                         roles.Add(RoleType.Blogger);
                     }
-
+                    
                     userManager.AddUser(userViewModel.User, new List<RoleType>());
                     return RedirectToAction("Home");
                 }

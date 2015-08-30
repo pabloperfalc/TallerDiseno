@@ -15,5 +15,9 @@ namespace BlogApp.Web.Models
         public bool EditMode { get; set; }
 
         public string PostAction { get; set; }
+
+        public bool IsPublic { get; set; }
+        public bool IsPrivate { get; set; }
+
     }
 }
