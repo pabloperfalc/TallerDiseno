@@ -28,17 +28,22 @@ namespace BlogApp.DataAccess.Implementations
         {
             using (var db = new BlogContext())
             {
-                var query = (from u in db.Users
+                var query = (from u in db.Users.Include(r=>r.Roles)
                              where u.IsActive == true && u.Id == user.Id
                              select u).FirstOrDefault<User>();
-              
+
+
+                var types = user.Roles.Select(r => r.Type);
+
+                var newRoles = db.Roles
+                              .Where(r => types.Contains(r.Type)).ToList();
                 query.Email = user.Email;
                 query.Name = user.Name;
                 query.Surname = user.Surname;
                 query.Password = user.Password;
                 query.PicturePath = user.PicturePath;
                 query.Roles.Clear();
-                query.Roles = user.Roles;
+                query.Roles.AddRange(newRoles);
                 db.SaveChanges();
             }
         }
