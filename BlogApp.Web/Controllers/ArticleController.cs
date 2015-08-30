@@ -16,11 +16,13 @@ namespace BlogApp.Web.Controllers
 
         private readonly IArticleManager articleManager;
         private readonly ICommentManager commentManager;
+        private readonly IUserManager userManager;
 
-        public ArticleController(IArticleManager articleManager, ICommentManager commentManager)
+        public ArticleController(IArticleManager articleManager, ICommentManager commentManager, IUserManager userManager)
         {
             this.articleManager = articleManager;
             this.commentManager = commentManager;
+            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -39,7 +41,7 @@ namespace BlogApp.Web.Controllers
             return View("CreateArticle", viewModel);
         }
 
-        [Authorization(Role = RoleType.Blogger)]
+        [Authorization(Roles = new [] { RoleType.Blogger} )]
         public ActionResult CreateArticle()
         {
             var viewModel = new RegisterArticleViewModel
@@ -53,7 +55,7 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpPost]
-        //[Authorization(Role = RoleType.Blogger)]
+        //[Authorization(Roles = new [] { RoleType.Blogger })]
         public ActionResult EditArticle(RegisterArticleViewModel viewModel, HttpPostedFileBase image)
         {
 
@@ -89,7 +91,7 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpPost]
-        [Authorization(Role = RoleType.Blogger)]
+        [Authorization(Roles = new [] { RoleType.Blogger })]
         public async Task<ActionResult> CreateArticle(Article article, HttpPostedFileBase image)
         {
             if (Request.Form["Confirm"] != null)
@@ -141,14 +143,14 @@ namespace BlogApp.Web.Controllers
             }
         }
 
-        [Authorization(Role = RoleType.Blogger)]
+        [Authorization(Roles = new [] { RoleType.Blogger })]
         public ActionResult Import()
         {
             return View(-1);
         }
 
         [HttpPost]
-        [Authorization(Role = RoleType.Blogger)]
+        [Authorization(Roles = new [] { RoleType.Blogger })]
         public async Task<ActionResult> Import(HttpPostedFileBase file)
         {
             if (file != null)
@@ -164,7 +166,7 @@ namespace BlogApp.Web.Controllers
             return View(0);
         }
 
-        [Authorization(Role = RoleType.Blogger)]
+        [Authorization(Roles = new [] { RoleType.Blogger })]
         public ActionResult ArticleView(int id)
         {
             var article = articleManager.GetArticleById(id);
@@ -181,7 +183,7 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpPost]
-        [Authorization(Role = RoleType.Blogger)]
+        [Authorization(Roles = new [] { RoleType.Blogger })]
         public ActionResult AddComment(Comment comment)
         {
             var user = (User)Session["Login"];
@@ -190,27 +192,31 @@ namespace BlogApp.Web.Controllers
             newComment.Text = comment.Text;
             newComment.ArticleId = comment.ArticleId;
             newComment.ParentId = comment.ParentId;
+            
             commentManager.AddComment(newComment);
-
+            userManager.UpdateUserComments(user.Id, newComment);
+            
             return RedirectToAction("ArticleView", new { id = comment.ArticleId });
         }
 
         [HttpPost]
-        [Authorization(Role = RoleType.Blogger)]
+        [Authorization(Roles = new [] { RoleType.Blogger })]
         public ActionResult CommentArticle(Comment comment)
         {
             var user = (User)Session["Login"];
 
-           if(comment != null || !String.IsNullOrWhiteSpace(comment.Text))
+            if (comment != null || !String.IsNullOrWhiteSpace(comment.Text)) { 
                 commentManager.AddComment(comment);
+
+                userManager.UpdateUserComments(user.Id, comment);
+            }
 
             return RedirectToAction("ArticleView", new { id = comment.ArticleId });
            
-            
         }
 
         [HttpGet]
-        [Authorization(Role = RoleType.Blogger)]
+        [Authorization(Roles = new [] { RoleType.Blogger })]
         public ActionResult List(int id)
         {
             List<Article> lstPublicArticles = articleManager.GetPublicArticles(id);
@@ -219,7 +225,7 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpGet]
-        [Authorization(Role = RoleType.Blogger)]
+        [Authorization(Roles = new [] { RoleType.Blogger })]
         public ActionResult MyArticles(int userId)
         {
             List<Article> lstPublicArticles = articleManager.GetArticles(userId);

@@ -8,7 +8,7 @@ namespace BlogApp.Web.RequiredInterfaces
     public interface IUserManager
     {
         void AddUser(User user, List<RoleType> roles, Byte[] ImageBytes);
-        void ModifyUser(User user, Byte[] ImageByte);
+        void ModifyUser(User user,List<RoleType> roles, Byte[] ImageByte);
         void RemoveUser(User user);
         bool ValidateLogin(ref User user);
         bool ValidateRegistration(User user);
@@ -18,5 +18,7 @@ namespace BlogApp.Web.RequiredInterfaces
         User GetUserById(int userId);
         List<User> GetUsers();
         List<Tuple<User, int>> GetMostActiveUsers(DateTime fromDate, DateTime toDate);
+        void UpdateUserComments(int userId, Comment comment);
+
     }
 }

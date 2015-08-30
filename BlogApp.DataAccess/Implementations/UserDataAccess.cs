@@ -15,6 +15,10 @@ namespace BlogApp.DataAccess.Implementations
         {
             using (var db = new BlogContext())
             {
+                foreach (Role r in user.Roles)
+                {
+                    db.Roles.Attach(r);
+                }
                 db.Users.Add(user);
                 db.SaveChanges();
             }
@@ -24,14 +28,16 @@ namespace BlogApp.DataAccess.Implementations
         {
             using (var db = new BlogContext())
             {
-                var query = (from u in db.Users.Include(u => u.Roles)
+                var query = (from u in db.Users
                              where u.IsActive == true && u.Id == user.Id
                              select u).FirstOrDefault<User>();
+              
                 query.Email = user.Email;
                 query.Name = user.Name;
                 query.Surname = user.Surname;
                 query.Password = user.Password;
                 query.PicturePath = user.PicturePath;
+                query.Roles.Clear();
                 query.Roles = user.Roles;
                 db.SaveChanges();
             }
@@ -116,6 +122,20 @@ namespace BlogApp.DataAccess.Implementations
 
                 return lstMostActive;
 
+            }
+        }
+
+        public void UpdateUserComments(int userId, Comment comment)
+        {
+            using (var db = new BlogContext())
+            {
+                db.Comments.Attach(comment);
+                var query = (from u in db.Users.Include(u => u.Comments)
+                             where u.IsActive == true && u.Id == userId
+                             select u).FirstOrDefault<User>();
+
+                query.Comments.Add(comment);
+                db.SaveChanges();
             }
         }
     }

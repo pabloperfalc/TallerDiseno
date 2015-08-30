@@ -36,7 +36,7 @@ namespace BlogApp.Manager.Implementations
             userDataAccess.AddUser(user);         
         }
 
-        public void ModifyUser(User user, Byte[] ImageBytes)
+        public void ModifyUser(User user,List<RoleType> roles, Byte[] ImageBytes)
         {
             if (ImageBytes != null)
             {
@@ -54,6 +54,7 @@ namespace BlogApp.Manager.Implementations
                     user.PicturePath = usAux.PicturePath;
                 }
             }
+            user.Roles = roles.Select(r => roleDataAccess.GetRoleByType(r)).ToList();
             userDataAccess.ModifyUser(user);
         }
 
@@ -166,6 +167,10 @@ namespace BlogApp.Manager.Implementations
         public List<Tuple<User, int>> GetMostActiveUsers(DateTime fromDate, DateTime toDate)
         {
             return userDataAccess.GetMostActiveUsers(fromDate, toDate);
+        }
+        public void UpdateUserComments(int userId, Comment comment)
+        {
+            userDataAccess.UpdateUserComments(userId, comment);
         }
     }
 }
