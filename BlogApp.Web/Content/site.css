@@ -16,6 +16,24 @@
     margin-bottom:10px;
 
 }
-.report-inline {
+
+.circle
+{
+    width:25px;
+    height:25px;
+    border-radius:50%;
+    font-size:12px;
+    color:#fff;
+    line-height:25px;
+    text-align:center;
+    background-color:red;
+    display:inline-block;
+    margin-top:11px;
+}
+
+.notification-bell {
+    height:25px;
+    margin-top:11px;
+}.report-inline {
     width: 850px;
 }

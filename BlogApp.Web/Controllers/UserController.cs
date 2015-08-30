@@ -222,5 +222,12 @@ namespace BlogApp.Web.Controllers
             Session["Login"] = null;
             return RedirectToAction("Login");
         }
+
+        public ActionResult GetNotificationCount()
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(1, 20); 
+            return Json(num, JsonRequestBehavior.AllowGet);
+        }
     }
 }

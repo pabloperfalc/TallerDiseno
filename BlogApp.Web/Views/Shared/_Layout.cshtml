@@ -6,8 +6,6 @@
     <title>@ViewBag.Title - BlogApp</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/themes/base/jqueryui")
-    @*@Scripts.Render("~/bundles/modernizr")*@
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -49,8 +47,8 @@
                     }
                     </ul>
                 <ul class="nav navbar-nav" style="float:right">
-                    <li><span style="background-image:url('Content/bell.png')"></span></li>
                     <li>@Html.ActionLink("Log out", "LogOut", "User")</li>
+                    <li><img class="notification-bell" src="@Url.Content("/Content/bell.png")" /><div id="notification" class="circle"></div></li>
                 </ul>
                 @*@Html.Partial("_LoginPartial")*@
             </div>
@@ -77,8 +75,26 @@
         </footer>
     </div>
 
+
+
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            (function doStuff() {
+                $.get("/user/GetNotificationCount", function (data) {
+                    $('#notification').text(data);
+                }).always(function () {
+                    setTimeout(doStuff, 1000);
+                });;
+                
+            }());
+
+        });
+    </script>
+
 </body>
 </html>
