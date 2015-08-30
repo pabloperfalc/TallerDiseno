@@ -30,7 +30,6 @@ namespace BlogApp.DataAccess.Implementations
                 query.Name = user.Name;
                 query.Surname = user.Surname;
                 query.Password = user.Password;
-                query.Username = user.Username;
                 query.PicturePath = user.PicturePath;
                 query.Roles = user.Roles;
                 db.SaveChanges();

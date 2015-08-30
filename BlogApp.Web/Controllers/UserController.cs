@@ -171,7 +171,7 @@ namespace BlogApp.Web.Controllers
                     {
                         roles.Add(RoleType.Blogger);
                     }
-
+                    
                     userManager.AddUser(userViewModel.User, new List<RoleType>());
                     return RedirectToAction("Home");
                 }

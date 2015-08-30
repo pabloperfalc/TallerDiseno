@@ -20,21 +20,21 @@
             @Html.TextAreaFor(m => m.Article.Text, new { @class = "form-control", rows = 5, columns = 2 })
             @Html.ValidationMessageFor(m => m.Article.Text, "", new { @class = "text-danger" })
         </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(m => m.Article.Type):
            <div class="btn-group" data-toggle="buttons">
                <label class="btn btn-primary active">
-                   <input type="radio" name="Public" id="1" checked>
+                   @Html.RadioButtonFor(m => m.Article.Type, Model.IsPublic)
                    Public 
                </label>
-               <label class="btn btn-primary">
-                   <input type="radio" name="Private">
+               <label class="btn btn-primary"> 
+                   @Html.RadioButtonFor(m => m.Article.Type, Model.IsPrivate)
                    Private
                </label>
            </div>
         </div>
-    
+       
         <div class="form-group">
             @Html.LabelFor(m => m.Article.Layout):
         <div class="btn-group" data-toggle="buttons">
@@ -66,7 +66,8 @@
         </div>
         <br />
         <div class="form-group">
-            <input type="submit" name="Confirm" value="Confirm" class="btn btn-primary" />
+            @*<input type="submit" name="Confirm" value="Confirm" class="btn btn-primary" />*@
+            <input type="submit" value="Confirm" class="btn btn-primary" />
             @if (!Model.EditMode)
             {
                 <div class="form-group">
@@ -75,6 +76,11 @@
                     </p>
                 </div>
             }
+            
+            @Html.HiddenFor(m=>m.Article.Id)
+            @Html.HiddenFor(m=>m.EditMode)
+            @Html.HiddenFor(m =>m.Title)
+            @Html.HiddenFor(m => m.PostAction)
         </div>
         }
 </div>

@@ -82,6 +82,10 @@
                     @Html.HiddenFor(m => m.Title);
                     @Html.HiddenFor(m => m.EditMode);
                     @Html.HiddenFor(m => m.AdminMode);
+                    @Html.HiddenFor(m=>m.User.Id)
+                    @Html.HiddenFor(m=>m.User.Username)
+                    @Html.HiddenFor(m=>m.User.IsActive)
+                    
 
                 }
             </div>
