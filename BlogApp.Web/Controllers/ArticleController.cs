@@ -234,5 +234,17 @@ namespace BlogApp.Web.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult UnreadComments()
+        {
+            var comments = commentManager.GetUnreadComments(((User)Session["Login"]).Id);
+            return View(comments);
+        }
+
+        public ActionResult GetNotificationCount()
+        {            
+            return Json(commentManager.GetUnreadCommentsCount(((User)Session["Login"]).Id), JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

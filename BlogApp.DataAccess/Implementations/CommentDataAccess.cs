@@ -43,5 +43,32 @@ namespace BlogApp.DataAccess.Implementations
             }
         }
 
+        public List<Comment> GetUnreadComments(int userId)
+        {
+            using (var db = new BlogContext())
+            {
+                return GetUnreadCommenstQuery(db,userId).ToList();
+            }
+        }
+
+        public int GetUnreadCommentsCount(int userId)
+        {
+            using (var db = new BlogContext())
+            {
+                return GetUnreadCommenstQuery(db, userId).Count();
+            }
+        }
+
+        private IQueryable<Comment> GetUnreadCommenstQuery(BlogContext db,int userId)
+        { 
+            return 
+                    from article in db.Articles
+                    from commnet in article.Comments
+                    where article.AuthorId == userId
+                    where !commnet.ParentId.HasValue
+                    where !commnet.Read
+                    select commnet;
+        }
+
     }
 }

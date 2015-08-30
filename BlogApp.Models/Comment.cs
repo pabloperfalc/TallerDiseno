@@ -22,6 +22,8 @@ namespace BlogApp.Models
         public int ArticleId { get; set; }
 
         public Article Article { get; set; }
+
+        public bool Read { get; set; }
         
       
     }
