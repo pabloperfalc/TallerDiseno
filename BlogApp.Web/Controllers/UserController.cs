@@ -145,7 +145,7 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpPost]
-        [Authorization(Role = RoleType.Administrator)]
+        [Authorization(Roles = new [] { RoleType.Administrator })]
         public ActionResult AddEditUser(RegisterUserViewModel userViewModel, HttpPostedFileBase image)
         {
             List<Tuple<string, string>> errors = userManager.ValidateUser(userViewModel.User);
