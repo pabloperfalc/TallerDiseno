@@ -9,7 +9,7 @@ namespace BlogApp.Web
 {
     public class AuthorizationAttribute:ActionFilterAttribute,IActionFilter
     {
-        public RoleType  Role { get; set; }
+        public RoleType?  Role { get; set; }
 
         void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -17,7 +17,7 @@ namespace BlogApp.Web
             Controller controller = filterContext.Controller as Controller; 
             if (controller != null)
             {
-                if (session["Login"] == null || ((User)session["Login"]).Roles == null || !((User)session["Login"]).Roles.Any(role=>role.Type == Role))
+                if (session["Login"] == null || ((User)session["Login"]).Roles == null || (Role.HasValue && !((User)session["Login"]).Roles.Any(role=>role.Type == Role)))
                 { 
                     filterContext.Result = new RedirectResult("~/User/Login");
                     return;
