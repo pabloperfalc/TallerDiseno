@@ -59,7 +59,7 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.User.PicturePath)
                         @Html.TextBox("image", null, new { type = "file", accept = "image/*", @class = "input-file" })
-                        @if (Model.User != null && Model.User.PicturePath != null)
+                        @if (Model.User != null && Model.User.PicturePath != null && !Model.User.PicturePath.Equals(String.Empty))
                         {
                             <img src="@Url.Content(Model.User.PicturePath)" alt="Profile Picture" class="profile-picture" />
                         }

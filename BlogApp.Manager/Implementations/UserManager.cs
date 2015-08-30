@@ -3,6 +3,7 @@ using BlogApp.Models;
 using BlogApp.Web.RequiredInterfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -20,20 +21,53 @@ namespace BlogApp.Manager.Implementations
             this.roleDataAccess = roleDataAccess;
         }
 
-        public void AddUser(User user, List<RoleType> roles)
+        public void AddUser(User user, List<RoleType> roles, Byte[] ImageBytes)
         {
-            var existsUser = GetUserByUsername(user.Username);
-            if (existsUser == null)
+            if (ImageBytes != null)
             {
-                user.IsActive = true;
-                user.Roles = roles.Select(r => roleDataAccess.GetRoleByType(r)).ToList();
-                userDataAccess.AddUser(user);
+                user.PicturePath = BytesImage(ImageBytes);
             }
+            else
+            {
+                user.PicturePath = String.Empty;
+            }
+            user.IsActive = true;
+            user.Roles = roles.Select(r => roleDataAccess.GetRoleByType(r)).ToList();
+            userDataAccess.AddUser(user);         
         }
 
-        public void ModifyUser(User user)
+        public void ModifyUser(User user, Byte[] ImageBytes)
         {
+            if (ImageBytes != null)
+            {
+                user.PicturePath = BytesImage(ImageBytes);
+            }
+            else
+            {
+                User usAux = userDataAccess.GetUserById(user.Id);
+                if (usAux.PicturePath.Equals(String.Empty))
+                {
+                    user.PicturePath = String.Empty;
+                }
+                else
+                {
+                    user.PicturePath = usAux.PicturePath;
+                }
+            }
             userDataAccess.ModifyUser(user);
+        }
+
+        private string BytesImage(Byte[] ImgBytes)
+        {
+            string name = Guid.NewGuid().ToString() + ".jpg";
+            string path = System.AppDomain.CurrentDomain.BaseDirectory + "ProfilePictures/" + name;
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+            File.WriteAllBytes(path, ImgBytes);
+            path = "/ProfilePictures/" + name;
+            return path;
         }
 
         public void RemoveUser(User user) 

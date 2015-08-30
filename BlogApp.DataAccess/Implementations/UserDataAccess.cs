@@ -10,6 +10,7 @@ namespace BlogApp.DataAccess.Implementations
 {
     public class UserDataAccess : IUserDataAccess
     {
+
         public void AddUser(User user)
         {
             using (var db = new BlogContext())
