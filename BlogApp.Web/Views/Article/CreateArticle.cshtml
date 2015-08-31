@@ -7,7 +7,7 @@
 <h2>CreateArticle</h2>
 
 <div class="row">
-    @using (Html.BeginForm(Model.PostAction, "Article", FormMethod.Post, new { ReturnUrl = ViewBag.ReturnUrl, enctype = "multipart/form-data" }))
+    @using (Html.BeginForm(Model.PostAction, "Article", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div class="form-group">
             @Html.LabelFor(m => m.Article.Name)
@@ -24,12 +24,12 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Article.Type):
            <div class="btn-group" data-toggle="buttons">
-               <label class="btn btn-primary active">
-                   @Html.RadioButtonFor(m => m.Article.Type, Model.IsPublic)
-                   Public 
+               <label class="btn btn-primary @(@Model.Article.Type == BlogApp.Models.ArticleType.Public ? "active" : "")">
+                   @Html.RadioButtonFor(m => m.Article.Type, (int)BlogApp.Models.ArticleType.Public, Model.Article.Type == BlogApp.Models.ArticleType.Public ? new { @checked = "checked" } : null)
+                   Public
                </label>
-               <label class="btn btn-primary"> 
-                   @Html.RadioButtonFor(m => m.Article.Type, Model.IsPrivate)
+               <label class="btn btn-primary @(@Model.Article.Type == BlogApp.Models.ArticleType.Private ? "active" : "")">
+                   @Html.RadioButtonFor(m => m.Article.Type, (int)BlogApp.Models.ArticleType.Private, Model.Article.Type == BlogApp.Models.ArticleType.Private ? new { @checked = "checked" } : null)
                    Private
                </label>
            </div>
@@ -38,21 +38,21 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Article.Layout):
         <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-primary active">
-                <input type="radio" name="Layout" id="1" autocomplete="off" checked>
-                None 
+            <label class="btn btn-primary @(@Model.Article.Layout == BlogApp.Models.ArticleLayout.NoPicture ? "active" : "")">
+                @Html.RadioButtonFor(m => m.Article.Layout, (int)BlogApp.Models.ArticleLayout.NoPicture, Model.Article.Layout == BlogApp.Models.ArticleLayout.NoPicture ? new { @checked = "checked" } : null)
+                None
             </label>
-            <label class="btn btn-primary">
-                <input type="radio" name="Layout" id="2" autocomplete="off">
+            <label class="btn btn-primary @(@Model.Article.Layout == BlogApp.Models.ArticleLayout.Top ? "active" : "")">
+                @Html.RadioButtonFor(m => m.Article.Layout, (int)BlogApp.Models.ArticleLayout.Top, Model.Article.Layout == BlogApp.Models.ArticleLayout.Top ? new { @checked = "checked" } : null)
                 Top
             </label>
-            <label class="btn btn-primary">
-                <input type="radio" name="Layout" id="3" autocomplete="off">
-                Left
+            <label class="btn btn-primary @(@Model.Article.Layout == BlogApp.Models.ArticleLayout.Bottom ? "active" : "")">
+                @Html.RadioButtonFor(m => m.Article.Layout, (int)BlogApp.Models.ArticleLayout.Bottom, Model.Article.Layout == BlogApp.Models.ArticleLayout.Bottom ? new { @checked = "checked" } : null)
+                Botom
             </label>
-            <label class="btn btn-primary">
-                <input type="radio" name="Layout" id="4" autocomplete="off">
-                Bottom
+            <label class="btn btn-primary @(@Model.Article.Layout == BlogApp.Models.ArticleLayout.Left ? "active" : "")">
+                @Html.RadioButtonFor(m => m.Article.Layout, (int)BlogApp.Models.ArticleLayout.Left, Model.Article.Layout == BlogApp.Models.ArticleLayout.Left ? new { @checked = "checked" } : null)
+                Left
             </label>
         </div>
         </div>
@@ -66,8 +66,7 @@
         </div>
         <br />
         <div class="form-group">
-            @*<input type="submit" name="Confirm" value="Confirm" class="btn btn-primary" />*@
-            <input type="submit" value="Confirm" class="btn btn-primary" />
+            <input type="submit" name="Confirm" value="Confirm" class="btn btn-primary" />
             @if (!Model.EditMode)
             {
                 <div class="form-group">

@@ -36,8 +36,6 @@ namespace BlogApp.Web.Controllers
                 EditMode = true,
                 PostAction = "EditArticle",
             };
-            viewModel.IsPrivate = viewModel.Article.Type == ArticleType.Private;
-            viewModel.IsPublic = viewModel.Article.Type == ArticleType.Public;
             return View("CreateArticle", viewModel);
         }
 
@@ -49,6 +47,7 @@ namespace BlogApp.Web.Controllers
                 Title = "Create Article",
                 EditMode = false,
                 PostAction = "CreateArticle",
+                Article = new Article()
 
             };
             return View("CreateArticle", viewModel);
@@ -109,8 +108,6 @@ namespace BlogApp.Web.Controllers
 
                     article.ModificationdDate = DateTime.Now;
                     article.CreationDate = DateTime.Now;
-                    article.Layout = ViewBag.Layout;
-                    //article.Type = ViewBag.Type;
 
                     if (image != null)
                     {
@@ -170,7 +167,7 @@ namespace BlogApp.Web.Controllers
         public ActionResult ArticleView(int id)
         {
             var article = articleManager.GetArticleById(id);
-            if (article == null || article.Type == ArticleType.Private)
+            if (article == null || (article.Type == ArticleType.Private && article.AuthorId != ((User)Session["Login"]).Id))
             {
                 ViewBag.ErrorTitle = "No article was found!";
                 ViewBag.ErrorDescription = "";
@@ -274,13 +271,6 @@ namespace BlogApp.Web.Controllers
 
             return RedirectToAction("UnreadComments");
         }
-
-        [HttpPost]
-        [Authorization(Roles = new[] { RoleType.Blogger })]
-        public ActionResult MarkAsRead(int commentId)
-        {
-            
-            return RedirectToAction("UnreadComments");
-        }
+       
     }
 }
