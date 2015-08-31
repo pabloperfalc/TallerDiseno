@@ -14,5 +14,12 @@ namespace BlogApp.Manager.RequiredInterfaces
         Comment RetriveComments(Comment comment);
 
         List<Comment> GetArticleComments(int articleId);
+        
+        List<Comment> GetUnreadComments(int userId);
+
+        int GetUnreadCommentsCount(int userId);
+
+        void MarkAsRead(int commentId);
+
     }
 }

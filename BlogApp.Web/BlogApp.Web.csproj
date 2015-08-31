@@ -354,6 +354,7 @@
     <Content Include="Views\Article\List.cshtml" />
     <Content Include="Views\Article\MyArticles.cshtml" />
     <Content Include="Views\Video\List.cshtml" />
+    <Content Include="Views\Article\UnreadComments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -26,5 +26,23 @@ namespace BlogApp.Manager.Implementations
         {
             return commentDataAccess.GetArticleComments(articleId);
         }
+
+
+
+
+        public List<Comment> GetUnreadComments(int userId)
+        {
+            return commentDataAccess.GetUnreadComments(userId);
+        }
+
+        public int GetUnreadCommentsCount(int userId)
+        {
+            return commentDataAccess.GetUnreadCommentsCount(userId);
+        }
+
+        public void MarkAsRead(int commentId)
+        {
+            commentDataAccess.MarkAsRead(commentId);
+        }
     }
 }

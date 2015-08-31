@@ -234,5 +234,53 @@ namespace BlogApp.Web.Controllers
         }
 
 
+        [HttpGet]
+        [Authorization(Roles = new[] { RoleType.Blogger })]
+        public ActionResult UnreadComments()
+        {
+            var comments = commentManager.GetUnreadComments(((User)Session["Login"]).Id);
+            return View(comments);
+        }
+
+        [Authorization(Roles = new[] { RoleType.Blogger })]
+        public ActionResult GetNotificationCount()
+        {            
+            return Json(commentManager.GetUnreadCommentsCount(((User)Session["Login"]).Id), JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        [Authorization(Roles = new[] { RoleType.Blogger })]
+        public ActionResult CommentComment(Comment comment, string Command)
+        {
+
+            if (Command.Equals("MarkAsRead", StringComparison.InvariantCultureIgnoreCase))
+            {
+                commentManager.MarkAsRead(comment.ParentId.Value);
+            }
+            else
+            {
+                var user = (User)Session["Login"];
+
+                var newComment = new Comment();
+                newComment.Text = comment.Text;
+                newComment.ArticleId = comment.ArticleId;
+                newComment.ParentId = comment.ParentId;
+
+                commentManager.AddComment(newComment);
+                userManager.UpdateUserComments(user.Id, newComment);
+                commentManager.MarkAsRead(comment.ParentId.Value);
+            }
+
+            return RedirectToAction("UnreadComments");
+        }
+
+        [HttpPost]
+        [Authorization(Roles = new[] { RoleType.Blogger })]
+        public ActionResult MarkAsRead(int commentId)
+        {
+            
+            return RedirectToAction("UnreadComments");
+        }
     }
 }

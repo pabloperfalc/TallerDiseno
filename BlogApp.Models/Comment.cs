@@ -22,7 +22,10 @@ namespace BlogApp.Models
         public int ArticleId { get; set; }
 
         public Article Article { get; set; }
-        
-      
+
+        public bool Read { get; set; }
+
+        public int? AuthorId { get; set; }
+        public User Author { get; set; }
     }
 }

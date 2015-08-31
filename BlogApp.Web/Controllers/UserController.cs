@@ -303,6 +303,7 @@ namespace BlogApp.Web.Controllers
             return RedirectToAction("Login");
         }
 
+
         public ActionResult GetNotificationCount()
         {
             Random rnd = new Random();
