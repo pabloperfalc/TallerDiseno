@@ -191,5 +191,10 @@ namespace BlogApp.Manager.Implementations
         {
             return articleDataAccess.GetArticles(userId);
         }
+
+        public List<Article> SearchArticles(string searchText)
+        {
+            return articleDataAccess.SearchArticles(searchText);
+        }
     }
 }

@@ -126,6 +126,19 @@ namespace BlogApp.DataAccess.Implementations
                 return articles;
             }
         }
+
+        public List<Article> SearchArticles(string searchText)
+        {
+            using (var db = new BlogContext())
+            {
+                var query = (from a in db.Articles.Include(x=>x.Author)
+                             where (a.Name.Contains(searchText) || a.Text.Contains(searchText)) && a.Type == ArticleType.Public
+                             select a).ToList();
+
+                return query;
+
+            }
+        }
         
     }
 }

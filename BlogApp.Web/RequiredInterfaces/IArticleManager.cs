@@ -19,6 +19,7 @@ namespace BlogApp.Web.RequiredInterfaces
         List<Article> GetPublicArticles(int id);
         void CreateArticle(Article article, Byte[] ImageBytes);
         List<Article> GetArticles(int userId);
+        List<Article> SearchArticles(string searchText);
 
     }
 }

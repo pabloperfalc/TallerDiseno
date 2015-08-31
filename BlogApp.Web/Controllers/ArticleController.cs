@@ -8,6 +8,7 @@ using BlogApp.Models;
 using System.Xml;
 using System.IO;
 using BlogApp.Web.Models;
+using BlogApp.ILogger;
 
 namespace BlogApp.Web.Controllers
 {
@@ -17,12 +18,14 @@ namespace BlogApp.Web.Controllers
         private readonly IArticleManager articleManager;
         private readonly ICommentManager commentManager;
         private readonly IUserManager userManager;
+        private readonly ILogger.ILogger logger;
 
-        public ArticleController(IArticleManager articleManager, ICommentManager commentManager, IUserManager userManager)
+        public ArticleController(IArticleManager articleManager, ICommentManager commentManager, IUserManager userManager, ILogger.ILogger logger)
         {
             this.articleManager = articleManager;
             this.commentManager = commentManager;
             this.userManager = userManager;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -271,6 +274,24 @@ namespace BlogApp.Web.Controllers
 
             return RedirectToAction("UnreadComments");
         }
-       
+
+
+        [HttpPost]
+        [Authorization(Roles = new[] { RoleType.Blogger })]
+        public ActionResult MarkAsRead(int commentId)
+        {
+            
+            return RedirectToAction("UnreadComments");
+        }
+
+        [HttpGet]
+        public ActionResult SearchArticle(string searchText)
+        {
+            var user = ((User)Session["Login"]).Username;
+            List<Article> lstSearch = articleManager.SearchArticles(searchText);
+            logger.Log("", LogType.Search, user);
+
+            return View(lstSearch);
+        }
     }
 }

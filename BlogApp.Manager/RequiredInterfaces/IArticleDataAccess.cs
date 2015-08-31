@@ -16,5 +16,6 @@ namespace BlogApp.Manager.RequiredInterfaces
 
         List<Article> GetPublicArticles(int id);
         List<Article> GetArticles(int userId);
+        List<Article> SearchArticles(string searchText);
     }
 }

@@ -8,8 +8,12 @@
     @Styles.Render("~/Content/themes/base/jqueryui")
 </head>
 <body>
+
+
     <div class="navbar navbar-inverse navbar-fixed-top">
+
         <div class="container">
+
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -21,7 +25,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" style="float:left">
                     <li>@Html.ActionLink("Home", "Home", "User")</li>
-                    
+
                     @if (Session["Login"] != null && ((BlogApp.Models.User)Session["Login"]).Roles.Any(r => r.Type == BlogApp.Models.RoleType.Administrator))
                     {
                         <li class="dropdown">
@@ -38,7 +42,7 @@
                                 <li>@Html.ActionLink("List video", "List", "Video")</li>
                             </ul>
                         </li>
-                        
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -59,7 +63,18 @@
                             </ul>
                         </li>
                     }
-                    </ul>
+                </ul>
+
+
+                @using (Html.BeginForm("SearchArticle", "Article", FormMethod.Get, new { @class = "navbar-form navbar-left", role = "Search"}))
+                {
+                        <div class="form-group">
+                            @Html.TextBox("searchText", null, new { @class = "form-control", placeholder = "Search article"})
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                }
+
+
                 <ul class="nav navbar-nav" style="float:right">
                     <li>@Html.ActionLink("Edit profile", "Edit", "User", new { Id = ((BlogApp.Models.User)Session["Login"]).Id }, null)</li>
                     <li>@Html.ActionLink("Log out", "LogOut", "User")</li>
@@ -104,7 +119,7 @@
                 }).always(function () {
                     setTimeout(doStuff, 30000);
                 });;
-                
+
             }());
 
         });

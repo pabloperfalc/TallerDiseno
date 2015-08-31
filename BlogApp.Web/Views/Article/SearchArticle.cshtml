@@ -1,0 +1,24 @@
+﻿@model List<BlogApp.Models.Article>
+
+@{
+    ViewBag.Title = "SearchArticle";
+}
+
+<h2>SearchArticle</h2>
+
+<div class="row">
+    <div class="col-lg-12 blog-main">
+        @foreach (var article in Model)
+        {
+            <div class="blog-post">
+                <h2 class="blog-post-title">@Html.ActionLink(article.Name, "ArticleView", "Article", new { id = article.Id }, null)</h2>
+                <p class="blog-post-meta">
+                    @Html.DisplayFor(x => article.ModificationdDate) by @Html.ActionLink(article.Author.Name, "list", "article", new { Id = article.AuthorId }, null)
+                </p>
+
+                <p class="ellipsis">@Html.DisplayFor(x => article.Text)</p>
+                <hr />
+            </div>
+        }
+    </div>
+</div>
