@@ -62,13 +62,24 @@ namespace BlogApp.DataAccess.Implementations
         private IQueryable<Comment> GetUnreadCommenstQuery(BlogContext db,int userId)
         { 
             return 
-                    from article in db.Articles
-                    from commnet in article.Comments
-                    where article.AuthorId == userId
+                    from commnet in db.Comments.Include(c => c.Article)
+                    where commnet.Article.AuthorId == userId
+                    where commnet.AuthorId != userId
                     where !commnet.ParentId.HasValue
                     where !commnet.Read
                     select commnet;
         }
 
+
+
+        public void MarkAsRead(int commentId)
+        {
+            using (var db = new BlogContext())
+            {
+                var comment = db.Comments.Find(commentId);
+                comment.Read = true;
+                db.SaveChanges();
+            }
+        }
     }
 }

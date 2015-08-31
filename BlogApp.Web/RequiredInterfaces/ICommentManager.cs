@@ -15,5 +15,7 @@ namespace BlogApp.Web.RequiredInterfaces
         List<Comment> GetUnreadComments(int userId);
 
         int GetUnreadCommentsCount(int userId);
+
+        void MarkAsRead(int commentId);
     }
 }

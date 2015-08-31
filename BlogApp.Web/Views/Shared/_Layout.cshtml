@@ -48,7 +48,7 @@
                     </ul>
                 <ul class="nav navbar-nav" style="float:right">
                     <li>@Html.ActionLink("Log out", "LogOut", "User")</li>
-                    <li><a href="@Html.Action("UnreadComments","Article")"><img class="notification-bell" src="@Url.Content("/Content/bell.png")" /><div id="notification" class="circle"></div></a></li>
+                    <li><a href="@Url.Action("UnreadComments","Article")"><img class="notification-bell" src="@Url.Content("/Content/bell.png")" /><div id="notification" class="circle"></div></a></li>
                 </ul>
                 @*@Html.Partial("_LoginPartial")*@
             </div>
@@ -88,7 +88,7 @@
                 $.get("/article/GetNotificationCount", function (data) {
                     $('#notification').text(data);
                 }).always(function () {
-                    setTimeout(doStuff, 1000);
+                    setTimeout(doStuff, 30000);
                 });;
                 
             }());

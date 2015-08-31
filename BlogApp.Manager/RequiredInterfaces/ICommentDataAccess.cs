@@ -19,5 +19,7 @@ namespace BlogApp.Manager.RequiredInterfaces
 
         int GetUnreadCommentsCount(int userId);
 
+        void MarkAsRead(int commentId);
+
     }
 }

@@ -39,5 +39,10 @@ namespace BlogApp.Manager.Implementations
         {
             return commentDataAccess.GetUnreadCommentsCount(userId);
         }
+
+        public void MarkAsRead(int commentId)
+        {
+            commentDataAccess.MarkAsRead(commentId);
+        }
     }
 }

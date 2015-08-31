@@ -95,6 +95,10 @@
     <Compile Include="Migrations\201508301934135_comment_read.Designer.cs">
       <DependentUpon>201508301934135_comment_read.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508310201515_authoridcomments.cs" />
+    <Compile Include="Migrations\201508310201515_authoridcomments.Designer.cs">
+      <DependentUpon>201508310201515_authoridcomments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -139,6 +143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508301934135_comment_read.resx">
       <DependentUpon>201508301934135_comment_read.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508310201515_authoridcomments.resx">
+      <DependentUpon>201508310201515_authoridcomments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
