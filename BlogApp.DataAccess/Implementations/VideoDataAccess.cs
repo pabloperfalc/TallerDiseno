@@ -10,6 +10,7 @@ namespace BlogApp.DataAccess.Implementations
 {
     public class VideoDataAccess : IVideoDataAccess
     {
+        
         public void AddVideo(Video video)
         {
             using (var db = new BlogContext())
@@ -26,5 +27,19 @@ namespace BlogApp.DataAccess.Implementations
                 return db.Videos.ToList();
             }
         }
+
+        public void Delete(int Id)
+        {
+            using (var db = new BlogContext())
+            {
+                var query = (from v in db.Videos
+                             where v.Id == Id
+                             select v).FirstOrDefault();
+
+                db.Videos.Remove(query);
+                db.SaveChanges();
+            }
+        }
+
     }
 }

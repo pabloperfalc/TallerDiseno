@@ -52,10 +52,11 @@ namespace BlogApp.DataAccess.Implementations
         {
             using (var db = new BlogContext())
             {
-                db.Users.Attach(user);
-                user.IsActive = false;
+                var query = (from u in db.Users
+                             where u.IsActive == true && u.Id == user.Id
+                             select u).FirstOrDefault<User>();
+                query.IsActive = false;
                 db.SaveChanges();
-
             }
         }
 
@@ -141,6 +142,26 @@ namespace BlogApp.DataAccess.Implementations
 
                 query.Comments.Add(comment);
                 db.SaveChanges();
+            }
+        }
+
+        public int CountAdmin()
+        {
+            using (var db = new BlogContext())
+            {
+                var query = (from u in db.Users.Include(r => r.Roles)
+                             where u.IsActive == true
+                             select u).ToList();
+                int count = 0;
+                foreach (var u in query)
+                {
+                    foreach (var r in u.Roles)
+                    {
+                        if (r.Type.Equals(RoleType.Administrator))
+                            count++;
+                    }
+                }
+                return count;
             }
         }
     }

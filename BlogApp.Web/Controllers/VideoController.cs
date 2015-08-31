@@ -1,4 +1,5 @@
-﻿using BlogApp.Web.RequiredInterfaces;
+﻿using BlogApp.Models;
+using BlogApp.Web.RequiredInterfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,12 +29,14 @@ namespace BlogApp.Web.Controllers
        
 
         [HttpGet]
+        [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult ImportVideos()
         {
             return View(-1);
         }
 
         [HttpPost]
+        [Authorization(Roles = new[] { RoleType.Administrator })]
         public async Task<ActionResult> ImportVideos(HttpPostedFileBase file)
         {
             if (file !=null)
@@ -46,5 +49,19 @@ namespace BlogApp.Web.Controllers
             return View(0);
         }
 
+        [HttpGet]
+        [Authorization(Roles = new[] { RoleType.Administrator })]
+        public ActionResult List()
+        {
+            return View(videoManager.GetVideos());
+        }
+
+        [HttpGet]
+        [Authorization(Roles = new[] { RoleType.Administrator })]
+        public async Task<ActionResult> Delete(int Id)
+        {
+            videoManager.Delete(Id);
+            return View("List", videoManager.GetVideos());
+        }
     }
 }

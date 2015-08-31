@@ -4,7 +4,7 @@
     ViewBag.Title = "QueryLoginSearch";
 }
 
-<h2>Log and Searchs</h2>
+<h2>Log and Search</h2>
 <div class="row">
     @using (Html.BeginForm("QueryLoginSearch", "Report", FormMethod.Get))
     {
@@ -49,7 +49,7 @@
     @Scripts.Render("~/bundles/dataTables")
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#queryTable').DataTable();
+            $('#queryTable').DataTable({ "bLengthChange": false, "bInfo": false });
             $('#datepickerFrom').datepicker();
             $('#datepickerTo').datepicker();
         });

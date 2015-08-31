@@ -10,5 +10,6 @@ namespace BlogApp.Web.RequiredInterfaces
     {
         void Import(Byte[] VideoBytes);
         List<Video> GetVideos();
+        void Delete(int Id);
     }
 }

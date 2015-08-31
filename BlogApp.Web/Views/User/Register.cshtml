@@ -62,7 +62,9 @@
                         @if (Model.User != null && Model.User.PicturePath != null && !Model.User.PicturePath.Equals(String.Empty))
                         {
                             <img src="@Url.Content(Model.User.PicturePath)" alt="Profile Picture" class="profile-picture" />
+                            @Html.HiddenFor(m=>m.User.PicturePath)
                         }
+                        
                     </div>
                     if (@Model.AdminMode)
                     {
@@ -72,6 +74,11 @@
                             @Html.LabelFor(m => m.IsBlogger)
                             @Html.CheckBoxFor(m => m.IsBlogger)
                         </div>
+                    }
+                    else
+                    {
+                        @Html.HiddenFor(m=>m.IsAdmin)
+                        @Html.HiddenFor(m=>m.IsBlogger)
                     }
 
                     <div class="form-group">

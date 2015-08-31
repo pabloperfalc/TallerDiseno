@@ -24,12 +24,21 @@
                     
                     @if (Session["Login"] != null && ((BlogApp.Models.User)Session["Login"]).Roles.Any(r => r.Type == BlogApp.Models.RoleType.Administrator))
                     {
-                        <li>@Html.ActionLink("Add new user", "AddUser", "User")</li>
-
-                        <li>@Html.ActionLink("Users information", "List", "User")</li>
-
-                        <li>@Html.ActionLink("Manage videos", "ImportVideos", "Video")</li>
-
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Add new user", "AddUser", "User")</li>
+                                <li>@Html.ActionLink("Users information", "List", "User")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Videos <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Import video", "ImportVideos", "Video")</li>
+                                <li>@Html.ActionLink("List video", "List", "Video")</li>
+                            </ul>
+                        </li>
+                        
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -42,11 +51,17 @@
                     @if (Session["Login"] != null && ((BlogApp.Models.User)Session["Login"]).Roles.Any(r => r.Type == BlogApp.Models.RoleType.Blogger))
                     {
 
-                        <li>@Html.ActionLink("Edit profile", "Edit", "User", new { Id = ((BlogApp.Models.User)Session["Login"]).Id },null)</li>
-                        <li>@Html.ActionLink("My Articles", "MyArticles", "Article", new { userId = ((BlogApp.Models.User)Session["Login"]).Id },null)</li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Articles <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Create article", "CreateArticle", "Article", new { userId = ((BlogApp.Models.User)Session["Login"]).Id }, null)</li>
+                                <li>@Html.ActionLink("My articles", "MyArticles", "Article")</li>
+                            </ul>
+                        </li>
                     }
                     </ul>
                 <ul class="nav navbar-nav" style="float:right">
+                    <li>@Html.ActionLink("Edit profile", "Edit", "User", new { Id = ((BlogApp.Models.User)Session["Login"]).Id }, null)</li>
                     <li>@Html.ActionLink("Log out", "LogOut", "User")</li>
                     <li><img class="notification-bell" src="@Url.Content("/Content/bell.png")" /><div id="notification" class="circle"></div></li>
                 </ul>
@@ -71,7 +86,7 @@
 
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Alejandro Alvarez - Pablo Pérez - Diego Rocca</p>
         </footer>
     </div>
 

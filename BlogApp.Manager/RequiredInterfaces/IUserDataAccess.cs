@@ -17,5 +17,6 @@ namespace BlogApp.Manager.RequiredInterfaces
         User GetUserById(int userId);
         List<Tuple<User, int>> GetMostActiveUsers(DateTime fromDate, DateTime toDate);
         void UpdateUserComments(int userId, Comment comment);
+        int CountAdmin();
     }
 }

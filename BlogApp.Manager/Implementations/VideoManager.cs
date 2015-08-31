@@ -36,5 +36,10 @@ namespace BlogApp.Manager.Implementations
         {
             return videoDataAccess.GetVideos();
         }
+
+        public void Delete(int Id)
+        {
+            videoDataAccess.Delete(Id);
+        }
     }
 }

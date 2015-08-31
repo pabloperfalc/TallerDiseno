@@ -11,5 +11,6 @@ namespace BlogApp.Manager.RequiredInterfaces
     {
         void AddVideo(Video video);
         List<Video> GetVideos();
+        void Delete(int Id);
     }
 }

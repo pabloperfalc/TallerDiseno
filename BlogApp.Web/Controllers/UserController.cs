@@ -73,6 +73,7 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpGet]
+        [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult AddUser()
         {
             var viewModel = new RegisterUserViewModel
@@ -86,6 +87,7 @@ namespace BlogApp.Web.Controllers
             return View("Register", viewModel);
         }
 
+        [Authorization(Roles = new[] { RoleType.Administrator, RoleType.Blogger })]
         public ActionResult Edit(int Id)
         {
              var isAdmin =  Session["Login"] != null && ((User)Session["Login"]).Roles != null && ((User)Session["Login"]).Roles.Any(role => role.Type == RoleType.Administrator);
@@ -151,7 +153,6 @@ namespace BlogApp.Web.Controllers
             }
         }
 
-
         [HttpPost]
         [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult AddUser(RegisterUserViewModel userViewModel, HttpPostedFileBase image)
@@ -182,8 +183,6 @@ namespace BlogApp.Web.Controllers
                      string hashedPassword = userManager.GetHash(userViewModel.User);
                      userViewModel.User.Password = hashedPassword;
 
-                     roles.Add(RoleType.Blogger);
-
                      if (image != null)
                      {
                          var imageData = new byte[image.ContentLength];
@@ -199,7 +198,7 @@ namespace BlogApp.Web.Controllers
                  else
                  {
                      ModelState.AddModelError("User.Username", "The Username already exsists");
-                     return View(userViewModel);
+                     return View("Register", userViewModel);
                  }
 
              }
@@ -213,9 +212,7 @@ namespace BlogApp.Web.Controllers
              }
         }
 
-
         [HttpPost]
-
         [Authorization(Roles = new [] { RoleType.Administrator, RoleType.Blogger })]
         public ActionResult EditUser(RegisterUserViewModel userViewModel, HttpPostedFileBase image)
         {
@@ -247,7 +244,9 @@ namespace BlogApp.Web.Controllers
                 {
                     if(((User)Session["Login"]).Id != userViewModel.User.Id)
                     {
-                        //Tirar error;
+                        ViewBag.ErrorTitle = "Access denied";
+                        ViewBag.ErrorDescription = "";
+                        return View("~/Views/Shared/ErrorPage.cshtml");
                     }
 
                     roles.AddRange(((User)Session["Login"]).Roles.Select(r => r.Type));
@@ -283,18 +282,21 @@ namespace BlogApp.Web.Controllers
                 userManager.ModifyUser(userViewModel.User, roles, null);
             }
         }
-
+     
+        [Authorization(Roles = new[] { RoleType.Administrator, RoleType.Blogger })]
         public ActionResult Home()
         {
             return View(articleManager.GetLatest(10));
         }
 
+        [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult List()
         {
             var users = userManager.GetUsers();
             return View(users);
         }
 
+        [Authorization(Roles = new[] { RoleType.Administrator, RoleType.Blogger })]
         public ActionResult LogOut()
         {
             Session["Login"] = null;
@@ -306,6 +308,31 @@ namespace BlogApp.Web.Controllers
             Random rnd = new Random();
             int num = rnd.Next(1, 20); 
             return Json(num, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorization(Roles = new[] { RoleType.Administrator })]
+        public ActionResult Delete(int Id)
+        {
+            var userId = ((User)Session["Login"]);
+            User user = userManager.GetUserById(Id);
+            
+            if (userManager.CountAdmin()>1)
+            {
+                userManager.RemoveUser(user);
+                if (user.Id == userId.Id)
+                {
+                    Session["Login"] = null;
+                    return RedirectToAction("Login");
+                }
+                var users = userManager.GetUsers();
+                return View("List",users);
+            }
+            else
+            {
+                var users = userManager.GetUsers();
+                ModelState.AddModelError("", "It is not possible to remove the last Administrator");
+                return View("List", users);
+            }
         }
     }
 }

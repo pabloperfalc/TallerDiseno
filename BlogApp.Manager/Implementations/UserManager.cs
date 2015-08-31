@@ -172,5 +172,9 @@ namespace BlogApp.Manager.Implementations
         {
             userDataAccess.UpdateUserComments(userId, comment);
         }
+        public int CountAdmin()
+        {
+            return userDataAccess.CountAdmin();
+        }
     }
 }
