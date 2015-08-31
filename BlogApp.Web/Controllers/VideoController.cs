@@ -43,7 +43,7 @@ namespace BlogApp.Web.Controllers
             {
                 var videoData = new byte[file.ContentLength];
                 file.InputStream.Read(videoData, 0, file.ContentLength);
-                videoManager.Import(videoData);
+                videoManager.Import(videoData,file.FileName);
                 return View(0);
             }
             return View(0);

@@ -99,6 +99,10 @@
     <Compile Include="Migrations\201508310201515_authoridcomments.Designer.cs">
       <DependentUpon>201508310201515_authoridcomments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508310343064_videoName.cs" />
+    <Compile Include="Migrations\201508310343064_videoName.Designer.cs">
+      <DependentUpon>201508310343064_videoName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -146,6 +150,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508310201515_authoridcomments.resx">
       <DependentUpon>201508310201515_authoridcomments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508310343064_videoName.resx">
+      <DependentUpon>201508310343064_videoName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

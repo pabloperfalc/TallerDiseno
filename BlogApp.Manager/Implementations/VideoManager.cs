@@ -19,7 +19,7 @@ namespace BlogApp.Manager.Implementations
             this.videoDataAccess = videoDataAccess;
         }
 
-        public void Import(Byte[] VideoBytes)
+        public void Import(Byte[] VideoBytes, string fileName)
         {
             string name = Guid.NewGuid().ToString() + ".wmv";
             string path = System.AppDomain.CurrentDomain.BaseDirectory + "VideoAds/" + name;
@@ -27,7 +27,7 @@ namespace BlogApp.Manager.Implementations
             path = "/VideoAds/" + name;
             Video video = new Video();
             video.Path = path;
-
+            video.Name = fileName;
             videoDataAccess.AddVideo(video);
 
         }

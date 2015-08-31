@@ -12,13 +12,16 @@
         <table class="table table-hover" id="videoTable">
             <thead>
                 <tr>
+                    <th>Name</th>
                     <th>Path</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var vi in Model)
                 {
                     <tr>
+                        <td>@Html.DisplayFor(v => vi.Name)</td>
                         <td>@Html.DisplayFor(v => vi.Path)</td>
                         <td><a href="@Url.Action("Delete", "Video", new { Id = vi.Id })"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                     </tr>
