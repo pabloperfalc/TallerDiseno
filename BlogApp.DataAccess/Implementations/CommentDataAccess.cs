@@ -25,7 +25,7 @@ namespace BlogApp.DataAccess.Implementations
             using (var db = new BlogContext())
             {
                 List<Comment> comments = new List<Comment>();
-                var dbComment = db.Comments.Include(c => c.Comments).Where(c => c.Id == comment.Id).FirstOrDefault();
+                var dbComment = db.Comments.Include(x => x.Author).Include(c => c.Comments).Where(c => c.Id == comment.Id).FirstOrDefault();
                 foreach (var item in dbComment.Comments)
                 {
                     comments.Add(RetriveComments(item));
@@ -39,7 +39,10 @@ namespace BlogApp.DataAccess.Implementations
         {
             using (var db = new BlogContext())
             {
-                return db.Comments.Where(c => c.ArticleId == articleId && c.Parent == null).ToList();
+                var query = (from c in db.Comments.Include(x => x.Author)
+                            where (c.ArticleId == articleId && c.Parent == null)
+                            select c).ToList();
+                return query;
             }
         }
 
@@ -62,15 +65,13 @@ namespace BlogApp.DataAccess.Implementations
         private IQueryable<Comment> GetUnreadCommenstQuery(BlogContext db,int userId)
         { 
             return 
-                    from commnet in db.Comments.Include(c => c.Article)
+                    from commnet in db.Comments.Include(c => c.Article).Include(x => x.Author)
                     where commnet.Article.AuthorId == userId
                     where commnet.AuthorId != userId
                     where !commnet.ParentId.HasValue
                     where !commnet.Read
                     select commnet;
         }
-
-
 
         public void MarkAsRead(int commentId)
         {

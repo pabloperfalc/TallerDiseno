@@ -9,7 +9,7 @@
         <div class="blog-post">
             <h2 class="blog-post-title">@Html.DisplayFor(x => x.Name)</h2>
             <p class="blog-post-meta">
-                @Html.DisplayFor(x => @Model.ModificationdDate) by @Html.ActionLink(@Model.Author.Name, "list", "article", new { Id = @Model.AuthorId }, null)
+                @Html.DisplayFor(x => @Model.ModificationdDate) by @Html.ActionLink(@Model.Author.Username, "list", "article", new { Id = @Model.AuthorId }, null)
             </p>
             @if (Model.PicturePath != null && Model.PicturePath.Equals(String.Empty))
             {
@@ -34,21 +34,23 @@
         </div>
     </div>
 </div>
-<div class="row comment-row">
-    <div class="col-lg-12 blog-main">
-        @using (Html.BeginForm("CommentArticle", "Article", FormMethod.Post))
-        {
-            <div class="form-group">
-                <label for="Text">Comment this article</label>
+@if(((BlogApp.Models.User)Session["Login"]).Roles.Any(r => r.Type == BlogApp.Models.RoleType.Blogger))
+{
+    <div class="row comment-row" style="margin-top:20px">
+        <div class="col-lg-12 blog-main">
+            @using (Html.BeginForm("CommentArticle", "Article", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label for="Text">Comment this article</label>
 
-                @Html.TextArea("Text", "", new { @class = "form-control", rows = 3 })
-                @Html.Hidden("ArticleId", Model.Id)
-            </div>
-            <input type="submit" value="Comment" class="btn btn-default" />
-        }
+                    @Html.TextArea("Text", "", new { @class = "form-control", rows = 3 })
+                    @Html.Hidden("ArticleId", Model.Id)
+                </div>
+                <input type="submit" value="Comment" class="btn btn-default" />
+            }
+        </div>
     </div>
-</div>
-
+}
 <div class="row comment-row">
     <div class="col-lg-12 blog-main">
         @foreach (var comment in Model.Comments)

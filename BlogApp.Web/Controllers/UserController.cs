@@ -18,14 +18,15 @@ namespace BlogApp.Web.Controllers
         private readonly IRoleManager roleManager;
         private readonly IArticleManager articleManager;
         private readonly ILogger.ILogger logger;
-        
+        private readonly ICommentManager comManager;
 
-        public UserController(IUserManager userManager, IRoleManager roleManager, IArticleManager articleManager, ILogger.ILogger logger)
+        public UserController(IUserManager userManager, IRoleManager roleManager, IArticleManager articleManager, ILogger.ILogger logger, ICommentManager comManager)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.articleManager = articleManager;
             this.logger = logger;
+            this.comManager = comManager;
         }
 
         public ActionResult Login()
@@ -43,6 +44,7 @@ namespace BlogApp.Web.Controllers
                     logger.Log("", LogType.Login, user.Username);
 
                     Session["Login"] = user;
+                    Json(comManager.GetUnreadCommentsCount(((User)Session["Login"]).Id), JsonRequestBehavior.AllowGet);
                     return RedirectToAction("Home");
                 }
                 else
@@ -362,6 +364,7 @@ namespace BlogApp.Web.Controllers
         public ActionResult LogOut()
         {
             Session["Login"] = null;
+            Session.Clear();
             return RedirectToAction("Login");
         }
 

@@ -13,14 +13,15 @@ namespace BlogApp.DataAccess.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
+
         protected override void Seed(BlogApp.DataAccess.BlogContext context)
         {
             context.Roles.AddOrUpdate(
               r => r.Type,
-              new Role { Description = "Administrator", Type= RoleType.Administrator },
-              new Role { Description = "Blogger", Type= RoleType.Blogger }
+              new Role { Description = "Administrator", Type = RoleType.Administrator },
+              new Role { Description = "Blogger", Type = RoleType.Blogger }
             );
-            
+
         }
     }
 }

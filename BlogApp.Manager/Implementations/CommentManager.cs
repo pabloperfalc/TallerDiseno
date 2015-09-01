@@ -37,7 +37,8 @@ namespace BlogApp.Manager.Implementations
 
         public int GetUnreadCommentsCount(int userId)
         {
-            return commentDataAccess.GetUnreadCommentsCount(userId);
+            int count = commentDataAccess.GetUnreadCommentsCount(userId);
+            return count;
         }
 
         public void MarkAsRead(int commentId)

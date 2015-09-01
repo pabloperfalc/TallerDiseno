@@ -61,13 +61,9 @@
     <Compile Include="LogDataAccess.cs" />
     <Compile Include="LogEntry.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="Migrations\201508291436506_d.cs" />
-    <Compile Include="Migrations\201508291436506_d.Designer.cs">
-      <DependentUpon>201508291436506_d.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508291503478_f.cs" />
-    <Compile Include="Migrations\201508291503478_f.Designer.cs">
-      <DependentUpon>201508291503478_f.cs</DependentUpon>
+    <Compile Include="Migrations\201509010308426_final_log.cs" />
+    <Compile Include="Migrations\201509010308426_final_log.Designer.cs">
+      <DependentUpon>201509010308426_final_log.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,11 +79,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508291436506_d.resx">
-      <DependentUpon>201508291436506_d.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508291503478_f.resx">
-      <DependentUpon>201508291503478_f.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201509010308426_final_log.resx">
+      <DependentUpon>201509010308426_final_log.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

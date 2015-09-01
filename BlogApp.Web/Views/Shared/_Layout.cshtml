@@ -69,16 +69,21 @@
                 @using (Html.BeginForm("SearchArticle", "Article", FormMethod.Get, new { @class = "navbar-form navbar-left", role = "Search"}))
                 {
                         <div class="form-group">
-                            @Html.TextBox("searchText", null, new { @class = "form-control", placeholder = "Search article"})
+                            @Html.TextBox("searchText", null, new { @class = "form-control", placeholder = "Search article" })
                         </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default">Submit</button>
                 }
 
 
-                <ul class="nav navbar-nav" style="float:right">
+                <ul class="nav navbar-nav" style="float: right">
                     <li>@Html.ActionLink("Edit profile", "Edit", "User", new { Id = ((BlogApp.Models.User)Session["Login"]).Id }, null)</li>
                     <li>@Html.ActionLink("Log out", "LogOut", "User")</li>
-                    <li><a href="@Url.Action("UnreadComments","Article")"><img class="notification-bell" src="@Url.Content("/Content/bell.png")" /><div id="notification" class="circle"></div></a></li>
+                    @if (Session["Login"] != null && ((BlogApp.Models.User)Session["Login"]).Roles.Any(r => r.Type == BlogApp.Models.RoleType.Blogger))
+                    {
+                        <li><a href="@Url.Action("UnreadComments", "Article")">
+                            <img class="notification-bell" src="@Url.Content("/Content/bell.png")" /><div id="notification" class="circle"></div>
+                        </a></li>
+                    }
                 </ul>
             </div>
         </div>
@@ -111,19 +116,21 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            (function doStuff() {
-                $.get("/article/GetNotificationCount", function (data) {
-                    $('#notification').text(data);
-                }).always(function () {
-                    setTimeout(doStuff, 30000);
-                });;
+    @if (Session["Login"] != null && ((BlogApp.Models.User)Session["Login"]).Roles.Any(r => r.Type == BlogApp.Models.RoleType.Blogger))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                (function doStuff() {
+                    $.get("/article/GetNotificationCount", function (data) {
+                        $('#notification').text(data);
+                    }).always(function () {
+                        setTimeout(doStuff, 1);
+                    });;
 
-            }());
+                }());
 
-        });
-    </script>
-
+            });
+        </script>
+                    }
 </body>
 </html>

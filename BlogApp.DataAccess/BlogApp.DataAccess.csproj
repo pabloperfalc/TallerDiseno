@@ -59,49 +59,9 @@
     <Compile Include="Implementations\RoleDataAccess.cs" />
     <Compile Include="Implementations\UserDataAccess.cs" />
     <Compile Include="Implementations\VideoDataAccess.cs" />
-    <Compile Include="Migrations\201508231506073_Init.cs" />
-    <Compile Include="Migrations\201508231506073_Init.Designer.cs">
-      <DependentUpon>201508231506073_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508240225479_Add_articleincomments.cs" />
-    <Compile Include="Migrations\201508240225479_Add_articleincomments.Designer.cs">
-      <DependentUpon>201508240225479_Add_articleincomments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508240250256_add_parent-id.cs" />
-    <Compile Include="Migrations\201508240250256_add_parent-id.Designer.cs">
-      <DependentUpon>201508240250256_add_parent-id.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508261928287_prueba.cs" />
-    <Compile Include="Migrations\201508261928287_prueba.Designer.cs">
-      <DependentUpon>201508261928287_prueba.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508262249563_otroTest.cs" />
-    <Compile Include="Migrations\201508262249563_otroTest.Designer.cs">
-      <DependentUpon>201508262249563_otroTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508290022268_CambiosEnUser.cs" />
-    <Compile Include="Migrations\201508290022268_CambiosEnUser.Designer.cs">
-      <DependentUpon>201508290022268_CambiosEnUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508291410438_fueAlvarez.cs" />
-    <Compile Include="Migrations\201508291410438_fueAlvarez.Designer.cs">
-      <DependentUpon>201508291410438_fueAlvarez.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508292153450_roccaPuto.cs" />
-    <Compile Include="Migrations\201508292153450_roccaPuto.Designer.cs">
-      <DependentUpon>201508292153450_roccaPuto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508301934135_comment_read.cs" />
-    <Compile Include="Migrations\201508301934135_comment_read.Designer.cs">
-      <DependentUpon>201508301934135_comment_read.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508310201515_authoridcomments.cs" />
-    <Compile Include="Migrations\201508310201515_authoridcomments.Designer.cs">
-      <DependentUpon>201508310201515_authoridcomments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508310343064_videoName.cs" />
-    <Compile Include="Migrations\201508310343064_videoName.Designer.cs">
-      <DependentUpon>201508310343064_videoName.cs</DependentUpon>
+    <Compile Include="Migrations\201509010306498_final.cs" />
+    <Compile Include="Migrations\201509010306498_final.Designer.cs">
+      <DependentUpon>201509010306498_final.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -121,38 +81,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508231506073_Init.resx">
-      <DependentUpon>201508231506073_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508240225479_Add_articleincomments.resx">
-      <DependentUpon>201508240225479_Add_articleincomments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508240250256_add_parent-id.resx">
-      <DependentUpon>201508240250256_add_parent-id.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508261928287_prueba.resx">
-      <DependentUpon>201508261928287_prueba.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508262249563_otroTest.resx">
-      <DependentUpon>201508262249563_otroTest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508290022268_CambiosEnUser.resx">
-      <DependentUpon>201508290022268_CambiosEnUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508291410438_fueAlvarez.resx">
-      <DependentUpon>201508291410438_fueAlvarez.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508292153450_roccaPuto.resx">
-      <DependentUpon>201508292153450_roccaPuto.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508301934135_comment_read.resx">
-      <DependentUpon>201508301934135_comment_read.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508310201515_authoridcomments.resx">
-      <DependentUpon>201508310201515_authoridcomments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508310343064_videoName.resx">
-      <DependentUpon>201508310343064_videoName.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201509010306498_final.resx">
+      <DependentUpon>201509010306498_final.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

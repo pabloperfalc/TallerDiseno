@@ -20,7 +20,7 @@
         @foreach (var art in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(a => art.Name)</td>
+                <td>@Html.ActionLink(art.Name,"ArticleView", "Article", new { id = art.Id }, null)</td>
                 <td>@Html.DisplayFor(a => art.CreationDate)</td>
                 <td>@Html.DisplayFor(a => art.ModificationdDate)</td>
                 <td>@Html.DisplayFor(a => art.Type)</td>

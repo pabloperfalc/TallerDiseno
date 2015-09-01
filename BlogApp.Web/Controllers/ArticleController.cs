@@ -66,7 +66,7 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpPost]
-        //[Authorization(Roles = new [] { RoleType.Blogger })]
+        [Authorization(Roles = new [] { RoleType.Blogger })]
         public ActionResult EditArticle(RegisterArticleViewModel viewModel, HttpPostedFileBase image)
         {
             try
@@ -201,7 +201,7 @@ namespace BlogApp.Web.Controllers
             }
         }
 
-        [Authorization(Roles = new [] { RoleType.Blogger })]
+        [Authorization(Roles = new[] { RoleType.Administrator, RoleType.Blogger })]
         public ActionResult ArticleView(int id)
         {
             try
@@ -319,6 +319,7 @@ namespace BlogApp.Web.Controllers
             try
             {
                 var comments = commentManager.GetUnreadComments(((User)Session["Login"]).Id);
+                GetNotificationCount();
                 return View(comments);
             }
             catch (Exception e)

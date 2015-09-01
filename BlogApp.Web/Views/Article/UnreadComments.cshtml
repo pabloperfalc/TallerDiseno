@@ -12,7 +12,9 @@
         <h2 class="blog-post-title">@Html.ActionLink(Model[i].Article.Name, "ArticleView", "Article", new { id = Model[i].ArticleId }, null)</h2>
         <div class="col-lg-12 blog-main">
             <div class="well">
+                <p style="text-align:right">@Html.DisplayFor(c => Model[i].Author.Username) -- @Html.DisplayFor(c => Model[i].CreationDate)</p>
                 <p>@Html.DisplayFor(c => Model[i].Text)</p>
+                
             </div>
         </div>
     </div>
