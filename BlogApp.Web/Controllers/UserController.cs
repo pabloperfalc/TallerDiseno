@@ -36,25 +36,33 @@ namespace BlogApp.Web.Controllers
         [HttpPost]
         public ActionResult Login(User user, string returnUrl)
         {
-            if (userManager.ValidateLogin(ref user))
+            try
             {
-                logger.Log("", LogType.Login, user.Username);
-
-                Session["Login"] = user;
-                return RedirectToAction("Home");
-            }
-            else
-            {
-                if (user.Username == null || user.Password == null)
+                if (userManager.ValidateLogin(ref user))
                 {
-                    ModelState.AddModelError(string.Empty, "All fields are required");
-                    return View();
+                    logger.Log("", LogType.Login, user.Username);
+
+                    Session["Login"] = user;
+                    return RedirectToAction("Home");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Username or password is invalid");
-                    return View();
+                    if (user.Username == null || user.Password == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "All fields are required");
+                        return View();
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Username or password is invalid");
+                        return View();
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError(string.Empty, "Server Error, please try again later");
+                return View();
             }
         }
 
@@ -90,126 +98,153 @@ namespace BlogApp.Web.Controllers
         [Authorization(Roles = new[] { RoleType.Administrator, RoleType.Blogger })]
         public ActionResult Edit(int Id)
         {
-             var isAdmin =  Session["Login"] != null && ((User)Session["Login"]).Roles != null && ((User)Session["Login"]).Roles.Any(role => role.Type == RoleType.Administrator);
+            try
+            {
+                var isAdmin = Session["Login"] != null && ((User)Session["Login"]).Roles != null && ((User)Session["Login"]).Roles.Any(role => role.Type == RoleType.Administrator);
 
-             if (isAdmin || ((User)Session["Login"]).Id == Id)
-             {
+                if (isAdmin || ((User)Session["Login"]).Id == Id)
+                {
 
-                 var user = userManager.GetUserById(Id);
-                 var adminMode = isAdmin;
-                 var postAction = "EditUser";
-                 var viewModel = new RegisterUserViewModel
-                 {
-                     User = user,
-                     IsAdmin = user.Roles.Any(r => r.Type == RoleType.Administrator),
-                     IsBlogger = user.Roles.Any(r => r.Type == RoleType.Blogger),
-                     Title = "Edit",
-                     EditMode = true,
-                     AdminMode = adminMode,
-                     PostAction = postAction
-                 };
-                 return View("Register", viewModel);
-             }
-             return RedirectToAction("Login");
+                    var user = userManager.GetUserById(Id);
+                    var adminMode = isAdmin;
+                    var postAction = "EditUser";
+                    var viewModel = new RegisterUserViewModel
+                    {
+                        User = user,
+                        IsAdmin = user.Roles.Any(r => r.Type == RoleType.Administrator),
+                        IsBlogger = user.Roles.Any(r => r.Type == RoleType.Blogger),
+                        Title = "Edit",
+                        EditMode = true,
+                        AdminMode = adminMode,
+                        PostAction = postAction
+                    };
+                    return View("Register", viewModel);
+                }
+                return RedirectToAction("Login");
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorTitle = "Server Error";
+                ViewBag.ErrorDescription = "Please try again later";
+                return View("~/Views/Shared/ErrorPage.cshtml");
+            }
         }
 
         [HttpPost]
         public ActionResult Register(RegisterUserViewModel userViewModel, HttpPostedFileBase image)
         {
-            List<Tuple<string, string>> errors = userManager.ValidateUser(userViewModel.User);
-            if (errors.Count != 0)
+            try
             {
-                foreach (Tuple<string, string> t in errors)
+                List<Tuple<string, string>> errors = userManager.ValidateUser(userViewModel.User);
+                if (errors.Count != 0)
                 {
-                    ModelState.AddModelError("User." + t.Item1, t.Item2);
+                    foreach (Tuple<string, string> t in errors)
+                    {
+                        ModelState.AddModelError("User." + t.Item1, t.Item2);
+                    }
+                    return View(userViewModel);
+
                 }
-                return View(userViewModel);
-            }
 
-            if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
-            {
-                string hashedPassword = userManager.GetHash(userViewModel.User);
-                userViewModel.User.Password = hashedPassword;
-
-                List<RoleType> roles = new List<RoleType>();
-                roles.Add(RoleType.Blogger);
-
-                if (image != null)
+                if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
                 {
-                    var imageData = new byte[image.ContentLength];
-                    image.InputStream.Read(imageData, 0, image.ContentLength);
-                    userManager.AddUser(userViewModel.User, roles, imageData);
+                    string hashedPassword = userManager.GetHash(userViewModel.User);
+                    userViewModel.User.Password = hashedPassword;
+
+                    List<RoleType> roles = new List<RoleType>();
+                    roles.Add(RoleType.Blogger);
+
+                    if (image != null)
+                    {
+                        var imageData = new byte[image.ContentLength];
+                        image.InputStream.Read(imageData, 0, image.ContentLength);
+                        userManager.AddUser(userViewModel.User, roles, imageData);
+                    }
+                    else
+                    {
+                        userManager.AddUser(userViewModel.User, roles, null);
+                    }
+                    return RedirectToAction("Login");
                 }
-                else 
+                else
                 {
-                    userManager.AddUser(userViewModel.User, roles, null);                
-                }            
-                return RedirectToAction("Login");
+                    ModelState.AddModelError("User.Username", "The Username already exsists");
+                    return View(userViewModel);
+                }
             }
-            else
+            catch (Exception e)
             {
-                ModelState.AddModelError("User.Username", "The Username already exsists");
-                return View(userViewModel);
+                ModelState.AddModelError(string.Empty, "Server Error, please try again later");
+                return View("Login");
             }
         }
 
         [HttpPost]
         [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult AddUser(RegisterUserViewModel userViewModel, HttpPostedFileBase image)
-        { 
-             List<Tuple<string, string>> errors = userManager.ValidateUser(userViewModel.User);
-             if (errors.Count == 0)
-             {
-                 if (!userViewModel.IsAdmin && !userViewModel.IsBlogger)
-                 {
-                     ModelState.AddModelError("", "At least one checkbox must be selected");
-                     return View("Register", userViewModel);
-                 }
+        {
+            try
+            {
+                List<Tuple<string, string>> errors = userManager.ValidateUser(userViewModel.User);
+                if (errors.Count == 0)
+                {
+                    if (!userViewModel.IsAdmin && !userViewModel.IsBlogger)
+                    {
+                        ModelState.AddModelError("", "At least one checkbox must be selected");
+                        return View("Register", userViewModel);
+                    }
 
-                 if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
-                 {
-                     List<RoleType> roles = new List<RoleType>();
+                    if (userManager.GetUserByUsername(userViewModel.User.Username) == null)
+                    {
+                        List<RoleType> roles = new List<RoleType>();
 
-                     roles = new List<RoleType>();
-                     if (userViewModel.IsAdmin)
-                     {
-                         roles.Add(RoleType.Administrator);
-                     }
-                     if (userViewModel.IsBlogger)
-                     {
-                         roles.Add(RoleType.Blogger);
-                     }
+                        roles = new List<RoleType>();
+                        if (userViewModel.IsAdmin)
+                        {
+                            roles.Add(RoleType.Administrator);
+                        }
+                        if (userViewModel.IsBlogger)
+                        {
+                            roles.Add(RoleType.Blogger);
+                        }
 
-                     string hashedPassword = userManager.GetHash(userViewModel.User);
-                     userViewModel.User.Password = hashedPassword;
+                        string hashedPassword = userManager.GetHash(userViewModel.User);
+                        userViewModel.User.Password = hashedPassword;
 
-                     if (image != null)
-                     {
-                         var imageData = new byte[image.ContentLength];
-                         image.InputStream.Read(imageData, 0, image.ContentLength);
-                         userManager.AddUser(userViewModel.User, roles, imageData);
-                     }
-                     else
-                     {
-                         userManager.AddUser(userViewModel.User, roles, null);
-                     }
-                     return RedirectToAction("Home");
-                 }
-                 else
-                 {
-                     ModelState.AddModelError("User.Username", "The Username already exsists");
-                     return View("Register", userViewModel);
-                 }
+                        if (image != null)
+                        {
+                            var imageData = new byte[image.ContentLength];
+                            image.InputStream.Read(imageData, 0, image.ContentLength);
+                            userManager.AddUser(userViewModel.User, roles, imageData);
+                        }
+                        else
+                        {
+                            userManager.AddUser(userViewModel.User, roles, null);
+                        }
+                        return RedirectToAction("Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("User.Username", "The Username already exsists");
+                        return View("Register", userViewModel);
+                    }
 
-             }
-             else
-             {
-                 foreach (Tuple<string, string> t in errors)
-                 {
-                     ModelState.AddModelError("User." + t.Item1, t.Item2);
-                 }
-                 return View("Register", userViewModel);
-             }
+                }
+                else
+                {
+                    foreach (Tuple<string, string> t in errors)
+                    {
+                        ModelState.AddModelError("User." + t.Item1, t.Item2);
+                    }
+                    return View("Register", userViewModel);
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorTitle = "Server Error";
+                ViewBag.ErrorDescription = "Please try again later";
+                return View("~/Views/Shared/ErrorPage.cshtml");
+            }
         }
 
         [HttpPost]
@@ -240,9 +275,9 @@ namespace BlogApp.Web.Controllers
                         roles.Add(RoleType.Blogger);
                     }
                 }
-                else 
+                else
                 {
-                    if(((User)Session["Login"]).Id != userViewModel.User.Id)
+                    if (((User)Session["Login"]).Id != userViewModel.User.Id)
                     {
                         ViewBag.ErrorTitle = "Access denied";
                         ViewBag.ErrorDescription = "";
@@ -253,7 +288,7 @@ namespace BlogApp.Web.Controllers
                 }
 
                 Edit(userViewModel, image, roles);
-                
+
                 return RedirectToAction("Home");
             }
             else
@@ -268,32 +303,59 @@ namespace BlogApp.Web.Controllers
 
         private void Edit(RegisterUserViewModel userViewModel, HttpPostedFileBase image, List<RoleType> roles)
         {
-            string hashedPassword = userManager.GetHash(userViewModel.User);
-            userViewModel.User.Password = hashedPassword;
+            try
+            {
+                string hashedPassword = userManager.GetHash(userViewModel.User);
+                userViewModel.User.Password = hashedPassword;
 
-            if (image != null)
-            {
-                var imageData = new byte[image.ContentLength];
-                image.InputStream.Read(imageData, 0, image.ContentLength);
-                userManager.ModifyUser(userViewModel.User, roles, imageData);
+                if (image != null)
+                {
+                    var imageData = new byte[image.ContentLength];
+                    image.InputStream.Read(imageData, 0, image.ContentLength);
+                    userManager.ModifyUser(userViewModel.User, roles, imageData);
+                }
+                else
+                {
+                    userManager.ModifyUser(userViewModel.User, roles, null);
+                }
             }
-            else
+            catch (Exception e)
             {
-                userManager.ModifyUser(userViewModel.User, roles, null);
+                ViewBag.ErrorTitle = "Server Error";
+                ViewBag.ErrorDescription = "Please try again later";
+                RedirectToAction("~/Views/Shared/ErrorPage.cshtml");
             }
         }
      
         [Authorization(Roles = new[] { RoleType.Administrator, RoleType.Blogger })]
         public ActionResult Home()
         {
-            return View(articleManager.GetLatest(10));
+            try
+            {
+                return View(articleManager.GetLatest(10));
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorTitle = "Server Error";
+                ViewBag.ErrorDescription = "Please try again later";
+                return View("~/Views/Shared/ErrorPage.cshtml");
+            }
         }
 
         [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult List()
         {
-            var users = userManager.GetUsers();
-            return View(users);
+            try
+            {
+                var users = userManager.GetUsers();
+                return View(users);
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorTitle = "Server Error";
+                ViewBag.ErrorDescription = "Please try again later";
+                return View("~/Views/Shared/ErrorPage.cshtml");
+            }
         }
 
         [Authorization(Roles = new[] { RoleType.Administrator, RoleType.Blogger })]
@@ -313,25 +375,34 @@ namespace BlogApp.Web.Controllers
         [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult Delete(int Id)
         {
-            var userId = ((User)Session["Login"]);
-            User user = userManager.GetUserById(Id);
-            
-            if (userManager.CountAdmin()>1)
+            try
             {
-                userManager.RemoveUser(user);
-                if (user.Id == userId.Id)
+                var userId = ((User)Session["Login"]);
+                User user = userManager.GetUserById(Id);
+
+                if (userManager.CountAdmin() > 1)
                 {
-                    Session["Login"] = null;
-                    return RedirectToAction("Login");
+                    userManager.RemoveUser(user);
+                    if (user.Id == userId.Id)
+                    {
+                        Session["Login"] = null;
+                        return RedirectToAction("Login");
+                    }
+                    var users = userManager.GetUsers();
+                    return View("List", users);
                 }
-                var users = userManager.GetUsers();
-                return View("List",users);
+                else
+                {
+                    var users = userManager.GetUsers();
+                    ModelState.AddModelError("", "It is not possible to remove the last Administrator");
+                    return View("List", users);
+                }
             }
-            else
+            catch (Exception e)
             {
-                var users = userManager.GetUsers();
-                ModelState.AddModelError("", "It is not possible to remove the last Administrator");
-                return View("List", users);
+                ViewBag.ErrorTitle = "Server Error";
+                ViewBag.ErrorDescription = "Please try again later";
+                return View("~/Views/Shared/ErrorPage.cshtml");
             }
         }
     }

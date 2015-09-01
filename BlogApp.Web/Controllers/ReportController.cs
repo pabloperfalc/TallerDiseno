@@ -25,60 +25,80 @@ namespace BlogApp.Web.Controllers
         }
 
         [HttpGet]
+        [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult Reports()
         {
             return View();
         }
 
-
+        [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult QueryLoginSearch(DateTime? fromDate, DateTime? toDate)
         {
-            if (fromDate == null || toDate == null)
+            try
             {
-                return View();
+                if (fromDate == null || toDate == null)
+                {
+                    return View();
+                }
+                else
+                {
+                    ReportAdminViewModel model = new ReportAdminViewModel();
+                    model.FromDate = fromDate.Value;
+                    model.ToDate = toDate.Value;
+                    model.LogEntries = logger.GetLog(fromDate.Value, toDate.Value);
+
+                    return View(model);
+                }
             }
-            else
+            catch (Exception e)
             {
-                ReportAdminViewModel model = new ReportAdminViewModel();
-                model.FromDate = fromDate.Value;
-                model.ToDate = toDate.Value;
-                model.LogEntries = logger.GetLog(fromDate.Value, toDate.Value);
-                
-                return View(model);
+                ViewBag.ErrorTitle = "Server Error";
+                ViewBag.ErrorDescription = "Please try again later";
+                return View("~/Views/Shared/ErrorPage.cshtml");
             }
         }
 
-        
+        [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult QueryRankingMostActive()
         {
             return View();
-
         }
 
         [HttpGet]
+        [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult QueryRankingMostActive(DateTime? fromDate, DateTime? toDate)
         {
-            if (fromDate == null || toDate == null)
+            try
             {
-                return View();
+                if (fromDate == null || toDate == null)
+                {
+                    return View();
+                }
+                else
+                {
+                    ReportAdminViewModel model = new ReportAdminViewModel();
+                    model.FromDate = fromDate.Value;
+                    model.ToDate = toDate.Value;
+                    model.MostActives = userManager.GetMostActiveUsers(fromDate.Value, toDate.Value);
+                    return View(model);
+                }
             }
-            else
+            catch (Exception e)
             {
-                ReportAdminViewModel model = new ReportAdminViewModel();
-                model.FromDate = fromDate.Value;
-                model.ToDate = toDate.Value;
-                model.MostActives = userManager.GetMostActiveUsers(fromDate.Value, toDate.Value);
-                return View(model);
+                ViewBag.ErrorTitle = "Server Error";
+                ViewBag.ErrorDescription = "Please try again later";
+                return View("~/Views/Shared/ErrorPage.cshtml");
             }
         }
 
-
         [HttpGet]
+        [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult CreateChartByMonthPerYear(int year)
         {
-            List<int> lstArticlesCount = articleManager.GetArticlesPerMonth(year);
-           
-            string temp = @"<Chart BackColor=""LightGray"" ForeColor=""LightBlue"">
+            try
+            {
+                List<int> lstArticlesCount = articleManager.GetArticlesPerMonth(year);
+                string temp = @"<Chart BackColor=""LightGray"" ForeColor=""LightBlue"">
                       <ChartAreas>
                         <ChartArea Name=""Default"" _Template_=""All"">
                           <AxisY>
@@ -91,12 +111,20 @@ namespace BlogApp.Web.Controllers
                       </ChartAreas>
                     </Chart>";
 
-            Chart chartPerMonth = new Chart(width: 1000, height: 500, theme: temp).AddTitle(year.ToString()).AddSeries(chartType: "column",xValue: new[] { "Janury", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" },yValues: lstArticlesCount).Write("bmp");
-           
-            return null;
+                Chart chartPerMonth = new Chart(width: 1000, height: 500, theme: temp).AddTitle(year.ToString()).AddSeries(chartType: "column", xValue: new[] { "Janury", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }, yValues: lstArticlesCount).Write("bmp");
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorTitle = "Server Error";
+                ViewBag.ErrorDescription = "Please try again later";
+                return View("~/Views/Shared/ErrorPage.cshtml");
+            }
         }
 
         [HttpGet]
+        [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult QueryByMonthPerYear(int? year)
         {
             List<SelectListItem> lstYears = new List<SelectListItem>();
@@ -106,10 +134,8 @@ namespace BlogApp.Web.Controllers
             }
             ViewBag.Years = lstYears;
 
-
             if (year != null)
             {
-
                 ViewBag.SelectedYear = year;
             }
             else
