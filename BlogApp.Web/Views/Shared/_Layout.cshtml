@@ -58,8 +58,8 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Articles <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Create article", "CreateArticle", "Article", new { userId = ((BlogApp.Models.User)Session["Login"]).Id }, null)</li>
-                                <li>@Html.ActionLink("My articles", "MyArticles", "Article")</li>
+                                <li>@Html.ActionLink("Create article", "CreateArticle", "Article", new { Id = ((BlogApp.Models.User)Session["Login"]).Id }, null)</li>
+                                <li>@Html.ActionLink("My articles", "MyArticles", "Article", new { Id = ((BlogApp.Models.User)Session["Login"]).Id }, null)</li>
                             </ul>
                         </li>
                     }

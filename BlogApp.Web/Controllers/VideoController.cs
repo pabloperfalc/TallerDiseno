@@ -21,10 +21,19 @@ namespace BlogApp.Web.Controllers
 
         public ActionResult GetVideoPaths()
         {
-            var uri = Request.Url;
-            var host = uri.GetLeftPart(UriPartial.Authority);
-            var videos = videoManager.GetVideos().Select(v => host + v.Path).ToList<string>();
-            return Json(videos, JsonRequestBehavior.AllowGet);
+            try
+            {
+                var uri = Request.Url;
+                var host = uri.GetLeftPart(UriPartial.Authority);
+                var videos = videoManager.GetVideos().Select(v => host + v.Path).ToList<string>();
+                return Json(videos, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorTitle = "Server Error";
+                ViewBag.ErrorDescription = "Please try again later";
+                return View("~/Views/Shared/ErrorPage.cshtml");
+            }
         }
        
 
@@ -39,29 +48,56 @@ namespace BlogApp.Web.Controllers
         [Authorization(Roles = new[] { RoleType.Administrator })]
         public async Task<ActionResult> ImportVideos(HttpPostedFileBase file)
         {
-            if (file !=null)
+            try
             {
-                var videoData = new byte[file.ContentLength];
-                file.InputStream.Read(videoData, 0, file.ContentLength);
-                videoManager.Import(videoData,file.FileName);
+                if (file != null)
+                {
+                    var videoData = new byte[file.ContentLength];
+                    file.InputStream.Read(videoData, 0, file.ContentLength);
+                    videoManager.Import(videoData, file.FileName);
+                    return View(0);
+                }
                 return View(0);
             }
-            return View(0);
+            catch (Exception e)
+            {
+                ViewBag.ErrorTitle = "Server Error";
+                ViewBag.ErrorDescription = "Please try again later";
+                return View("~/Views/Shared/ErrorPage.cshtml");
+            }
         }
 
         [HttpGet]
         [Authorization(Roles = new[] { RoleType.Administrator })]
         public ActionResult List()
         {
-            return View(videoManager.GetVideos());
+            try
+            {
+                return View(videoManager.GetVideos());
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorTitle = "Server Error";
+                ViewBag.ErrorDescription = "Please try again later";
+                return View("~/Views/Shared/ErrorPage.cshtml"); 
+            }
         }
 
         [HttpGet]
         [Authorization(Roles = new[] { RoleType.Administrator })]
         public async Task<ActionResult> Delete(int Id)
         {
-            videoManager.Delete(Id);
-            return View("List", videoManager.GetVideos());
+            try
+            {
+                videoManager.Delete(Id);
+                return View("List", videoManager.GetVideos());
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorTitle = "Server Error";
+                ViewBag.ErrorDescription = "Please try again later";
+                return View("~/Views/Shared/ErrorPage.cshtml");
+            }
         }
     }
 }

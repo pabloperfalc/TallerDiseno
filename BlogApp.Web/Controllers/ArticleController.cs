@@ -226,9 +226,9 @@ namespace BlogApp.Web.Controllers
 
         [HttpGet]
         [Authorization(Roles = new [] { RoleType.Blogger })]
-        public ActionResult MyArticles(int userId)
+        public ActionResult MyArticles(int Id)
         {
-            List<Article> lstPublicArticles = articleManager.GetArticles(userId);
+            List<Article> lstPublicArticles = articleManager.GetArticles(Id);
             return View(lstPublicArticles);
 
         }

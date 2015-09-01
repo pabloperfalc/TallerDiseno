@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApp.DataAccess", "BlogApp.DataAccess\BlogApp.DataAccess.csproj", "{BF1DC20A-AF8B-496D-9736-00A429D21460}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApp.Logger", "BlogApp.Logger\BlogApp.Logger.csproj", "{FEC18373-C961-4CC6-B6D7-40B3C22C9DC5}"
@@ -16,8 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApp.UnityInjector", "BlogApp.UnityInjector\BlogApp.UnityInjector.csproj", "{D77C2BC5-84A9-4378-9283-BB929D6F1661}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApp.ILogger", "BlogApp.ILogger\BlogApp.ILogger.csproj", "{FB5C8245-1FAC-4C44-9720-4082521DB839}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApp.Utilities", "BlogApp.Utilities\BlogApp.Utilities.csproj", "{A490028A-6970-4F13-994C-D25E1DB5CB07}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApp.VideoPlayer", "BlogApp.VideoPlayer\BlogApp.VideoPlayer.csproj", "{70A36EF3-A79F-45A0-BBE8-E06809376069}"
 EndProject
@@ -62,10 +58,6 @@ Global
 		{FB5C8245-1FAC-4C44-9720-4082521DB839}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB5C8245-1FAC-4C44-9720-4082521DB839}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB5C8245-1FAC-4C44-9720-4082521DB839}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A490028A-6970-4F13-994C-D25E1DB5CB07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A490028A-6970-4F13-994C-D25E1DB5CB07}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A490028A-6970-4F13-994C-D25E1DB5CB07}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A490028A-6970-4F13-994C-D25E1DB5CB07}.Release|Any CPU.Build.0 = Release|Any CPU
 		{70A36EF3-A79F-45A0-BBE8-E06809376069}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{70A36EF3-A79F-45A0-BBE8-E06809376069}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70A36EF3-A79F-45A0-BBE8-E06809376069}.Release|Any CPU.ActiveCfg = Release|Any CPU

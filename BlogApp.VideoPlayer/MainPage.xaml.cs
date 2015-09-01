@@ -36,7 +36,7 @@ namespace BlogApp.VideoPlayer
             }
             catch
             {
-                System.Threading.Thread.Sleep(15000);
+                //System.Threading.Thread.Sleep(15000);
                 GetVideos();
             }
 
@@ -59,7 +59,7 @@ namespace BlogApp.VideoPlayer
             }
             else
             {
-                System.Threading.Thread.Sleep(15000);
+                //System.Threading.Thread.Sleep(15000);
                 GetVideos();
             }
         }
