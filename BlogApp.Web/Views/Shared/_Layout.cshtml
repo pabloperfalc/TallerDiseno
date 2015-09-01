@@ -124,7 +124,7 @@
                     $.get("/article/GetNotificationCount", function (data) {
                         $('#notification').text(data);
                     }).always(function () {
-                        setTimeout(doStuff, 1);
+                        setTimeout(doStuff, 20000);
                     });;
 
                 }());
