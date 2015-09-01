@@ -117,16 +117,11 @@ namespace BlogApp.Web.Controllers
             {
                 if (Request.Form["Confirm"] != null)
                 {
-                    // Code for function 1
-
                     List<Tuple<string, string>> errors = articleManager.ValidateArticle(article);
                     if (errors.Count == 0)
                     {
-                        //var user = new User();
-                        //user = (User)Session["Login"];
-                        //article.Author = user;
-                        //article.AuthorId = user.Id;
-                        article.AuthorId = 1;
+                        var user = (User)Session["login"];
+                        article.AuthorId = user.Id;
 
                         article.ModificationdDate = DateTime.Now;
                         article.CreationDate = DateTime.Now;
